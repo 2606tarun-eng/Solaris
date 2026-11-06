@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="910" height="391.3" viewBox="0 0 910 391.3" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="stroke0_0_73" fill="white">
+<path d="M910 195.65C910 303.704 706.29 391.3 455 391.3C203.71 391.3 0 303.704 0 195.65C0 87.5955 203.71 0 455 0C706.29 0 910 87.5955 910 195.65Z"/>
+</mask>
+<path id="Uranus orbit" d="M910 195.65C910 303.705 706.29 391.3 455 391.3C203.71 391.3 0 303.705 0 195.65C0 87.5955 203.71 0 455 0C706.29 0 910 87.5955 910 195.65Z" stroke-width="2" stroke="#6A91AE" stroke-opacity="0.28" mask="url(#stroke0_0_73)"/>
+</svg>

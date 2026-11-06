@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1040" height="447.2" viewBox="0 0 1040 447.2" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="stroke0_0_72" fill="white">
+<path d="M1040 223.6C1040 347.091 807.188 447.2 520 447.2C232.812 447.2 0 347.091 0 223.6C0 100.109 232.812 0 520 0C807.188 0 1040 100.109 1040 223.6Z"/>
+</mask>
+<path id="Neptune orbit" d="M1040 223.6C1040 347.091 807.188 447.2 520 447.2C232.812 447.2 0 347.091 0 223.6C0 100.109 232.812 0 520 0C807.188 0 1040 100.109 1040 223.6Z" stroke-width="2" stroke="#6A91AE" stroke-opacity="0.28" mask="url(#stroke0_0_72)"/>
+</svg>

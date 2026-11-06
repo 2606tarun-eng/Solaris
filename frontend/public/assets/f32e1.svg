@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="640" height="275.2" viewBox="0 0 640 275.2" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="stroke0_0_35" fill="white">
+<path d="M640 137.6C640 213.594 496.731 275.2 320 275.2C143.269 275.2 0 213.594 0 137.6C0 61.6056 143.269 0 320 0C496.731 0 640 61.6056 640 137.6Z"/>
+</mask>
+<path id="Jupiter orbit" d="M640 137.6C640 213.594 496.731 275.2 320 275.2C143.269 275.2 0 213.594 0 137.6C0 61.6056 143.269 0 320 0C496.731 0 640 61.6056 640 137.6Z" stroke-width="2" stroke="#6A91AE" stroke-opacity="0.28" mask="url(#stroke0_0_35)"/>
+</svg>

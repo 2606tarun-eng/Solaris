@@ -1,0 +1,175 @@
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import type { RefObject } from "react";
+import { planets } from "../data/planets";
+import { orbits } from "../data/solarSystem";
+import { projectCounts } from "../data/projects";
+import type { CameraApi, PlanetPosition } from "../hooks/useCamera";
+import PlanetMarker from "./PlanetMarker";
+import Sun from "./Sun";
+
+export type MissionFilter = "all" | "active" | "retired";
+
+type OrbitSystemProps = {
+  camera: CameraApi;
+  cameraRef: RefObject<HTMLDivElement | null>;
+  positionsRef: RefObject<Record<string, PlanetPosition>>;
+  speed: number;
+  focusedId: string | null;
+  reducedMotion: boolean;
+  filter: MissionFilter;
+  highlighted: Set<string>;
+  onSelectPlanet: (id: string) => void;
+};
+
+const TILT_WIDE = 1.45;
+const TILT_NARROW = 1.9;
+
+export default function OrbitSystem({
+  camera,
+  cameraRef,
+  positionsRef,
+  speed,
+  focusedId,
+  reducedMotion,
+  filter,
+  highlighted,
+  onSelectPlanet,
+}: OrbitSystemProps) {
+  const nodeRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const visualRefs = useRef<Record<string, HTMLSpanElement | null>>({});
+  const anglesRef = useRef<number[]>(planets.map((planet) => planet.startAngle));
+  const focusRef = useRef<string | null>(focusedId);
+  const [narrow, setNarrow] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(max-width: 720px)").matches,
+  );
+  const { frame: cameraFrame, consumeClickBlock } = camera;
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 720px)");
+    const update = () => setNarrow(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  // Narrow screens have more vertical than horizontal room, so open the
+  // ellipses further to keep the inner planets and their labels apart.
+  const orbitGeometry = useMemo(() => {
+    const tilt = narrow ? TILT_NARROW : TILT_WIDE;
+    return orbits.map((orbit) => ({
+      rx: orbit.width / 2,
+      ry: (orbit.height / 2) * tilt,
+      src: orbit.src,
+      name: orbit.name,
+    }));
+  }, [narrow]);
+
+  useEffect(() => {
+    focusRef.current = focusedId;
+  }, [focusedId]);
+
+  useLayoutEffect(() => {
+    let animation = 0;
+    let last = performance.now();
+
+    const update = (now: number) => {
+      const delta = Math.min(0.05, Math.max(0, (now - last) / 1000));
+      last = now;
+
+      const focus = focusRef.current;
+      const multiplier = reducedMotion ? 0 : speed * (focus ? 0.12 : 1);
+
+      planets.forEach((planet, index) => {
+        const geometry = orbitGeometry[planet.orbitIndex];
+        if (multiplier > 0) {
+          anglesRef.current[index] += ((Math.PI * 2) / planet.period) * delta * multiplier;
+        }
+        const angle = anglesRef.current[index];
+        const x = geometry.rx * Math.cos(angle);
+        const y = geometry.ry * Math.sin(angle);
+        const depth = Math.sin(angle);
+
+        positionsRef.current[planet.id] = { x, y, size: planet.size };
+
+        const node = nodeRefs.current[planet.id];
+        if (node) {
+          node.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0)`;
+          node.style.zIndex = String(
+            depth > 0 ? Math.round(54 + depth * 8) : Math.round(20 + (depth + 1) * 8),
+          );
+          node.style.opacity = String(0.78 + (depth + 1) * 0.11);
+        }
+
+        const visual = visualRefs.current[planet.id];
+        if (visual) {
+          const scale = 0.84 + (depth + 1) * 0.13;
+          visual.style.transform = `scale(${scale.toFixed(3)})`;
+        }
+      });
+
+      cameraFrame(delta);
+      animation = requestAnimationFrame(update);
+    };
+
+    animation = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(animation);
+  }, [cameraFrame, orbitGeometry, positionsRef, reducedMotion, speed]);
+
+  return (
+    <div
+      className={`orbit-viewport${camera.focusedId ? " is-focused" : ""}`}
+      ref={camera.viewportRef}
+      {...camera.viewportProps}
+    >
+      <div className="camera-layer" ref={cameraRef}>
+        <div className="orbit-rings">
+          {orbitGeometry.map((orbit) => (
+            <img
+              key={orbit.name}
+              className="orbit-ring"
+              src={orbit.src}
+              alt=""
+              draggable={false}
+              style={{
+                left: -orbit.rx,
+                top: -orbit.ry,
+                width: orbit.rx * 2,
+                height: orbit.ry * 2,
+              }}
+            />
+          ))}
+        </div>
+
+        <Sun />
+
+        {planets.map((planet) => {
+          const counts = projectCounts(planet.id);
+          const dimmed =
+            (filter === "active" && counts.active === 0) ||
+            (filter === "retired" && counts.retired === 0);
+
+          return (
+            <PlanetMarker
+              key={planet.id}
+              planet={planet}
+              focused={focusedId === planet.id}
+              dimmed={dimmed}
+              highlighted={highlighted.has(planet.id)}
+              counts={counts}
+              onSelect={() => {
+                if (consumeClickBlock()) return;
+                onSelectPlanet(planet.id);
+              }}
+              registerNode={(element) => {
+                nodeRefs.current[planet.id] = element;
+              }}
+              registerVisual={(element) => {
+                visualRefs.current[planet.id] = element;
+              }}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}

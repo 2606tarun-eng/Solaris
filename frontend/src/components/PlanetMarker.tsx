@@ -1,0 +1,77 @@
+import type { CSSProperties } from "react";
+import type { Planet } from "../data/planets";
+import ProjectDots from "./ProjectDots";
+
+type PlanetMarkerProps = {
+  planet: Planet;
+  focused: boolean;
+  dimmed: boolean;
+  highlighted: boolean;
+  counts: { active: number; retired: number };
+  onSelect: () => void;
+  registerNode: (element: HTMLDivElement | null) => void;
+  registerVisual: (element: HTMLSpanElement | null) => void;
+};
+
+export default function PlanetMarker({
+  planet,
+  focused,
+  dimmed,
+  highlighted,
+  counts,
+  onSelect,
+  registerNode,
+  registerVisual,
+}: PlanetMarkerProps) {
+  const hit = Math.max(46, Math.min(116, planet.size + 28));
+  const label = `${planet.name}. ${counts.active} ${
+    counts.active === 1 ? "project" : "projects"
+  } still exploring, ${counts.retired} retired. Open the story.`;
+
+  return (
+    <div
+      ref={registerNode}
+      className={`planet-node${focused ? " is-focused" : ""}${dimmed ? " is-dimmed" : ""}${
+        highlighted ? " is-highlighted" : ""
+      }`}
+      data-planet={planet.id}
+    >
+      <button
+        type="button"
+        className="planet-hit"
+        style={
+          {
+            width: hit,
+            height: hit,
+            left: -hit / 2,
+            top: -hit / 2,
+            "--planet-color": planet.color,
+            "--planet-size": `${planet.size}px`,
+            "--planet-radius": `${planet.size / 2}px`,
+          } as CSSProperties
+        }
+        onClick={onSelect}
+        aria-label={label}
+        aria-pressed={focused}
+      >
+        <span
+          className="planet-visual"
+          ref={registerVisual}
+          style={{ width: planet.size, height: planet.size }}
+        >
+          <span className="planet-atmosphere" />
+          <img className="planet-img" src={planet.src} alt="" draggable={false} />
+          <span className="planet-ring" />
+        </span>
+        <span className="planet-label">{planet.name}</span>
+        <span className="planet-counts">
+          {counts.active} exploring · {counts.retired} retired
+        </span>
+        <ProjectDots
+          planetId={planet.id}
+          radius={planet.size / 2 + (planet.size < 46 ? 16 : 22)}
+        />
+      </button>
+    </div>
+  );
+}

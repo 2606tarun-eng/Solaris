@@ -1,0 +1,19 @@
+# Build output (Figma Make deploy publishes the root dist/)
+dist/
+.vite/
+
+# Dependencies
+node_modules/
+
+# Environment / secrets
+.env*
+.env
+!.env.example
+
+# OS / editor cruft
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Local tool state
+*.log

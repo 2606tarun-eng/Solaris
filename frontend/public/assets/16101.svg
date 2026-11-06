@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="220" height="94.6" viewBox="0 0 220 94.6" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="stroke0_0_38" fill="white">
+<path d="M220 47.3C220 73.4231 170.751 94.6 110 94.6C49.2487 94.6 0 73.4231 0 47.3C0 21.1769 49.2487 0 110 0C170.751 0 220 21.1769 220 47.3Z"/>
+</mask>
+<path id="Mercury orbit" d="M220 47.3C220 73.4231 170.751 94.6 110 94.6C49.2487 94.6 0 73.4231 0 47.3C0 21.1769 49.2487 0 110 0C170.751 0 220 21.1769 220 47.3Z" stroke-width="2" stroke="#6A91AE" stroke-opacity="0.28" mask="url(#stroke0_0_38)"/>
+</svg>

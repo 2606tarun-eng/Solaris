@@ -1,0 +1,5 @@
+# Normalize line endings across the repo
+* text=auto
+
+# Shell scripts must keep LF
+.figma/make/* text eol=lf

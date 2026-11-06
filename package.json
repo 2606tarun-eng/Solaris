@@ -1,0 +1,13 @@
+{
+  "name": "astrorelics-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --dir frontend run dev",
+    "build": "pnpm --dir frontend run build",
+    "preview": "pnpm --dir frontend run preview",
+    "format": "pnpm --dir frontend run format",
+    "install:frontend": "pnpm --dir frontend install"
+  }
+}

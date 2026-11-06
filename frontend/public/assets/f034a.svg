@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="780" height="335.4" viewBox="0 0 780 335.4" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="stroke0_0_34" fill="white">
+<path d="M780 167.7C780 260.318 605.391 335.4 390 335.4C174.609 335.4 0 260.318 0 167.7C0 75.0818 174.609 0 390 0C605.391 0 780 75.0818 780 167.7Z"/>
+</mask>
+<path id="Saturn orbit" d="M780 167.7C780 260.318 605.391 335.4 390 335.4C174.609 335.4 0 260.318 0 167.7C0 75.0818 174.609 0 390 0C605.391 0 780 75.0818 780 167.7Z" stroke-width="2" stroke="#6A91AE" stroke-opacity="0.28" mask="url(#stroke0_0_34)"/>
+</svg>
