@@ -1,3 +1,5 @@
+import Icon from "./Icon";
+
 type CameraControlsProps = {
   speed: number;
   onSpeedChange: (speed: number) => void;
@@ -38,14 +40,14 @@ export default function CameraControls({
         </div>
       </div>
       <div className="zoom-controls" role="group" aria-label="Map zoom">
-        <button type="button" onClick={ onZoomIn } aria-label="Zoom in">
-          +
+        <button type="button" onClick={onZoomIn} aria-label="Zoom in">
+          <Icon name="plus" size={16} />
         </button>
         <button type="button" onClick={onZoomOut} aria-label="Zoom out">
-          −
+          <Icon name="minus" size={16} />
         </button>
         <button type="button" onClick={onReset} aria-label="Show the whole solar system">
-          ⟲
+          <Icon name="reset" size={16} />
         </button>
       </div>
     </div>

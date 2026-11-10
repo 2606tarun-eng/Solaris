@@ -21,7 +21,6 @@ type MissionMapProps = {
   onCloseDrawer: () => void;
   drawerOpen: boolean;
   tourActive: boolean;
-  onStartTour: () => void;
   onExitTour: () => void;
   reducedMotion: boolean;
   searchRef: RefObject<HTMLInputElement | null>;
@@ -48,7 +47,6 @@ export default function MissionMap({
   onCloseDrawer,
   drawerOpen,
   tourActive,
-  onStartTour,
   onExitTour,
   reducedMotion,
   searchRef,
@@ -101,9 +99,6 @@ export default function MissionMap({
               </button>
             ))}
           </div>
-          <button type="button" className="tour-launch" onClick={onStartTour}>
-            <Icon name="rocket" size={16} className="icon" /> Take the 1-minute tour
-          </button>
         </div>
 
         <div className="map-legend" aria-label="Dot legend">
@@ -115,6 +110,10 @@ export default function MissionMap({
           <span className="legend-item">
             <span className="mini-dot is-retired" aria-hidden="true" />
             Retired explorer
+          </span>
+          <span className="legend-item">
+            <span className="legend-moon" aria-hidden="true" />
+            Has moons
           </span>
         </div>
 

@@ -26,7 +26,7 @@ type ShootingStar = {
   maxLife: number;
 };
 
-const STAR_COLORS = ["#ffffff", "#dbeafe", "#c7d2fe", "#fde68a", "#a5f3fc"];
+const STAR_COLORS = ["#ffffff", "#f5f5f4", "#fde68a", "#facc15", "#fed7aa"];
 
 function makeStars(width: number, height: number, count: number): Star[] {
   return Array.from({ length: count }, () => {
@@ -59,9 +59,9 @@ function paintSky(width: number, height: number, tier: PerformanceTier) {
     height * 0.5,
     Math.max(width, height) * 0.95,
   );
-  base.addColorStop(0, "#0d1222");
-  base.addColorStop(0.45, "#080b15");
-  base.addColorStop(1, "#05060b");
+  base.addColorStop(0, "#18181b");
+  base.addColorStop(0.45, "#0c0c0e");
+  base.addColorStop(1, "#09090b");
   ctx.fillStyle = base;
   ctx.fillRect(0, 0, width, height);
 
@@ -71,12 +71,12 @@ function paintSky(width: number, height: number, tier: PerformanceTier) {
 
   const bandHeight = Math.max(height * 0.62, 420);
   const band = ctx.createLinearGradient(0, -bandHeight / 2, 0, bandHeight / 2);
-  band.addColorStop(0, "rgba(80, 92, 180, 0)");
-  band.addColorStop(0.3, "rgba(96, 112, 205, 0.08)");
-  band.addColorStop(0.48, "rgba(170, 186, 255, 0.17)");
+  band.addColorStop(0, "rgba(120, 113, 108, 0)");
+  band.addColorStop(0.3, "rgba(120, 113, 108, 0.06)");
+  band.addColorStop(0.48, "rgba(214, 211, 209, 0.14)");
   band.addColorStop(0.52, "rgba(255, 226, 196, 0.1)");
-  band.addColorStop(0.7, "rgba(96, 112, 205, 0.08)");
-  band.addColorStop(1, "rgba(80, 92, 180, 0)");
+  band.addColorStop(0.7, "rgba(120, 113, 108, 0.06)");
+  band.addColorStop(1, "rgba(120, 113, 108, 0)");
   ctx.fillStyle = band;
   ctx.fillRect(-width, -bandHeight / 2, width * 2, bandHeight);
 
@@ -85,7 +85,7 @@ function paintSky(width: number, height: number, tier: PerformanceTier) {
     const x = (Math.random() - 0.5) * width * 1.4;
     const y = (Math.random() - 0.5) * bandHeight * 0.55;
     const radius = 120 + Math.random() * 260;
-    const hue = index % 2 === 0 ? "124, 108, 255" : "56, 189, 190";
+    const hue = index % 2 === 0 ? "249, 115, 22" : "250, 204, 21";
     const cloud = ctx.createRadialGradient(x, y, 0, x, y, radius);
     cloud.addColorStop(0, `rgba(${hue}, 0.11)`);
     cloud.addColorStop(0.55, `rgba(${hue}, 0.05)`);
@@ -100,7 +100,7 @@ function paintSky(width: number, height: number, tier: PerformanceTier) {
     const spread = (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
     const y = spread * bandHeight * 0.42;
     const size = Math.random() < 0.9 ? 0.5 : 0.9;
-    ctx.fillStyle = `rgba(235, 240, 255, ${0.08 + Math.random() * 0.32})`;
+    ctx.fillStyle = `rgba(245, 245, 244, ${0.08 + Math.random() * 0.32})`;
     ctx.beginPath();
     ctx.arc(x, y, size, 0, Math.PI * 2);
     ctx.fill();
@@ -177,7 +177,7 @@ export default function StarfieldCanvas({ tier, reducedMotion }: StarfieldCanvas
         const tailY = shooting.y - shooting.vy * 12;
         const gradient = ctx.createLinearGradient(tailX, tailY, shooting.x, shooting.y);
         gradient.addColorStop(0, "rgba(255,255,255,0)");
-        gradient.addColorStop(1, `rgba(200,240,255,${0.85 * fade})`);
+        gradient.addColorStop(1, `rgba(253, 186, 116, ${0.85 * fade})`);
         ctx.strokeStyle = gradient;
         ctx.lineWidth = 1.6;
         ctx.beginPath();

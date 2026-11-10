@@ -1,4 +1,3 @@
-import { img } from "../assets";
 import { planets, planetById } from "../data/planets";
 import { missionByPlanet, missionYears, planetStories } from "../data/missions";
 import { projectsByPlanet, projectYears } from "../data/projects";
@@ -27,7 +26,7 @@ export default function MissionDrawer({ planetId, onClose, onSelectPlanet }: Mis
       <div className="drawer-bar">
         <span className="drawer-kicker">PLANET FILE · {planet.name.toUpperCase()}</span>
         <button type="button" className="icon-button" onClick={onClose} aria-label="Close planet file">
-          <img src={img.close} alt="" />
+          <Icon name="close" size={16} />
         </button>
       </div>
 
@@ -90,7 +89,7 @@ export default function MissionDrawer({ planetId, onClose, onSelectPlanet }: Mis
         </div>
 
         <a className="nasa-link" href={mission.nasaUrl} target="_blank" rel="noreferrer">
-          Open the NASA mission page <span aria-hidden="true">↗</span>
+          Open the NASA mission page <Icon name="external" size={14} className="icon" />
         </a>
 
         <p className="drawer-planet-fact">{story.funFact}</p>
@@ -98,13 +97,13 @@ export default function MissionDrawer({ planetId, onClose, onSelectPlanet }: Mis
 
       <div className="drawer-footer">
         <button type="button" onClick={() => onSelectPlanet(previous.id)}>
-          ← {previous.name}
+          <Icon name="arrow-left" size={13} className="icon" /> {previous.name}
         </button>
         <button type="button" className="back-button" onClick={onClose}>
           All planets
         </button>
         <button type="button" onClick={() => onSelectPlanet(next.id)}>
-          {next.name} →
+          {next.name} <Icon name="arrow-right" size={13} className="icon" />
         </button>
       </div>
     </aside>

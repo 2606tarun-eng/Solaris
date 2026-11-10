@@ -26,6 +26,13 @@ export default function Timeline({ year, onChange, highlighted }: TimelineProps)
   const handleAlign =
     railPercent > 96 ? "translateX(-100%)" : railPercent < 4 ? "translateX(0)" : "translateX(-50%)";
 
+  // Placeholder for Tone.js data sonification ("Jukebox" element).
+  // Next step will plug a synth chord in here and gate on isAudioEnabled.
+  const handleTimelineSonification = (year: number) => {
+    const activeMissionsCount = eventsForYear(year).length;
+    console.log('Play synth chord for year:', year, 'Missions active:', activeMissionsCount);
+  };
+
   useEffect(() => {
     if (!playing) return;
     if (year >= TIMELINE_END) {
@@ -33,7 +40,9 @@ export default function Timeline({ year, onChange, highlighted }: TimelineProps)
       return;
     }
     const timer = window.setTimeout(() => {
-      onChange(Math.min(TIMELINE_END, year + 1));
+      const nextYear = Math.min(TIMELINE_END, year + 1);
+      handleTimelineSonification(nextYear);
+      onChange(nextYear);
     }, 460);
     return () => window.clearTimeout(timer);
   }, [playing, year, onChange]);
@@ -105,6 +114,7 @@ export default function Timeline({ year, onChange, highlighted }: TimelineProps)
             aria-label={`${event.year}: ${event.title}`}
             onClick={() => {
               setPlaying(false);
+              handleTimelineSonification(event.year);
               onChange(event.year);
             }}
           />
@@ -126,7 +136,9 @@ export default function Timeline({ year, onChange, highlighted }: TimelineProps)
           value={year}
           onChange={(event) => {
             setPlaying(false);
-            onChange(Number(event.target.value));
+            const nextYear = Number(event.target.value);
+            handleTimelineSonification(nextYear);
+            onChange(nextYear);
           }}
           aria-label="Select a year in space history"
         />

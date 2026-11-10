@@ -6,12 +6,22 @@ type ProjectDotsProps = {
   radius: number;
 };
 
-const MAX_DOTS = 5;
+/**
+ * Keep the orbit map calm: show at most three mission dots per planet.
+ * Extra missions stay hidden and are summarised in the planet's hover counts.
+ */
+const MAX_ACTIVE_DOTS = 2;
+const MAX_RETIRED_DOTS = 1;
 
 export default function ProjectDots({ planetId, radius }: ProjectDotsProps) {
   const list = projectsByPlanet[planetId] ?? [];
-  const visible = list.slice(0, MAX_DOTS);
-  const extra = Math.max(0, list.length - visible.length);
+  const active = list
+    .filter((project) => project.status === "active")
+    .slice(0, MAX_ACTIVE_DOTS);
+  const retired = list
+    .filter((project) => project.status === "retired")
+    .slice(0, MAX_RETIRED_DOTS);
+  const visible = [...active, ...retired];
   if (visible.length === 0) return null;
 
   return (
@@ -35,11 +45,6 @@ export default function ProjectDots({ planetId, radius }: ProjectDotsProps) {
           } · ${projectYears(project)}`}
         />
       ))}
-      {extra > 0 ? (
-        <span className="project-dot-more" style={{ "--dot-radius": `${radius}px` } as CSSProperties}>
-          +{extra}
-        </span>
-      ) : null}
     </span>
   );
 }

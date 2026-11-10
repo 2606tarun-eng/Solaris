@@ -118,10 +118,18 @@ export default function GuidedTour({ active, reducedMotion, onStepFocus, onExit 
             onClick={() => setIndex((value) => Math.max(0, value - 1))}
             disabled={index === 0}
           >
-            ← Back
+            <Icon name="arrow-left" size={14} className="icon" /> Back
           </button>
           <button type="button" onClick={() => setPaused((value) => !value)}>
-            {paused || reducedMotion ? "▶ Play" : "⏸ Pause"}
+            {paused || reducedMotion ? (
+              <>
+                <Icon name="play" size={13} className="icon" /> Play
+              </>
+            ) : (
+              <>
+                <Icon name="pause" size={13} className="icon" /> Pause
+              </>
+            )}
           </button>
           {isLast ? (
             <button type="button" className="tour-primary" onClick={onExit}>
@@ -133,7 +141,7 @@ export default function GuidedTour({ active, reducedMotion, onStepFocus, onExit 
               className="tour-primary"
               onClick={() => setIndex((value) => Math.min(steps.length - 1, value + 1))}
             >
-              Next →
+              Next <Icon name="arrow-right" size={14} className="icon" />
             </button>
           )}
           <button type="button" className="tour-exit" onClick={onExit} aria-label="Exit tour">

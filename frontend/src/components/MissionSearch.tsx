@@ -104,7 +104,7 @@ export default function MissionSearch({ inputRef, onSelectPlanet }: MissionSearc
     <div className="mission-search" ref={wrapperRef}>
       <div className="search-field">
         <span className="search-icon" aria-hidden="true">
-          ⌕
+          <Icon name="search" size={19} />
         </span>
         <input
           ref={inputRef}
@@ -142,9 +142,7 @@ export default function MissionSearch({ inputRef, onSelectPlanet }: MissionSearc
           <button type="button" className="search-clear" onClick={() => setQuery("")} aria-label="Clear search">
             <Icon name="close" size={16} className="icon" />
           </button>
-        ) : (
-          <kbd className="search-kbd">⌘K</kbd>
-        )}
+        ) : null}
       </div>
 
       {term && results.length > 0 ? (

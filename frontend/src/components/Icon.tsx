@@ -1,8 +1,8 @@
 /**
- * Neon-blue outline icon system.
+ * Neon outline icon system.
  *
  * Every icon is an inline SVG drawn with `stroke="currentColor"` so it inherits
- * text colour. The parent sets colour (default cyan-blue) and optional glow via
+ * text colour. The parent sets colour (default vintage gold) and optional glow via
  * the `.icon` utility class. Strokes are deliberately thin and consistent so the
  * set reads as a single neon outline family, replacing the colourful emoji set.
  *
@@ -23,7 +23,15 @@ type IconName =
   | "arrow-right"
   | "close"
   | "gauge"
-  | "nav-arrow";
+  | "nav-arrow"
+  | "menu"
+  | "plus"
+  | "minus"
+  | "reset"
+  | "external"
+  | "probe"
+  | "volume-on"
+  | "volume-off";
 
 const SHAPES: Record<IconName, string> = {
   planet: `
@@ -72,6 +80,40 @@ const SHAPES: Record<IconName, string> = {
   `,
   "nav-arrow": `
     <path d="M10 6 L14 10 L10 14" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  `,
+  menu: `
+    <path d="M4 7 L20 7 M4 12 L20 12 M4 17 L20 17" fill="none" stroke-linecap="round" />
+  `,
+  plus: `
+    <path d="M12 5 L12 19 M5 12 L19 12" fill="none" stroke-linecap="round" />
+  `,
+  minus: `
+    <path d="M5 12 L19 12" fill="none" stroke-linecap="round" />
+  `,
+  reset: `
+    <path d="M20 12a8 8 0 1 1-2.34-5.66" fill="none" stroke-linecap="round" />
+    <path d="M20 4 L20 8 L16 8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  `,
+  external: `
+    <path d="M14 4 L20 4 L20 10" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M20 4 L11 13" fill="none" stroke-linecap="round" />
+    <path d="M18 14 L18 18 A2 2 0 0 1 16 20 L6 20 A2 2 0 0 1 4 18 L4 8 A2 2 0 0 1 6 6 L10 6" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  `,
+  probe: `
+    <path d="M9 4 A8 8 0 0 0 9 16" fill="none" stroke-linecap="round" />
+    <path d="M9 10 L14.5 10" fill="none" stroke-linecap="round" />
+    <circle cx="16.5" cy="10" r="2.1" fill="none" />
+    <path d="M18 12 L21.5 16" fill="none" stroke-linecap="round" />
+    <path d="M15 12 L11.5 17" fill="none" stroke-linecap="round" />
+  `,
+  "volume-on": `
+    <path d="M4 10 L8 10 L12 6 L12 18 L8 14 L4 14 Z" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M15 9 A3.5 3.5 0 0 1 15 15" fill="none" stroke-linecap="round" />
+    <path d="M17.5 6.5 A7.5 7.5 0 0 1 17.5 17.5" fill="none" stroke-linecap="round" />
+  `,
+  "volume-off": `
+    <path d="M4 10 L8 10 L12 6 L12 18 L8 14 L4 14 Z" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16 9.5 L20.5 14.5 M20.5 9.5 L16 14.5" fill="none" stroke-linecap="round" />
   `,
 };
 

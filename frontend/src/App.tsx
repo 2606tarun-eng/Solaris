@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import AboutPanel from "./components/AboutPanel";
 import MissionMap from "./components/MissionMap";
 import NavBar from "./components/NavBar";
@@ -6,6 +6,7 @@ import StatusBar from "./components/StatusBar";
 import StarfieldCanvas from "./components/StarfieldCanvas";
 import Timeline from "./components/Timeline";
 import type { MissionFilter } from "./components/OrbitSystem";
+import { flashBus, forecastSunPoint } from "./lib/flashBus";
 import useCamera, { type PlanetPosition } from "./hooks/useCamera";
 import usePerformanceTier from "./hooks/usePerformanceTier";
 import useReducedMotion from "./hooks/useReducedMotion";
@@ -22,6 +23,8 @@ export default function AstroRelicsMissionAtlas() {
   const [filter, setFilter] = useState<MissionFilter>("all");
   const [speed, setSpeed] = useState(1);
   const [year, setYear] = useState(TIMELINE_END);
+  // Data-sonification master switch (Tone.js will read this next step).
+  const [isAudioEnabled, setIsAudioEnabled] = useState(false);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const cameraRef = useRef<HTMLDivElement>(null);
@@ -42,6 +45,20 @@ export default function AstroRelicsMissionAtlas() {
   });
 
   const highlighted = planetsForYear(year);
+
+  // Stage 3 of the flash transition: report the sun's exact screen point so
+  // the persisted flash overlay can breathe out into it. The camera centres
+  // world (0, 0) — the sun — in the viewport, so its rect centre is the sun.
+  // Measure in a layout effect so the breathe-out starts before first paint.
+  useLayoutEffect(() => {
+    const viewport = camera.viewportRef.current;
+    if (viewport) {
+      const rect = viewport.getBoundingClientRect();
+      flashBus.deliver({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+    } else {
+      flashBus.deliver(forecastSunPoint());
+    }
+  }, [camera.viewportRef]);
 
   const selectPlanet = (id: string) => {
     setTourActive(false);
@@ -83,12 +100,6 @@ export default function AstroRelicsMissionAtlas() {
       const typing =
         target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
 
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-        event.preventDefault();
-        searchRef.current?.focus();
-        return;
-      }
-
       if (event.key !== "Escape") return;
       if (aboutOpen) {
         setAboutOpen(false);
@@ -117,6 +128,8 @@ export default function AstroRelicsMissionAtlas() {
         onOpenMap={openMap}
         onStartTour={startTour}
         onOpenAbout={() => setAboutOpen(true)}
+        isAudioEnabled={isAudioEnabled}
+        onToggleAudio={() => setIsAudioEnabled((value) => !value)}
       />
 
       <main className="app-main">
@@ -134,7 +147,6 @@ export default function AstroRelicsMissionAtlas() {
           onCloseDrawer={closeDrawer}
           drawerOpen={drawerOpen}
           tourActive={tourActive}
-          onStartTour={startTour}
           onExitTour={exitTour}
           reducedMotion={reducedMotion}
           searchRef={searchRef}

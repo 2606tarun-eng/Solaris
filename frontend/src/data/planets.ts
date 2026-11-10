@@ -16,6 +16,8 @@ export type Planet = {
   startAngle: number;
   /** Label colour on the map. */
   color: string;
+  /** Number of known moons, for the tiny companion dot and HUD readout. */
+  moons?: number;
   /** Short, kid-friendly nickname. */
   tagline: string;
   /** Transparent cutout used for the orbit marker. */
@@ -79,6 +81,7 @@ const seeds: PlanetSeed[] = [
     size: 40,
     period: 30,
     color: "#93c5fd",
+    moons: 1,
     tagline: "Our home world",
     src: img.earth,
     hero: img.planetEarth,
@@ -93,6 +96,7 @@ const seeds: PlanetSeed[] = [
     size: 34,
     period: 38,
     color: "#fca5a5",
+    moons: 2,
     tagline: "The rover playground",
     src: img.mars,
     hero: img.planetMars,
@@ -107,6 +111,7 @@ const seeds: PlanetSeed[] = [
     size: 86,
     period: 52,
     color: "#fde68a",
+    moons: 95,
     tagline: "The giant storm",
     src: img.jupiter,
     hero: img.planetJupiter,
@@ -121,6 +126,7 @@ const seeds: PlanetSeed[] = [
     size: 72,
     period: 66,
     color: "#fde68a",
+    moons: 146,
     tagline: "The ringed beauty",
     src: img.saturn,
     hero: img.planetSaturn,
