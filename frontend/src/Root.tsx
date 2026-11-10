@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import App from "./App";
 import LandingIntro from "./components/LandingIntro";
-import SolarisFlash from "./components/SolarisFlash";
+import SolarisFlashSimplified from "./components/SolarisFlashSimplified";
 
 /**
  * Minimal two-route entry point.
@@ -10,7 +10,7 @@ import SolarisFlash from "./components/SolarisFlash";
  *   "/app"           -> the existing AstroRelics atlas (untouched)
  *   "/system"        -> alias for "/app"
  *
- * <SolarisFlash /> is rendered above both routes so the warp flash can expand
+ * <SolarisFlashSimplified /> is rendered above both routes so the warp flash can expand
  * while the landing is mounted and breathe out after the atlas mounts.
  */
 
@@ -32,6 +32,12 @@ function isAppRoute() {
 export default function Root() {
   const [inApp, setInApp] = useState(isAppRoute);
 
+  const enterApp = useCallback(() => {
+    window.history.pushState({}, "", `${BASE}/app`);
+    setInApp(true);
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     const sync = () => setInApp(isAppRoute());
     window.addEventListener("popstate", sync);
@@ -42,15 +48,9 @@ export default function Root() {
     document.title = inApp ? "AstroRelics — Mission Atlas" : "Solaris — NASA Space Apps 2026";
   }, [inApp]);
 
-  const enterApp = useCallback(() => {
-    window.history.pushState({}, "", `${BASE}/app`);
-    setInApp(true);
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <>
-      <SolarisFlash />
+      <SolarisFlashSimplified />
       {inApp ? <App /> : <LandingIntro onEnter={enterApp} enterHref={`${BASE}/app`} />}
     </>
   );
