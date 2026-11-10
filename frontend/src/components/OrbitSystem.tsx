@@ -43,6 +43,10 @@ export default function OrbitSystem({
   const visualRefs = useRef<Record<string, HTMLSpanElement | null>>({});
   const anglesRef = useRef<number[]>(planets.map((planet) => planet.startAngle));
   const focusRef = useRef<string | null>(focusedId);
+  // Entrance: planets zoom outward from the sun as the flash breathe-out
+  // clears. Kept in refs so it never re-triggers React.
+  const mountAtRef = useRef<number | null>(null);
+  const entranceDoneRef = useRef(reducedMotion);
   const [narrow, setNarrow] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(max-width: 720px)").matches,
   );
@@ -79,9 +83,20 @@ export default function OrbitSystem({
     let animation = 0;
     let last = performance.now();
 
+    // Entrance choreography: hold them parked on the sun for a beat while the
+    // flash breathes out, then unfold ring by ring, inner planets first.
+    // Times are tight so the system merges quickly out of the flash.
+    const ENTRANCE_HOLD = 140;
+    const ENTRANCE_DURATION = 620;
+    const RING_STAGGER = 70;
+    const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
+
     const update = (now: number) => {
       const delta = Math.min(0.05, Math.max(0, (now - last) / 1000));
       last = now;
+
+      if (mountAtRef.current === null) mountAtRef.current = performance.now();
+      const sinceMount = now - mountAtRef.current;
 
       const focus = focusRef.current;
       const multiplier = reducedMotion ? 0 : speed * (focus ? 0.12 : 1);
@@ -93,7 +108,17 @@ export default function OrbitSystem({
         }
         const angle = anglesRef.current[index];
 
-        const spread = 1;
+        // planets ride out from the sun: radius scale 0.04 -> 1 per ring
+        let progress = 1;
+        if (!entranceDoneRef.current) {
+          const local = (sinceMount - ENTRANCE_HOLD - planet.orbitIndex * RING_STAGGER) /
+            ENTRANCE_DURATION;
+          progress = local <= 0 ? 0 : local >= 1 ? 1 : easeOutCubic(local);
+          if (index === planets.length - 1 && progress >= 1) {
+            entranceDoneRef.current = true;
+          }
+        }
+        const spread = 0.04 + 0.96 * progress;
         const x = geometry.rx * Math.cos(angle) * spread;
         const y = geometry.ry * Math.sin(angle) * spread;
         const depth = Math.sin(angle);
@@ -106,7 +131,7 @@ export default function OrbitSystem({
           node.style.zIndex = String(
             depth > 0 ? Math.round(54 + depth * 8) : Math.round(20 + (depth + 1) * 8),
           );
-          node.style.opacity = String(0.78 + (depth + 1) * 0.11);
+          node.style.opacity = String((0.78 + (depth + 1) * 0.11) * (0.08 + 0.92 * progress));
         }
 
         const visual = visualRefs.current[planet.id];
