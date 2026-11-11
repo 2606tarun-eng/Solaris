@@ -75,8 +75,7 @@ export default function MissionSearch({ inputRef, onSelectPlanet }: MissionSearc
     return index
       .filter(
         (result) =>
-          result.label.toLowerCase().includes(term) ||
-          result.meta.toLowerCase().includes(term),
+          result.label.toLowerCase().includes(term) || result.meta.toLowerCase().includes(term),
       )
       .slice(0, 7);
   }, [index, term]);
@@ -139,7 +138,12 @@ export default function MissionSearch({ inputRef, onSelectPlanet }: MissionSearc
           aria-autocomplete="list"
         />
         {query ? (
-          <button type="button" className="search-clear" onClick={() => setQuery("")} aria-label="Clear search">
+          <button
+            type="button"
+            className="search-clear"
+            onClick={() => setQuery("")}
+            aria-label="Clear search"
+          >
             <Icon name="close" size={16} className="icon" />
           </button>
         ) : null}
@@ -155,7 +159,11 @@ export default function MissionSearch({ inputRef, onSelectPlanet }: MissionSearc
                 onPointerEnter={() => setActive(position)}
                 onClick={() => choose(result)}
               >
-                <span className="result-dot" style={{ background: result.color }} aria-hidden="true" />
+                <span
+                  className="result-dot"
+                  style={{ background: result.color }}
+                  aria-hidden="true"
+                />
                 <span className="result-text">
                   <strong>{result.label}</strong>
                   <span>{result.meta}</span>

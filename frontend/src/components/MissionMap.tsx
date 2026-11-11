@@ -131,12 +131,15 @@ export default function MissionMap({
         />
 
         <p className="map-hint">
-          <Icon name="sparkle" size={14} className="icon" /> Drag to look · Scroll to zoom · Tap a planet
+          <Icon name="sparkle" size={14} className="icon" /> Drag to look · Scroll to zoom · Tap a
+          planet
         </p>
 
         <p className="map-year-badge">
           Year {year}
-          {highlighted.size > 0 ? ` · ${highlighted.size} active signal${highlighted.size === 1 ? "" : "s"}` : ""}
+          {highlighted.size > 0
+            ? ` · ${highlighted.size} active signal${highlighted.size === 1 ? "" : "s"}`
+            : ""}
         </p>
       </div>
 

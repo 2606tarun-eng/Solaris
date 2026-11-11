@@ -107,7 +107,10 @@ function cacheSunPoint(point: FlashPoint) {
 }
 
 /** Where the atlas sun will land on screen for the current viewport. */
-export function forecastSunPoint(width = window.innerWidth, height = window.innerHeight): FlashPoint {
+export function forecastSunPoint(
+  width = window.innerWidth,
+  height = window.innerHeight,
+): FlashPoint {
   try {
     const cached = JSON.parse(window.sessionStorage.getItem(SUN_CACHE_KEY) ?? "null") as
       | (FlashPoint & { w: number; h: number })

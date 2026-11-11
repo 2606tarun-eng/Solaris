@@ -1,20 +1,24 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import type { PlanetMissionControl } from "../data/missionControl";
+import { img } from "../assets";
+import { orbitMissionsFor, type PlanetMissionControl } from "../data/missionControl";
+import type { PlanetRings } from "./CinematicPlanet3D";
+import Icon from "./Icon";
 
 /**
  * PlanetFocusStage — the "micro" view.
  *
  * The macro map keeps its own camera; this layer is what a focused planet
- * grows into. The globe is a CSS sphere rather than a WebGL mesh: the texture
- * is a banded gradient with a seamless scrolling surface layer, so the world
- * genuinely rotates (gas giants read best, and the outer planets are gas
- * giants). Rings are drawn twice — the far half behind the globe and the near
- * half in front — which is what makes them look like they wrap around it.
+ * grows into. The globe itself is a real WebGL scene (`CinematicPlanet3D`,
+ * loaded lazily so the atlas never pays for three.js) with the planet's
+ * missions orbiting it. Everything else here — the scrim, the offset, the
+ * caption — stays CSS so the entrance animation is pure compositor work.
  *
- * No 3-D library and no per-frame React state: one compositor-friendly
- * transform on a single element.
+ * If WebGL is unavailable (locked-down school laptops, software rendering
+ * blocked), the previous CSS sphere takes over: same layout, no GPU needed.
  */
+
+const CinematicPlanet3D = lazy(() => import("./CinematicPlanet3D"));
 
 type PlanetFocusStageProps = {
   data: PlanetMissionControl;
@@ -23,6 +27,22 @@ type PlanetFocusStageProps = {
 };
 
 const EASE_OUT: [number, number, number, number] = [0.22, 0.9, 0.3, 1];
+
+/** Only Earth ships a true equirectangular map; everything else is generated. */
+const realMaps: Record<string, string> = { earth: img.earthMap };
+
+let webglSupport: boolean | null = null;
+
+function hasWebGL() {
+  if (webglSupport !== null) return webglSupport;
+  try {
+    const canvas = document.createElement("canvas");
+    webglSupport = Boolean(canvas.getContext("webgl2") ?? canvas.getContext("webgl"));
+  } catch {
+    webglSupport = false;
+  }
+  return webglSupport;
+}
 
 function useNarrow(query = "(max-width: 900px)") {
   const [narrow, setNarrow] = useState(
@@ -47,6 +67,35 @@ function bandGradient(bands: string[]) {
   return `linear-gradient(180deg, ${stops.join(", ")})`;
 }
 
+/** No-WebGL fallback: the hand-built CSS sphere. */
+function CssGlobe({ data }: { data: PlanetMissionControl }) {
+  const rings = data.rings;
+  const ringStyle = rings
+    ? {
+        ["--mc-ring-tilt" as string]: `${rings.tilt}deg`,
+        ["--mc-ring-band" as string]: rings.band,
+        ["--mc-ring-soft" as string]: rings.bandSoft,
+        ["--mc-ring-gap" as string]: rings.gap,
+      }
+    : undefined;
+
+  return (
+    <div className="mc-sphere" aria-hidden="true">
+      {rings ? <span className="mc-ring mc-ring-back" style={ringStyle} /> : null}
+
+      <div className="mc-globe">
+        <span className="mc-bands" />
+        <span className="mc-spots" />
+        <span className="mc-shade" />
+        <span className="mc-spec" />
+        <span className="mc-limb" />
+      </div>
+
+      {rings ? <span className="mc-ring mc-ring-front" style={ringStyle} /> : null}
+    </div>
+  );
+}
+
 export default function PlanetFocusStage({
   data,
   reducedMotion,
@@ -54,9 +103,33 @@ export default function PlanetFocusStage({
 }: PlanetFocusStageProps) {
   const narrow = useNarrow();
   const { sphere, rings } = data;
+  // The 3-D canvas measures its box once, at mount. Waiting for the entrance
+  // to finish means it measures the finished box, not a mid-scale one.
+  const [settled, setSettled] = useState(false);
+
+  // For the 3rd page (planet focus view), start minimized to make the planet
+  // and orbit system more compact and easier to see without overwhelming the screen
+  const [minimized, setMinimized] = useState(true);
+
+  // Missions orbit outside the ring system, so a ringed world needs a wider
+  // first orbit than a bare one. Phones get a tighter shell layout — the
+  // canvas is narrow, so a wide orbit spread would shrink the planet to a
+  // pea and leave the labels no room. Orbit radii are scaled down with the
+  // smaller planet so the whole system fits comfortably.
+  const orbits = useMemo(() => {
+    const start = rings ? (narrow ? 1.0 : 1.2) : narrow ? 0.8 : 1.0;
+    const step = rings ? (narrow ? 0.06 : 0.1) : narrow ? 0.06 : 0.1;
+    return orbitMissionsFor(data, start, step);
+  }, [data, rings, narrow]);
+
+  const ringProps: PlanetRings | null = rings
+    ? { band: rings.band, soft: rings.bandSoft, gap: rings.gap, tilt: 0.38 }
+    : null;
+
+  const gl = useMemo(() => hasWebGL(), []);
 
   // Phones stack the drawer under the planet, so no sideways travel there.
-  const shift = { x: narrow ? 0 : "-20vw" };
+  const shiftX = narrow ? 0 : "-20vw";
 
   return (
     <motion.div
@@ -76,10 +149,13 @@ export default function PlanetFocusStage({
 
       <motion.div
         className="mc-stage-planet"
-        initial={{ x: 0, y: 0, scale: 0.42, opacity: 0 }}
-        animate={{ ...shift, scale: 1, opacity: 1 }}
-        exit={{ x: 0, y: 0, scale: 0.4, opacity: 0 }}
+        // Start already at the final x offset so the globe grows in place
+        // instead of sweeping across the stage.
+        initial={{ x: shiftX, y: 0, scale: 0.42, opacity: 0 }}
+        animate={{ x: shiftX, y: 0, scale: 1, opacity: 1 }}
+        exit={{ x: shiftX, y: 0, scale: 0.4, opacity: 0 }}
         transition={{ duration: reducedMotion ? 0.01 : 0.72, ease: EASE_OUT }}
+        onAnimationComplete={() => setSettled(true)}
         style={{
           ["--mc-band" as string]: bandGradient(sphere.bands),
           ["--mc-highlight" as string]: sphere.highlight,
@@ -88,39 +164,21 @@ export default function PlanetFocusStage({
       >
         <div className="mc-stage-aura" aria-hidden="true" />
 
-        <div className="mc-sphere" aria-hidden="true">
-          {rings ? (
-            <span
-              className="mc-ring mc-ring-back"
-              style={{
-                ["--mc-ring-tilt" as string]: `${rings.tilt}deg`,
-                ["--mc-ring-band" as string]: rings.band,
-                ["--mc-ring-soft" as string]: rings.bandSoft,
-                ["--mc-ring-gap" as string]: rings.gap,
-              }}
+        {gl ? (
+          <Suspense fallback={<CssGlobe data={data} />}>
+            <CinematicPlanet3D
+              planetId={data.planetId}
+              missions={orbits}
+              palette={sphere}
+              textureUrl={realMaps[data.planetId]}
+              rings={ringProps}
+              reducedMotion={reducedMotion}
+              settled={settled}
             />
-          ) : null}
-
-          <div className="mc-globe">
-            <span className="mc-bands" />
-            <span className="mc-spots" />
-            <span className="mc-shade" />
-            <span className="mc-spec" />
-            <span className="mc-limb" />
-          </div>
-
-          {rings ? (
-            <span
-              className="mc-ring mc-ring-front"
-              style={{
-                ["--mc-ring-tilt" as string]: `${rings.tilt}deg`,
-                ["--mc-ring-band" as string]: rings.band,
-                ["--mc-ring-soft" as string]: rings.bandSoft,
-                ["--mc-ring-gap" as string]: rings.gap,
-              }}
-            />
-          ) : null}
-        </div>
+          </Suspense>
+        ) : (
+          <CssGlobe data={data} />
+        )}
 
         <div className="mc-stage-caption">
           <span className="mc-stage-tag">FOCUS LOCK</span>

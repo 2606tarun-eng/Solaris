@@ -511,11 +511,43 @@ type WaveSpec = {
 
 /** Five stacked transmissions: warm copper, bronze and dark gold. */
 const WAVES: WaveSpec[] = [
-  { amp: 0.062, freq: 1.9, speed: 0.3, phase: 0.4, alpha: 0.58, width: 1.15, tint: "232, 185, 165" },
-  { amp: 0.1, freq: 1.15, speed: -0.22, phase: 1.9, alpha: 0.38, width: 1.05, tint: "196, 139, 113" },
+  {
+    amp: 0.062,
+    freq: 1.9,
+    speed: 0.3,
+    phase: 0.4,
+    alpha: 0.58,
+    width: 1.15,
+    tint: "232, 185, 165",
+  },
+  {
+    amp: 0.1,
+    freq: 1.15,
+    speed: -0.22,
+    phase: 1.9,
+    alpha: 0.38,
+    width: 1.05,
+    tint: "196, 139, 113",
+  },
   { amp: 0.042, freq: 2.8, speed: 0.46, phase: 3.6, alpha: 0.5, width: 0.9, tint: "244, 205, 176" },
-  { amp: 0.145, freq: 0.82, speed: 0.14, phase: 5.2, alpha: 0.3, width: 1.35, tint: "196, 139, 113" },
-  { amp: 0.074, freq: 2.3, speed: -0.36, phase: 2.4, alpha: 0.36, width: 0.95, tint: "232, 185, 165" },
+  {
+    amp: 0.145,
+    freq: 0.82,
+    speed: 0.14,
+    phase: 5.2,
+    alpha: 0.3,
+    width: 1.35,
+    tint: "196, 139, 113",
+  },
+  {
+    amp: 0.074,
+    freq: 2.3,
+    speed: -0.36,
+    phase: 2.4,
+    alpha: 0.36,
+    width: 0.95,
+    tint: "232, 185, 165",
+  },
 ];
 
 type NodeSpec = {

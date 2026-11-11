@@ -68,7 +68,7 @@ export default function OrbitSystem({
       const boost = INNER_BOOSTS[index] ?? 1;
       return {
         rx: (orbit.width / 2) * boost,
-        ry: ((orbit.height / 2) * tilt) * boost,
+        ry: (orbit.height / 2) * tilt * boost,
         src: orbit.src,
         name: orbit.name,
       };
@@ -111,8 +111,8 @@ export default function OrbitSystem({
         // planets ride out from the sun: radius scale 0.04 -> 1 per ring
         let progress = 1;
         if (!entranceDoneRef.current) {
-          const local = (sinceMount - ENTRANCE_HOLD - planet.orbitIndex * RING_STAGGER) /
-            ENTRANCE_DURATION;
+          const local =
+            (sinceMount - ENTRANCE_HOLD - planet.orbitIndex * RING_STAGGER) / ENTRANCE_DURATION;
           progress = local <= 0 ? 0 : local >= 1 ? 1 : easeOutCubic(local);
           if (index === planets.length - 1 && progress >= 1) {
             entranceDoneRef.current = true;
@@ -182,15 +182,13 @@ export default function OrbitSystem({
           <span className="deep-space-probe" style={{ top: "-190px" }}>
             <Icon name="probe" size={16} className="icon" aria-hidden="true" />
             <span className="deep-space-probe-text">
-              Voyager I
-              <em>1977</em>
+              Voyager I<em>1977</em>
             </span>
           </span>
           <span className="deep-space-probe" style={{ top: "-20px" }}>
             <Icon name="probe" size={16} className="icon" aria-hidden="true" />
             <span className="deep-space-probe-text">
-              Voyager 2
-              <em>1977</em>
+              Voyager 2<em>1977</em>
             </span>
           </span>
           <span className="deep-space-probe" style={{ top: "110px" }}>

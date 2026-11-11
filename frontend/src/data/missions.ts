@@ -39,7 +39,8 @@ export const planetStories: Record<string, PlanetStory> = {
     headline: "The first world we visited — then left alone.",
     intro:
       "Mercury is the closest planet to the Sun. It races all the way around in just 88 Earth days.",
-    funFact: "One Mercury day is longer than one Mercury year. A single sunrise takes 176 Earth days!",
+    funFact:
+      "One Mercury day is longer than one Mercury year. A single sunrise takes 176 Earth days!",
   },
   venus: {
     planetId: "venus",
@@ -172,7 +173,8 @@ export const missions: Mission[] = [
     headline: "Built for 90 days. Stayed for 15 years.",
     summary:
       "Opportunity drove across Mars looking for signs of ancient water. It found them — and kept exploring far longer than anyone expected.",
-    funFact: "A giant dust storm covered its solar panels, and the little rover finally went quiet.",
+    funFact:
+      "A giant dust storm covered its solar panels, and the little rover finally went quiet.",
     stats: [
       { value: "5,111", label: "Sols on Mars" },
       { value: "45.16 km", label: "Distance driven" },
@@ -192,7 +194,8 @@ export const missions: Mission[] = [
     headline: "The first spacecraft to orbit Jupiter.",
     summary:
       "Galileo dropped a probe into Jupiter's clouds and studied its moons. It found strong clues that an ocean hides under Europa's icy shell.",
-    funFact: "Engineers crashed Galileo into Jupiter on purpose, so it could never accidentally pollute Europa.",
+    funFact:
+      "Engineers crashed Galileo into Jupiter on purpose, so it could never accidentally pollute Europa.",
     stats: [
       { value: "35", label: "Orbits of Jupiter" },
       { value: "8 yrs", label: "Exploring Jupiter" },

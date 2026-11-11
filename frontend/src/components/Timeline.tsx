@@ -30,7 +30,7 @@ export default function Timeline({ year, onChange, highlighted }: TimelineProps)
   // Next step will plug a synth chord in here and gate on isAudioEnabled.
   const handleTimelineSonification = (year: number) => {
     const activeMissionsCount = eventsForYear(year).length;
-    console.log('Play synth chord for year:', year, 'Missions active:', activeMissionsCount);
+    console.log("Play synth chord for year:", year, "Missions active:", activeMissionsCount);
   };
 
   useEffect(() => {

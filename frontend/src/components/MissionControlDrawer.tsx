@@ -1,6 +1,10 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { missionControlFor, type MissionControlEntry, type MissionMedia } from "../data/missionControl";
+import {
+  missionControlFor,
+  type MissionControlEntry,
+  type MissionMedia,
+} from "../data/missionControl";
 import Icon from "./Icon";
 
 /**
@@ -222,7 +226,12 @@ export default function MissionControlDrawer({
             <span aria-hidden="true">//</span> {data.planetName}
           </h2>
         </div>
-        <button type="button" className="mc-close" onClick={onClose} aria-label="Close mission control">
+        <button
+          type="button"
+          className="mc-close"
+          onClick={onClose}
+          aria-label="Close mission control"
+        >
           <Icon name="close" size={16} />
         </button>
       </header>

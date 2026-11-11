@@ -122,9 +122,7 @@ export default function SolarisFlash() {
   // Breathe-out finished (or was skipped) -> drop the overlay entirely.
   useEffect(() => {
     if (flash.phase !== "breathe") return;
-    const clearAt = reducedMotion
-      ? 90
-      : FLASH_TIMING.breatheDelayMs + FLASH_TIMING.breatheMs + 120;
+    const clearAt = reducedMotion ? 90 : FLASH_TIMING.breatheDelayMs + FLASH_TIMING.breatheMs + 120;
     const timer = window.setTimeout(() => flashBus.reset(), clearAt);
     return () => window.clearTimeout(timer);
   }, [flash.phase, reducedMotion]);

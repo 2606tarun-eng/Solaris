@@ -157,7 +157,12 @@
   z-index: 3;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 52%, rgba(9, 9, 11, 0) 0%, rgba(9, 9, 11, 0.42) 76%, rgba(9, 9, 11, 0.86) 100%),
+    radial-gradient(
+      circle at 50% 52%,
+      rgba(9, 9, 11, 0) 0%,
+      rgba(9, 9, 11, 0.42) 76%,
+      rgba(9, 9, 11, 0.86) 100%
+    ),
     linear-gradient(180deg, rgba(9, 9, 11, 0.62) 0%, rgba(9, 9, 11, 0) 22%);
 }
 
@@ -243,7 +248,10 @@
   background: transparent;
   color: var(--muted);
   font-size: 14px;
-  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
 }
 
 .nav-links button span {
@@ -283,7 +291,10 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   box-shadow: 0 0 8px rgba(249, 115, 22, 0.2);
-  transition: background 160ms ease, box-shadow 160ms ease, color 160ms ease;
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
 }
 
 .login-button:hover {
@@ -307,7 +318,11 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   white-space: nowrap;
-  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .audio-toggle.is-off:hover {
@@ -346,7 +361,11 @@
   border-radius: 6px;
   background: transparent;
   color: #f97316;
-  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .icon-action:hover,
@@ -376,7 +395,9 @@
   border: 1px solid #f97316;
   border-radius: 10px;
   background: #18181b;
-  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.62), 0 0 8px rgba(249, 115, 22, 0.2);
+  box-shadow:
+    0 20px 44px rgba(0, 0, 0, 0.62),
+    0 0 8px rgba(249, 115, 22, 0.2);
   animation: menu-in 180ms cubic-bezier(0.22, 0.9, 0.3, 1);
 }
 
@@ -394,7 +415,9 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   text-align: left;
-  transition: background 140ms ease, color 140ms ease;
+  transition:
+    background 140ms ease,
+    color 140ms ease;
 }
 
 .nav-dropdown button:hover,
@@ -417,7 +440,9 @@
   font-size: 12px;
   line-height: 1.4;
   white-space: nowrap;
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.55), 0 0 14px rgba(249, 115, 22, 0.25);
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.55),
+    0 0 14px rgba(249, 115, 22, 0.25);
   animation: menu-in 180ms cubic-bezier(0.22, 0.9, 0.3, 1);
 }
 
@@ -511,13 +536,7 @@
   width: 0;
   height: 720px;
   border-right: 1px dashed rgba(82, 82, 91, 0.85);
-  -webkit-mask-image: linear-gradient(
-    180deg,
-    transparent 0%,
-    #000 16%,
-    #000 84%,
-    transparent 100%
-  );
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
   mask-image: linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
 }
 
@@ -703,7 +722,9 @@
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 0 8px rgba(231, 229, 228, 0.22));
-  transition: transform 180ms ease, filter 180ms ease;
+  transition:
+    transform 180ms ease,
+    filter 180ms ease;
 }
 
 .planet-globe {
@@ -711,7 +732,9 @@
   display: block;
   border-radius: 50%;
   filter: drop-shadow(0 0 8px rgba(231, 229, 228, 0.22));
-  transition: transform 180ms ease, filter 180ms ease;
+  transition:
+    transform 180ms ease,
+    filter 180ms ease;
 }
 
 .planet-hit:hover .planet-globe,
@@ -739,7 +762,9 @@
   opacity: 0;
   transform: scale(0.82);
   box-shadow: 0 0 14px rgba(249, 115, 22, 0.3);
-  transition: opacity 220ms ease, transform 220ms ease;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
   pointer-events: none;
 }
 
@@ -774,7 +799,9 @@
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
   white-space: nowrap;
   pointer-events: none;
-  transition: color 180ms ease, border-color 180ms ease;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
 }
 
 .planet-hit:hover .planet-label,
@@ -799,7 +826,9 @@
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 .planet-hit:hover .planet-counts,
@@ -948,7 +977,9 @@
   background: linear-gradient(160deg, rgba(24, 24, 27, 0.74), rgba(24, 24, 27, 0.42));
   backdrop-filter: blur(9px);
   pointer-events: none;
-  transition: opacity 240ms ease, transform 240ms ease;
+  transition:
+    opacity 240ms ease,
+    transform 240ms ease;
 }
 
 .intro-card.is-muted {
@@ -1004,12 +1035,17 @@
   border: 1px solid #3f3f46;
   border-radius: 6px;
   background: #09090b;
-  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
 }
 
 .search-field:focus-within {
   border-color: #f97316;
-  box-shadow: 0 0 0 1px #f97316, 0 0 8px rgba(249, 115, 22, 0.2);
+  box-shadow:
+    0 0 0 1px #f97316,
+    0 0 8px rgba(249, 115, 22, 0.2);
 }
 
 .search-icon {
@@ -1052,7 +1088,10 @@
   border-radius: 4px;
   background: transparent;
   color: #a1a1aa;
-  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
+  transition:
+    border-color 140ms ease,
+    color 140ms ease,
+    background 140ms ease;
 }
 
 .search-clear:hover {
@@ -1176,7 +1215,11 @@
   font-weight: 600;
   letter-spacing: 0.02em;
   white-space: nowrap;
-  transition: background 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .filter-bar button:hover {
@@ -1295,7 +1338,11 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
-  transition: background 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .segmented button:hover {
@@ -1325,7 +1372,11 @@
   background: #18181b;
   color: #a1a1aa;
   line-height: 1;
-  transition: border-color 150ms ease, background 150ms ease, color 150ms ease, box-shadow 150ms ease;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .zoom-controls button:hover {
@@ -1430,8 +1481,7 @@
   height: 100%;
   object-fit: contain;
   background:
-    radial-gradient(circle at 50% 50%, rgba(63, 63, 70, 0.28) 0%, rgba(9, 9, 11, 0) 62%),
-    #09090b;
+    radial-gradient(circle at 50% 50%, rgba(63, 63, 70, 0.28) 0%, rgba(9, 9, 11, 0) 62%), #09090b;
   opacity: 0.96;
   display: block;
 }
@@ -1441,7 +1491,13 @@
   place-items: center;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 50% 48%, #ffe7a8 0%, #ffb52e 32%, #b34b0d 74%, #2a0e05 100%);
+  background: radial-gradient(
+    circle at 50% 48%,
+    #ffe7a8 0%,
+    #ffb52e 32%,
+    #b34b0d 74%,
+    #2a0e05 100%
+  );
 }
 
 .tour-sun-visual span {
@@ -1819,7 +1875,10 @@
   text-transform: uppercase;
   white-space: nowrap;
   box-shadow: 0 0 8px rgba(249, 115, 22, 0.2);
-  transition: background 160ms ease, box-shadow 160ms ease, color 160ms ease;
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
 }
 
 .timeline-play:hover {
@@ -1891,7 +1950,9 @@
   border-radius: 50%;
   background: #a8a29e;
   box-shadow: 0 0 8px rgba(249, 115, 22, 0.55);
-  transition: transform 140ms ease, box-shadow 140ms ease;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease;
 }
 
 .rail-marker.is-launch {
@@ -2445,6 +2506,67 @@
 
 /* ============================================ cinematic planet focus stage */
 
+/* The live 3-D view. The canvas is deliberately wider than it is tall: the
+ * moon orbits read as ellipses, so most of the vertical space would be empty. */
+.cp3d {
+  position: relative;
+  width: min(82vw, 900px);
+  height: min(50vh, 500px);
+  /* Clips mission labels that would otherwise run off-screen on phones. */
+  overflow: hidden;
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.cp3d:active {
+  cursor: grabbing;
+}
+
+.cp3d canvas {
+  display: block;
+  touch-action: none;
+}
+
+/* Mission labels — drawn as HTML so they stay crisp at any DPR. Each one is a
+ * little callout: a leader line off the node, then the name. */
+.cp3d-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: 9px;
+  transform: translate(var(--cp3d-shift, 0px), -50%);
+  white-space: nowrap;
+  font-family: "IBM Plex Mono:Medium", monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 12px rgba(0, 0, 0, 0.95),
+    0 1px 3px rgba(0, 0, 0, 0.9);
+  will-change: opacity;
+  pointer-events: none;
+}
+
+/* Left-half nodes mirror the callout so the leader always points inwards. */
+.cp3d-tag[data-side="left"] {
+  flex-direction: row-reverse;
+  margin-right: 9px;
+  margin-left: 0;
+  transform: translate(calc(-100% + var(--cp3d-shift, 0px)), -50%);
+}
+
+.cp3d-tag-line {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.cp3d-tag-name {
+  color: #e7e5e4;
+}
+
 /*
  * The micro view. When a planet is picked the macro map keeps zooming behind
  * this layer; the scrim swallows it and the chosen world grows out of the tap.
@@ -2486,6 +2608,13 @@
     linear-gradient(180deg, rgba(9, 9, 11, 0.92), rgba(9, 9, 11, 0.97));
 }
 
+/* The stage draws its own globe. The macro map's photo behind the scrim would
+ * otherwise read as a hard rectangle around the 3-D planet, so it steps aside
+ * while the stage is up. */
+.map-area.has-drawer .planet-node.is-focused .planet-visual {
+  opacity: 0;
+}
+
 .mc-stage-planet {
   position: relative;
   display: grid;
@@ -2511,6 +2640,39 @@
   );
   filter: blur(8px);
   pointer-events: none;
+}
+
+/* Minimize/expand toggle for the live 3-D planet view. */
+.mc-minimize {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(120, 113, 108, 0.32);
+  border-radius: 8px;
+  background: rgba(24, 24, 27, 0.7);
+  backdrop-filter: blur(8px);
+  color: var(--muted);
+  pointer-events: auto;
+  transition:
+    border-color 160ms,
+    color 160ms,
+    background 160ms;
+}
+
+.mc-minimize:hover {
+  border-color: rgba(250, 204, 21, 0.5);
+  color: var(--amber);
+  background: rgba(24, 24, 27, 0.9);
+}
+
+.mc-minimize[aria-pressed="true"] {
+  border-color: rgba(250, 204, 21, 0.55);
+  color: var(--amber);
 }
 
 /* --------------------------------------------------------------- the globe */
@@ -2603,7 +2765,11 @@
   width: 38%;
   height: 27%;
   border-radius: 50%;
-  background: radial-gradient(closest-side, var(--mc-highlight, rgba(255, 255, 255, 0.4)), transparent);
+  background: radial-gradient(
+    closest-side,
+    var(--mc-highlight, rgba(255, 255, 255, 0.4)),
+    transparent
+  );
   mix-blend-mode: screen;
   filter: blur(3px);
 }
@@ -2779,7 +2945,10 @@
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.03);
   color: var(--muted);
-  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
 }
 
 .mc-close:hover {
@@ -2815,7 +2984,10 @@
   font-family: "IBM Plex Mono:Medium", monospace;
   font-size: 10px;
   letter-spacing: 0.1em;
-  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
 }
 
 .mc-tabs button:hover {
@@ -2865,7 +3037,9 @@
   border: 1px solid rgba(120, 113, 108, 0.2);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.018);
-  transition: border-color 200ms ease, background 200ms ease;
+  transition:
+    border-color 200ms ease,
+    background 200ms ease;
 }
 
 .mc-row.is-open {
@@ -2931,7 +3105,9 @@
   width: 20px;
   height: 20px;
   color: var(--dim);
-  transition: transform 240ms ease, color 240ms ease;
+  transition:
+    transform 240ms ease,
+    color 240ms ease;
 }
 
 .mc-chevron.is-open {
@@ -3070,7 +3246,9 @@
   border-radius: 8px;
   background: #0b0a09;
   scroll-snap-align: start;
-  transition: border-color 160ms ease, box-shadow 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .mc-media-item img {
@@ -3079,7 +3257,9 @@
   height: 100%;
   object-fit: cover;
   opacity: 0.84;
-  transition: opacity 160ms ease, transform 240ms ease;
+  transition:
+    opacity 160ms ease,
+    transform 240ms ease;
 }
 
 .mc-media-item:hover img {
@@ -3160,11 +3340,37 @@
   .mc-stage {
     --mc-sphere: clamp(88px, 22vw, 132px);
     align-items: flex-start;
-    padding-top: 2.5vh;
+    padding-top: 10px;
   }
 
   .mc-stage-planet {
+    position: relative;
     gap: 12px;
+    /* An explicit width stops the canvas sizing itself from its own
+     * intrinsic size, which would collapse the whole stack on phones. */
+    width: min(100%, 380px);
+  }
+
+  .cp3d {
+    width: 100%;
+    height: min(26vh, 220px);
+  }
+
+  /* Phones have no room for a caption under the canvas, so it sits inside it. */
+  .mc-stage-caption {
+    position: absolute;
+    right: 0;
+    bottom: 2px;
+    left: 0;
+  }
+
+  .mc-stage-tag,
+  .mc-stage-caption em {
+    display: none;
+  }
+
+  .mc-stage-caption strong {
+    font-size: 17px;
   }
 
   .mc-stage-aura {
@@ -3178,7 +3384,7 @@
     left: 10px;
     width: auto;
     max-width: none;
-    height: min(46vh, 400px);
+    height: min(44vh, 400px);
     border-radius: 16px;
   }
 
@@ -3193,4 +3399,3 @@
     grid-template-columns: 104px 1fr;
   }
 }
-

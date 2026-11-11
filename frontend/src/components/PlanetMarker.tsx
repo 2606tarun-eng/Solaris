@@ -70,18 +70,13 @@ export default function PlanetMarker({
         <span className="planet-counts">
           {counts.active} exploring · {counts.retired} retired
         </span>
-        {planet.moons ? (
-          <span className="moon-ring" aria-hidden="true" />
-        ) : null}
+        {planet.moons ? <span className="moon-ring" aria-hidden="true" /> : null}
         {planet.moons ? (
           <span className="moon-hud" aria-hidden="true">
             {planet.moons === 1 ? "MOONS: 1" : `TOTAL MOONS: ${planet.moons}`}
           </span>
         ) : null}
-        <ProjectDots
-          planetId={planet.id}
-          radius={planet.size / 2 + (planet.size < 46 ? 16 : 22)}
-        />
+        <ProjectDots planetId={planet.id} radius={planet.size / 2 + (planet.size < 46 ? 16 : 22)} />
       </button>
     </div>
   );

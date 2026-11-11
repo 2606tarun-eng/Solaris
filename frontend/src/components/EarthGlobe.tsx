@@ -119,7 +119,11 @@ export default function EarthGlobe({ size }: EarthGlobeProps) {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return undefined;
-    const gl = canvas.getContext("webgl", { alpha: true, antialias: true, premultipliedAlpha: true });
+    const gl = canvas.getContext("webgl", {
+      alpha: true,
+      antialias: true,
+      premultipliedAlpha: true,
+    });
     if (!gl) {
       setFailed(true);
       return undefined;

@@ -15,12 +15,8 @@ const MAX_RETIRED_DOTS = 1;
 
 export default function ProjectDots({ planetId, radius }: ProjectDotsProps) {
   const list = projectsByPlanet[planetId] ?? [];
-  const active = list
-    .filter((project) => project.status === "active")
-    .slice(0, MAX_ACTIVE_DOTS);
-  const retired = list
-    .filter((project) => project.status === "retired")
-    .slice(0, MAX_RETIRED_DOTS);
+  const active = list.filter((project) => project.status === "active").slice(0, MAX_ACTIVE_DOTS);
+  const retired = list.filter((project) => project.status === "retired").slice(0, MAX_RETIRED_DOTS);
   const visible = [...active, ...retired];
   if (visible.length === 0) return null;
 

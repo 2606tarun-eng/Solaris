@@ -327,7 +327,12 @@ function derivedEntries(planetId: string): MissionControlEntry[] {
       agency: project.agency,
       status: project.status,
       years: projectYears(project),
-      target: isFeatured && featured ? featured.headline : finished ? "Retired explorer" : "Still exploring",
+      target:
+        isFeatured && featured
+          ? featured.headline
+          : finished
+            ? "Retired explorer"
+            : "Still exploring",
       summary:
         isFeatured && featured
           ? featured.summary
@@ -342,7 +347,10 @@ function derivedEntries(planetId: string): MissionControlEntry[] {
           : [
               { label: "Launched", value: String(project.launched) },
               { label: "Agency", value: project.agency },
-              { label: finished ? "Ended" : "Status", value: finished ? String(project.ended ?? "—") : "Active" },
+              {
+                label: finished ? "Ended" : "Status",
+                value: finished ? String(project.ended ?? "—") : "Active",
+              },
             ],
       media,
       href: isFeatured && featured ? featured.nasaUrl : undefined,
@@ -362,12 +370,11 @@ const derived: Record<string, PlanetMissionControl> = Object.fromEntries(
         planetName: planet.name,
         headline: story?.headline ?? planet.tagline,
         brief: story?.intro ?? `${planet.name}, from the atlas.`,
-        sphere:
-          spherePalettes[planetId] ?? {
-            bands: ["#9ca3af", "#6b7280", "#d1d5db", "#4b5563"],
-            highlight: "rgba(255, 255, 255, 0.4)",
-            shadow: "rgba(8, 8, 10, 0.84)",
-          },
+        sphere: spherePalettes[planetId] ?? {
+          bands: ["#9ca3af", "#6b7280", "#d1d5db", "#4b5563"],
+          highlight: "rgba(255, 255, 255, 0.4)",
+          shadow: "rgba(8, 8, 10, 0.84)",
+        },
         counts: projectCounts(planetId),
         entries,
       } satisfies PlanetMissionControl,
@@ -379,6 +386,48 @@ const derived: Record<string, PlanetMissionControl> = Object.fromEntries(
 export function missionControlFor(planetId: string): PlanetMissionControl | null {
   if (planetId === "saturn") return saturn;
   return derived[planetId] ?? null;
+}
+
+/* ------------------------------------------------------------ 3-D orbits */
+
+export type MissionOrbit = {
+  id: string;
+  name: string;
+  /** Distance from the planet centre, in world units. */
+  orbitRadius: number;
+  /** Radians per second. */
+  speed: number;
+  color: string;
+  status: ProjectStatus;
+};
+
+const orbitColor: Record<ProjectStatus, string> = {
+  active: "#34d399",
+  retired: "#d09a63",
+};
+
+/**
+ * Lays the planet's missions out as orbit shells: still-active hardware runs
+ * the inner tracks, retired explorers take the longer, slower outer ones.
+ */
+export function orbitMissionsFor(
+  data: PlanetMissionControl,
+  startRadius = 2.6,
+  step = 0.4,
+): MissionOrbit[] {
+  const ordered = [...data.entries].sort((a, b) => {
+    if (a.status !== b.status) return a.status === "active" ? -1 : 1;
+    return 0;
+  });
+
+  return ordered.map((entry, index) => ({
+    id: entry.id,
+    name: entry.name,
+    orbitRadius: Number((startRadius + index * step).toFixed(2)),
+    speed: Number((0.32 / (1 + index * 0.24)).toFixed(3)),
+    color: orbitColor[entry.status],
+    status: entry.status,
+  }));
 }
 
 export const missionControl = { ...derived, saturn } as Record<string, PlanetMissionControl>;

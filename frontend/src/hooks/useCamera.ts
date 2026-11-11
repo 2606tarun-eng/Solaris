@@ -168,8 +168,14 @@ export default function useCamera({
       const nextZoom = clamp(currentZoom * factor, MIN_ZOOM, MAX_ZOOM);
       if (nextZoom === currentZoom) return;
 
-      const anchorX = viewport && clientX !== undefined ? clientX - viewport.getBoundingClientRect().left : width / 2;
-      const anchorY = viewport && clientY !== undefined ? clientY - viewport.getBoundingClientRect().top : height / 2;
+      const anchorX =
+        viewport && clientX !== undefined
+          ? clientX - viewport.getBoundingClientRect().left
+          : width / 2;
+      const anchorY =
+        viewport && clientY !== undefined
+          ? clientY - viewport.getBoundingClientRect().top
+          : height / 2;
       const screenX = anchorX - width / 2;
       const screenY = anchorY - height / 2;
 
@@ -244,11 +250,7 @@ export default function useCamera({
         const previous = pinchRef.current;
         pinchRef.current = distance;
         if (previous && previous > 0) {
-          zoomByFactor(
-            distance / previous,
-            (first.x + second.x) / 2,
-            (first.y + second.y) / 2,
-          );
+          zoomByFactor(distance / previous, (first.x + second.x) / 2, (first.y + second.y) / 2);
         }
         return;
       }
@@ -313,9 +315,7 @@ export default function useCamera({
 
       if (focus) {
         const position =
-          focus === "sun"
-            ? { x: 0, y: 0, size: SUN_SIZE }
-            : positionsRef.current[focus] ?? null;
+          focus === "sun" ? { x: 0, y: 0, size: SUN_SIZE } : (positionsRef.current[focus] ?? null);
 
         if (position) {
           targetZoom = focusZoomRef.current;
