@@ -15,6 +15,25 @@
  * viewport matches, and falls back to a geometry estimate for first visits.
  */
 
+/**
+ * Transition timing, shared by the splash (which starts the flash) and the
+ * overlay (which runs it). One source of truth, so the route change can never
+ * land before the screen is fully covered, or after it has started to clear.
+ */
+export const FLASH_TIMING = {
+  /** Grace beat after the click before the light starts to grow. */
+  beginDelayMs: 160,
+  /** Stage 1 — the orb grows to full cover while fading in. */
+  coverMs: 600,
+  /** Stage 3 — a short hold while the atlas sky sits under the full glow. */
+  breatheDelayMs: 60,
+  /** Stage 3 — the glow shrinks into the Sun and fades out. */
+  breatheMs: 800,
+} as const;
+
+/** Splash-side total: click -> route change, at the exact moment of full cover. */
+export const WARP_TOTAL_MS = FLASH_TIMING.beginDelayMs + FLASH_TIMING.coverMs;
+
 export type FlashPoint = { x: number; y: number };
 
 export type FlashPhase = "idle" | "expand" | "breathe";

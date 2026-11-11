@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
 import { MotionConfig, motion, useReducedMotion, type Variants } from "framer-motion";
-import { flashBus, forecastSunPoint } from "../lib/flashBus";
+import { flashBus, forecastSunPoint, FLASH_TIMING, WARP_TOTAL_MS } from "../lib/flashBus";
 
 /**
  * Solaris — splash landing page.
@@ -12,16 +12,17 @@ import { flashBus, forecastSunPoint } from "../lib/flashBus";
 
 export const LANDING_APP_PATH = "/app";
 
-const WARP_DURATION_MS = 660;
+const WARP_DURATION_MS = WARP_TOTAL_MS;
 /**
- * Stage 1 (0–~0.6s): the UI text fades while light pours out of the waves
- * into an edge-to-edge beam. Stage 2 (~0.18–0.6s): the persisted
- * SolarisFlash light sheet expands out of the waves and fills the frame —
- * never a circle. Stage 3: at full cover, navigate.
+ * Stage 1 (0 –~0.16s): the UI text fades out while the canvas waves keep
+ * running. Stage 2 (~0.16 – 0.76s): the persisted SolarisFlash orb grows out of
+ * the Sun point until it floods the frame. Stage 3: the instant it reaches full
+ * cover, navigate — the same orb then shrinks into the Sun on "/app".
+ *
+ * Timing comes from FLASH_TIMING in `lib/flashBus` so the splash and the
+ * overlay can never drift apart.
  */
-const FLASH_BEGIN_MS = 180;
-const FLASH_EXPAND_MS = 420;
-/** How long the wave light-build runs before the sheet fully takes over. */
+/** How long the wave light-build runs before the orb fully takes over. */
 const WAVE_RAMP_MS = 480;
 const EASE_OUT: [number, number, number, number] = [0.22, 0.9, 0.3, 1];
 /** Slow shrink of the world as the light floods in (depth cue only). */
@@ -1081,9 +1082,9 @@ export default function LandingIntro({
     // Stage 1 — the persisted overlay blooms out of the sun point.
     flashTimerRef.current = window.setTimeout(
       () => flashBus.begin(forecastSunPoint()),
-      FLASH_BEGIN_MS,
+      FLASH_TIMING.beginDelayMs,
     );
-    // Stage 2 — navigate while the screen is fully covered (~0.12 + 0.5s).
+    // Stage 3 — navigate at the exact moment of full cover.
     timerRef.current = window.setTimeout(finish, WARP_DURATION_MS);
   }, [finish, reducedMotion]);
 
