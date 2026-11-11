@@ -1,7 +1,10 @@
 import type { RefObject } from "react";
+import { AnimatePresence } from "framer-motion";
 import type { CameraApi, PlanetPosition } from "../hooks/useCamera";
+import { missionControlFor } from "../data/missionControl";
 import GuidedTour from "./GuidedTour";
-import MissionDrawer from "./MissionDrawer";
+import MissionControlDrawer from "./MissionControlDrawer";
+import PlanetFocusStage from "./PlanetFocusStage";
 import MissionSearch from "./MissionSearch";
 import OrbitSystem, { type MissionFilter } from "./OrbitSystem";
 import CameraControls from "./CameraControls";
@@ -52,6 +55,8 @@ export default function MissionMap({
   searchRef,
   year,
 }: MissionMapProps) {
+  const focusData = selectedPlanetId ? missionControlFor(selectedPlanetId) : null;
+
   return (
     <section
       className={`map-area${drawerOpen ? " has-drawer" : ""}${tourActive ? " is-touring" : ""}`}
@@ -135,13 +140,27 @@ export default function MissionMap({
         </p>
       </div>
 
-      {selectedPlanetId && drawerOpen ? (
-        <MissionDrawer
-          planetId={selectedPlanetId}
-          onClose={onCloseDrawer}
-          onSelectPlanet={onSelectPlanet}
-        />
+      {focusData && drawerOpen ? (
+        <AnimatePresence mode="wait">
+          <PlanetFocusStage
+            key={`stage-${focusData.planetId}`}
+            data={focusData}
+            reducedMotion={reducedMotion}
+            onDismiss={onCloseDrawer}
+          />
+        </AnimatePresence>
       ) : null}
+
+      <AnimatePresence>
+        {drawerOpen && selectedPlanetId ? (
+          <MissionControlDrawer
+            key={`mc-${selectedPlanetId}`}
+            planetId={selectedPlanetId}
+            reducedMotion={reducedMotion}
+            onClose={onCloseDrawer}
+          />
+        ) : null}
+      </AnimatePresence>
 
       <GuidedTour
         active={tourActive}

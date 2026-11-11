@@ -1372,369 +1372,6 @@
   backdrop-filter: blur(6px);
 }
 
-/* -------------------------------------------------------------- drawer */
-
-.mission-drawer {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  bottom: 14px;
-  z-index: 90;
-  display: flex;
-  flex-direction: column;
-  width: 396px;
-  overflow: hidden;
-  border: 1px solid rgba(120, 113, 108, 0.3);
-  border-radius: 18px;
-  background: linear-gradient(165deg, rgba(24, 24, 27, 0.97), rgba(9, 9, 11, 0.98));
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.62);
-  backdrop-filter: blur(18px);
-  animation: drawer-in 300ms cubic-bezier(0.22, 0.9, 0.3, 1);
-}
-
-.drawer-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px 10px 15px;
-  border-bottom: 1px solid rgba(120, 113, 108, 0.18);
-}
-
-.drawer-kicker {
-  font-family: "IBM Plex Mono:Medium", monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: var(--aqua);
-}
-
-.icon-button {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid #27272a;
-  border-radius: 6px;
-  background: #18181b;
-  color: #a1a1aa;
-  transition: border-color 150ms ease, background 150ms ease, color 150ms ease, box-shadow 150ms ease;
-}
-
-.icon-button:hover {
-  border-color: #f97316;
-  background: rgba(249, 115, 22, 0.15);
-  color: #fb923c;
-  box-shadow: 0 0 8px rgba(249, 115, 22, 0.2);
-}
-
-.drawer-hero {
-  position: relative;
-  height: 168px;
-  flex: 0 0 auto;
-  overflow: hidden;
-}
-
-.drawer-hero-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.9;
-}
-
-.drawer-hero-shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(9, 9, 11, 0.06) 20%, rgba(9, 9, 11, 0.92) 100%);
-}
-
-.drawer-hero-text {
-  position: absolute;
-  right: 14px;
-  bottom: 11px;
-  left: 14px;
-}
-
-.planet-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  margin-bottom: 6px;
-  padding: 3px 9px 3px 5px;
-  border: 1px solid rgba(249, 115, 22, 0.26);
-  border-radius: 999px;
-  background: rgba(6, 12, 19, 0.7);
-  font-size: 12px;
-  color: #e7e5e4;
-}
-
-.planet-chip img {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
-}
-
-.drawer-hero-text h2 {
-  margin: 0;
-  font-family: "Space Grotesk:Bold", sans-serif;
-  font-size: 26px;
-  line-height: 1.05;
-  letter-spacing: -0.5px;
-  color: #ffffff;
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.8);
-}
-
-.drawer-hero-text p {
-  margin: 3px 0 0;
-  font-size: 12px;
-  color: var(--muted);
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
-}
-
-.drawer-body {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: 12px;
-  padding: 14px 16px 16px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(249, 115, 22, 0.3) transparent;
-}
-
-.drawer-body::-webkit-scrollbar {
-  width: 6px;
-}
-
-.drawer-body::-webkit-scrollbar-thumb {
-  border-radius: 3px;
-  background: rgba(249, 115, 22, 0.28);
-}
-
-.status-pill {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  gap: 7px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-}
-
-.status-pill.is-active {
-  border: 1px solid rgba(249, 115, 22, 0.4);
-  background: rgba(249, 115, 22, 0.12);
-  color: var(--cyan);
-}
-
-.status-pill.is-retired {
-  border: 1px solid rgba(250, 204, 21, 0.4);
-  background: rgba(250, 204, 21, 0.12);
-  color: #ffbe83;
-}
-
-.status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 8px currentColor;
-}
-
-.drawer-body h3 {
-  margin: 0;
-  font-family: "Space Grotesk:Regular", sans-serif;
-  font-size: 20px;
-  line-height: 1.25;
-  letter-spacing: -0.3px;
-  color: #fafaf9;
-}
-
-.drawer-summary {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.65;
-  color: var(--muted);
-}
-
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 7px;
-}
-
-.stat-card {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 9px 10px;
-  border: 1px solid rgba(120, 113, 108, 0.2);
-  border-radius: 10px;
-  background: rgba(24, 24, 27, 0.6);
-}
-
-.stat-card strong {
-  font-family: "Space Grotesk:Bold", sans-serif;
-  font-size: 17px;
-  line-height: 1.1;
-  color: #ffffff;
-}
-
-.stat-card span {
-  font-size: 11px;
-  line-height: 1.35;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-.fun-fact {
-  display: flex;
-  gap: 10px;
-  padding: 10px 12px;
-  border: 1px solid rgba(255, 196, 120, 0.24);
-  border-radius: 10px;
-  background: rgba(255, 170, 70, 0.07);
-}
-
-.fun-fact-icon {
-  font-size: 16px;
-  line-height: 1.2;
-}
-
-.fun-fact p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.5;
-  color: #f3d6ac;
-}
-
-.project-section {
-  padding-top: 2px;
-}
-
-.project-heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 4px;
-}
-
-.project-heading h4 {
-  margin: 0;
-  font-family: "Inter:Semi Bold", sans-serif;
-  font-size: 14px;
-  color: #e7e5e4;
-}
-
-.project-heading span {
-  font-size: 11px;
-  color: var(--dim);
-}
-
-.project-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.project-list li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 0;
-  border-bottom: 1px dashed rgba(120, 113, 108, 0.16);
-}
-
-.project-name {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow: hidden;
-  font-size: 13px;
-  color: #e7e5e4;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.project-years {
-  font-family: "IBM Plex Mono:Regular", monospace;
-  font-size: 11px;
-  color: var(--dim);
-}
-
-.project-note {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 8px 0 0;
-  font-size: 11px;
-  color: var(--dim);
-}
-
-.nasa-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 40px;
-  border: 1px solid #f97316;
-  border-radius: 10px;
-  background: transparent;
-  color: #f97316;
-  font-family: "Inter:Semi Bold", sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  box-shadow: 0 0 8px rgba(249, 115, 22, 0.2);
-  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
-}
-
-.nasa-link:hover {
-  border-color: #fb923c;
-  background: rgba(249, 115, 22, 0.16);
-  color: #fdba74;
-  box-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
-}
-
-.drawer-planet-fact {
-  margin: 0;
-  padding-top: 2px;
-  font-size: 12px;
-  line-height: 1.55;
-  color: var(--dim);
-}
-
-.drawer-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 10px 12px;
-  border-top: 1px solid rgba(120, 113, 108, 0.18);
-  background: rgba(9, 9, 11, 0.5);
-}
-
-.drawer-footer button {
-  padding: 7px 9px;
-  border: 1px solid rgba(120, 113, 108, 0.22);
-  border-radius: 8px;
-  background: transparent;
-  color: var(--muted);
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-.drawer-footer button:hover {
-  border-color: rgba(249, 115, 22, 0.4);
-  color: var(--text);
-}
-
-.drawer-footer .back-button {
-  border-color: rgba(249, 115, 22, 0.3);
-  background: rgba(249, 115, 22, 0.08);
-  color: var(--cyan);
-}
-
 /* ---------------------------------------------------------------- icons */
 
 .icon {
@@ -1752,7 +1389,6 @@
 
 /* Inline control icons follow their button's colour. */
 .tour-buttons .icon,
-.drawer-footer .icon,
 .nasa-link .icon,
 .icon-button .icon {
   color: inherit;
@@ -2491,10 +2127,6 @@
   .top-tools {
     width: min(360px, 42vw);
   }
-
-  .mission-drawer {
-    width: 370px;
-  }
 }
 
 @media (max-width: 980px) {
@@ -2559,20 +2191,6 @@
 
   .map-area.has-drawer .view-controls {
     display: none;
-  }
-
-  .mission-drawer {
-    top: auto;
-    right: 10px;
-    bottom: 10px;
-    left: 10px;
-    width: auto;
-    max-height: 64%;
-    border-radius: 16px;
-  }
-
-  .drawer-hero {
-    height: 132px;
   }
 
   .tour-card {
@@ -2824,3 +2442,755 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================ cinematic planet focus stage */
+
+/*
+ * The micro view. When a planet is picked the macro map keeps zooming behind
+ * this layer; the scrim swallows it and the chosen world grows out of the tap.
+ * All sizing flows from --mc-sphere so rings, aura and globe stay in ratio.
+ */
+
+.mc-stage {
+  /* Sized so a ringed world at -20vw still clears the left edge of the map:
+   * 0.3vw centre − 1.68 × sphere ≥ 0 for the widths we support. */
+  --mc-sphere: clamp(150px, 17.5vw, 300px);
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.mc-stage-scrim {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  pointer-events: auto;
+  cursor: default;
+  background:
+    radial-gradient(
+      56% 58% at 34% 50%,
+      rgba(9, 9, 11, 0.42) 0%,
+      rgba(8, 8, 10, 0.88) 58%,
+      #07070a 100%
+    ),
+    linear-gradient(180deg, rgba(9, 9, 11, 0.92), rgba(9, 9, 11, 0.97));
+}
+
+.mc-stage-planet {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 26px;
+  pointer-events: none;
+}
+
+.mc-stage-aura {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 26px);
+  width: calc(var(--mc-sphere) * 2.7);
+  height: calc(var(--mc-sphere) * 2.7);
+  margin-left: calc(var(--mc-sphere) * -1.35);
+  margin-top: calc(var(--mc-sphere) * -1.35);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 206, 160, 0.15) 0%,
+    rgba(255, 184, 120, 0.06) 44%,
+    rgba(255, 170, 90, 0) 72%
+  );
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------- the globe */
+
+.mc-sphere {
+  position: relative;
+  width: var(--mc-sphere);
+  height: var(--mc-sphere);
+  display: grid;
+  place-items: center;
+}
+
+.mc-globe {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--mc-band, #b9a37f);
+  box-shadow:
+    0 0 64px 4px rgba(255, 198, 140, 0.16),
+    0 0 150px 34px rgba(255, 170, 90, 0.06);
+}
+
+/* Horizontal cloud banding. Static: bands are longitude-independent, so the
+ * rotation comes from the drifting spots layer underneath. The two pole
+ * washes are what stop a striped rectangle from reading as a flat disc. */
+.mc-bands {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 132% 32% at 50% -2%, rgba(52, 42, 28, 0.5), rgba(52, 42, 28, 0) 72%),
+    radial-gradient(ellipse 132% 32% at 50% 102%, rgba(34, 27, 18, 0.58), rgba(34, 27, 18, 0) 72%),
+    var(--mc-band);
+  filter: blur(0.6px);
+}
+
+/*
+ * The rotating surface. 200% wide with a pattern that tiles every 50%, so a
+ * -50% translate loops seamlessly: the world actually turns, and the storms
+ * carry the motion the bands alone cannot show.
+ */
+.mc-spots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  opacity: 0.55;
+  background-image:
+    radial-gradient(closest-side at 16% 42%, rgba(255, 255, 255, 0.3), transparent 100%),
+    radial-gradient(closest-side at 30% 63%, rgba(96, 70, 44, 0.34), transparent 100%),
+    radial-gradient(closest-side at 52% 26%, rgba(255, 255, 255, 0.2), transparent 100%),
+    radial-gradient(closest-side at 66% 55%, rgba(88, 64, 40, 0.3), transparent 100%),
+    radial-gradient(closest-side at 84% 38%, rgba(255, 255, 255, 0.18), transparent 100%);
+  background-size: 50% 100%;
+  background-repeat: repeat-x;
+  animation: mc-surface-spin 72s linear infinite;
+  will-change: transform;
+}
+
+@keyframes mc-surface-spin {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Terminator: lit from the upper left, falling into night at the lower right. */
+.mc-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 46%),
+    radial-gradient(
+      circle at 74% 78%,
+      rgba(0, 0, 0, 0.62) 0%,
+      rgba(0, 0, 0, 0.14) 54%,
+      rgba(0, 0, 0, 0) 78%
+    );
+}
+
+.mc-spec {
+  position: absolute;
+  left: 13%;
+  top: 11%;
+  width: 38%;
+  height: 27%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--mc-highlight, rgba(255, 255, 255, 0.4)), transparent);
+  mix-blend-mode: screen;
+  filter: blur(3px);
+}
+
+.mc-limb {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow:
+    inset -20px -24px 58px var(--mc-shadow, rgba(0, 0, 0, 0.8)),
+    inset 12px 14px 40px rgba(0, 0, 0, 0.2),
+    inset 0 0 22px rgba(0, 0, 0, 0.36);
+}
+
+/* ---------------------------------------------------------------- the rings */
+
+/*
+ * Drawn twice. Without perspective, rotateX just flattens the circle into an
+ * ellipse, which is exactly the orthographic look we want. The far half sits
+ * behind the globe and the near half in front, so the ring genuinely wraps.
+ *
+ * Element half-size is 2 × sphere, and the gradient stops are percentages of
+ * that: the ring system runs from 1.22 × sphere out to 1.68 × sphere, i.e.
+ * clear of the globe silhouette (anything under 100% would cut through it).
+ */
+.mc-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--mc-sphere) * 4);
+  height: calc(var(--mc-sphere) * 4);
+  margin-left: calc(var(--mc-sphere) * -2);
+  margin-top: calc(var(--mc-sphere) * -2);
+  border-radius: 50%;
+  transform: rotateX(var(--mc-ring-tilt, 70deg)) rotate(-9deg);
+  background-image: radial-gradient(
+    closest-side,
+    transparent 0 60%,
+    var(--mc-ring-soft, rgba(214, 190, 150, 0.24)) 61.5%,
+    var(--mc-ring-band, rgba(232, 214, 178, 0.62)) 64%,
+    var(--mc-ring-band, rgba(232, 214, 178, 0.62)) 66.5%,
+    var(--mc-ring-gap, rgba(10, 8, 6, 0.34)) 67.6%,
+    var(--mc-ring-band, rgba(232, 214, 178, 0.62)) 68.6%,
+    var(--mc-ring-band, rgba(232, 214, 178, 0.62)) 70.5%,
+    var(--mc-ring-gap, rgba(10, 8, 6, 0.34)) 71.8%,
+    var(--mc-ring-band, rgba(232, 214, 178, 0.62)) 73.5%,
+    var(--mc-ring-band, rgba(232, 214, 178, 0.62)) 76%,
+    var(--mc-ring-soft, rgba(214, 190, 150, 0.5)) 77.4%,
+    var(--mc-ring-band, rgba(232, 214, 178, 0.62)) 78.2%,
+    var(--mc-ring-band, rgba(232, 214, 178, 0.62)) 79.6%,
+    var(--mc-ring-soft, rgba(214, 190, 150, 0.44)) 80.4%,
+    var(--mc-ring-band, rgba(232, 214, 178, 0.62)) 81.2%,
+    var(--mc-ring-soft, rgba(214, 190, 150, 0.3)) 83%,
+    transparent 84.5% 100%
+  );
+  /* Mask the bands back to the ring system so nothing fills the hole. */
+  mask-image: radial-gradient(
+    circle closest-side,
+    transparent 0 60%,
+    #000 61.5% 83%,
+    transparent 84.5%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle closest-side,
+    transparent 0 60%,
+    #000 61.5% 83%,
+    transparent 84.5%
+  );
+  pointer-events: none;
+}
+
+/* The far half sits behind the planet. Both halves share the same shading so
+ * the seam where they meet at the ansae stays invisible. */
+.mc-ring-back {
+  z-index: 0;
+  clip-path: inset(0 0 50% 0);
+}
+
+.mc-ring-front {
+  z-index: 3;
+  clip-path: inset(50% 0 0 0);
+}
+
+.mc-stage-caption {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  text-align: center;
+}
+
+.mc-stage-tag {
+  font-family: "IBM Plex Mono:Medium", monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: rgba(250, 204, 21, 0.8);
+}
+
+.mc-stage-caption strong {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.mc-stage-caption em {
+  font-style: normal;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* =================================================== mission control panel */
+
+.mc-drawer {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  width: 432px;
+  max-width: calc(100% - 28px);
+  overflow: hidden;
+  border: 1px solid rgba(214, 160, 110, 0.24);
+  border-radius: 18px;
+  background: linear-gradient(168deg, rgba(32, 23, 17, 0.86), rgba(10, 9, 9, 0.92));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.66),
+    inset 0 1px 0 rgba(255, 214, 170, 0.09);
+}
+
+.mc-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 15px 12px 18px;
+  border-bottom: 1px solid rgba(214, 160, 110, 0.16);
+}
+
+.mc-kicker {
+  margin: 0 0 5px;
+  font-family: "IBM Plex Mono:Medium", monospace;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: rgba(250, 204, 21, 0.74);
+}
+
+.mc-head h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.mc-head h2 span {
+  color: rgba(214, 160, 110, 0.5);
+  margin-right: 2px;
+}
+
+.mc-close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(214, 160, 110, 0.32);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.mc-close:hover {
+  color: #fff;
+  border-color: rgba(214, 160, 110, 0.62);
+  background: rgba(214, 160, 110, 0.12);
+}
+
+.mc-brief {
+  margin: 12px 18px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.mc-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 14px 14px 10px;
+}
+
+.mc-tabs button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 9px 10px;
+  border: 1px solid rgba(120, 113, 108, 0.24);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--dim);
+  font-family: "IBM Plex Mono:Medium", monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.mc-tabs button:hover {
+  color: var(--muted);
+  border-color: rgba(214, 160, 110, 0.34);
+}
+
+.mc-tabs button.is-active {
+  color: var(--amber);
+  border-color: rgba(250, 204, 21, 0.42);
+  background: rgba(250, 204, 21, 0.07);
+}
+
+.mc-tab-count {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.mc-list-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 14px 18px;
+}
+
+.mc-list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mc-list-scroll::-webkit-scrollbar-thumb {
+  background: rgba(120, 113, 108, 0.42);
+  border-radius: 9999px;
+}
+
+.mc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mc-row {
+  overflow: hidden;
+  border: 1px solid rgba(120, 113, 108, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.018);
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+.mc-row.is-open {
+  border-color: rgba(214, 160, 110, 0.42);
+  background: rgba(255, 255, 255, 0.038);
+}
+
+.mc-row-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+}
+
+.mc-dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.mc-dot.is-active {
+  background: #34d399;
+  box-shadow: 0 0 8px 1px rgba(52, 211, 153, 0.7);
+}
+
+.mc-dot.is-retired {
+  background: #d09a63;
+  box-shadow: 0 0 8px 1px rgba(208, 154, 99, 0.55);
+}
+
+.mc-row-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.mc-row-name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.mc-row-sub {
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mc-chevron {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  color: var(--dim);
+  transition: transform 240ms ease, color 240ms ease;
+}
+
+.mc-chevron.is-open {
+  transform: rotate(45deg);
+  color: var(--amber);
+}
+
+.mc-body {
+  overflow: hidden;
+}
+
+.mc-body-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 2px 12px 14px;
+}
+
+.mc-status {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: 9999px;
+  font-family: "IBM Plex Mono:Medium", monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mc-status.is-active {
+  color: #6ee7b7;
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  background: rgba(52, 211, 153, 0.08);
+}
+
+.mc-status.is-retired {
+  color: #e0b184;
+  border: 1px solid rgba(208, 154, 99, 0.35);
+  background: rgba(208, 154, 99, 0.08);
+}
+
+.mc-hero-row {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.mc-hero {
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border: 1px solid rgba(120, 113, 108, 0.28);
+  border-radius: 10px;
+  background: #0b0a09;
+}
+
+.mc-hero img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mc-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.mc-stat {
+  padding: 7px 8px;
+  border: 1px solid rgba(120, 113, 108, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.mc-stat strong {
+  display: block;
+  font-size: 15px;
+  color: var(--amber);
+  line-height: 1.1;
+}
+
+.mc-stat span {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.25;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.mc-hero-caption {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--dim);
+}
+
+.mc-summary {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.mc-media-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: 6px;
+  scroll-snap-type: x mandatory;
+}
+
+.mc-media-strip::-webkit-scrollbar {
+  height: 4px;
+}
+
+.mc-media-strip::-webkit-scrollbar-thumb {
+  background: rgba(120, 113, 108, 0.42);
+  border-radius: 9999px;
+}
+
+.mc-media-item {
+  position: relative;
+  flex: 0 0 104px;
+  height: 74px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(120, 113, 108, 0.28);
+  border-radius: 8px;
+  background: #0b0a09;
+  scroll-snap-align: start;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.mc-media-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.84;
+  transition: opacity 160ms ease, transform 240ms ease;
+}
+
+.mc-media-item:hover img {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.mc-media-item.is-active {
+  border-color: rgba(250, 204, 21, 0.62);
+  box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.28);
+}
+
+.mc-media-item.is-active img {
+  opacity: 1;
+}
+
+.mc-media-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border-radius: 50%;
+  background: rgba(9, 9, 11, 0.72);
+  color: #fff;
+}
+
+.mc-media-caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px 6px 4px;
+  font-size: 9px;
+  line-height: 1.2;
+  color: #e7e5e4;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.86));
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.mc-media-item:hover .mc-media-caption,
+.mc-media-item:focus-visible .mc-media-caption {
+  opacity: 1;
+}
+
+.mc-source {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(250, 204, 21, 0.3);
+  color: var(--aqua);
+  font-family: "IBM Plex Mono:Medium", monospace;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-decoration: none;
+}
+
+.mc-source:hover {
+  border-bottom-color: rgba(250, 204, 21, 0.72);
+}
+
+.mc-empty {
+  margin: 20px 4px;
+  font-size: 13px;
+  text-align: center;
+  color: var(--dim);
+}
+
+/* ------------------------------------------------------------ narrow layout */
+
+@media (max-width: 900px) {
+  .mc-stage {
+    --mc-sphere: clamp(88px, 22vw, 132px);
+    align-items: flex-start;
+    padding-top: 2.5vh;
+  }
+
+  .mc-stage-planet {
+    gap: 12px;
+  }
+
+  .mc-stage-aura {
+    top: 50%;
+  }
+
+  .mc-drawer {
+    top: auto;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    width: auto;
+    max-width: none;
+    height: min(46vh, 400px);
+    border-radius: 16px;
+  }
+
+  .mc-tabs button {
+    padding: 8px;
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .mc-hero-row {
+    grid-template-columns: 104px 1fr;
+  }
+}
+

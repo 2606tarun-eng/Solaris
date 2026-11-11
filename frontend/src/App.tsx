@@ -16,8 +16,11 @@ export default function AstroRelicsMissionAtlas() {
   const reducedMotion = useReducedMotion();
   const tier = usePerformanceTier();
 
-  const [selectedPlanetId, setSelectedPlanetId] = useState<string | null>(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  // One source of truth for the cinematic focus: null = macro map, an id =
+  // micro view (3-D planet left, mission control right).
+  const [focusedPlanet, setFocusedPlanet] = useState<string | null>(null);
+  const selectedPlanetId = focusedPlanet;
+  const drawerOpen = focusedPlanet !== null;
   const [tourActive, setTourActive] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [filter, setFilter] = useState<MissionFilter>("all");
@@ -39,8 +42,7 @@ export default function AstroRelicsMissionAtlas() {
     tourActive,
     reducedMotion,
     onExitFocus: () => {
-      setSelectedPlanetId(null);
-      setDrawerOpen(false);
+      setFocusedPlanet(null);
     },
   });
 
@@ -63,29 +65,25 @@ export default function AstroRelicsMissionAtlas() {
   const selectPlanet = (id: string) => {
     setTourActive(false);
     setAboutOpen(false);
-    setSelectedPlanetId(id);
-    setDrawerOpen(true);
+    setFocusedPlanet(id);
     camera.focusPlanet(id);
   };
 
   const closeDrawer = () => {
-    setDrawerOpen(false);
-    setSelectedPlanetId(null);
+    setFocusedPlanet(null);
     camera.focusPlanet(null);
   };
 
   const openMap = () => {
     setAboutOpen(false);
     setTourActive(false);
-    setDrawerOpen(false);
-    setSelectedPlanetId(null);
+    setFocusedPlanet(null);
     camera.resetView();
   };
 
   const startTour = () => {
     setAboutOpen(false);
-    setDrawerOpen(false);
-    setSelectedPlanetId(null);
+    setFocusedPlanet(null);
     setTourActive(true);
   };
 
@@ -107,8 +105,7 @@ export default function AstroRelicsMissionAtlas() {
         setTourActive(false);
         camera.focusPlanet(null);
       } else if (drawerOpen) {
-        setDrawerOpen(false);
-        setSelectedPlanetId(null);
+        setFocusedPlanet(null);
         camera.focusPlanet(null);
       } else if (!typing) {
         camera.resetView();

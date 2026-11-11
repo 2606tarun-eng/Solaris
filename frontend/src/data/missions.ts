@@ -226,8 +226,9 @@ export const missions: Mission[] = [
     planetId: "uranus",
     name: "Voyager 2 at Uranus",
     agency: "NASA / JPL",
-    status: "active",
+    status: "retired",
     launched: 1977,
+    ended: 1986,
     headline: "The only spacecraft ever to visit Uranus.",
     summary:
       "Voyager 2 flew past Uranus in 1986 and sent back the first close-up pictures. It found new moons, new rings, and a strange tilted magnetic field.",
@@ -245,8 +246,9 @@ export const missions: Mission[] = [
     planetId: "neptune",
     name: "Voyager 2 at Neptune",
     agency: "NASA / JPL",
-    status: "active",
+    status: "retired",
     launched: 1977,
+    ended: 1989,
     headline: "The last portrait before deep space.",
     summary:
       "Voyager 2 swept past Neptune in 1989. It spotted the Great Dark Spot and icy geysers erupting from Triton.",

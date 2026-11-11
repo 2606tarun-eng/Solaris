@@ -127,6 +127,32 @@ const extraProjects: ProjectSeed[] = [
     launched: 1997,
     ended: 2005,
   },
+  {
+    id: "dragonfly",
+    planetId: "saturn",
+    name: "Dragonfly",
+    agency: "NASA / APL",
+    status: "active",
+    launched: 2028,
+  },
+  {
+    id: "voyager-1",
+    planetId: "saturn",
+    name: "Voyager 1",
+    agency: "NASA / JPL",
+    status: "retired",
+    launched: 1977,
+    ended: 1980,
+  },
+  {
+    id: "pioneer-11",
+    planetId: "saturn",
+    name: "Pioneer 11",
+    agency: "NASA / Ames",
+    status: "retired",
+    launched: 1973,
+    ended: 1979,
+  },
 ];
 
 const featuredProjects: Project[] = missions.map((mission) => ({
@@ -156,8 +182,13 @@ for (const list of Object.values(projectsByPlanet)) {
   });
 }
 
+const currentYear = new Date().getFullYear();
+
+/** "1997–2017", "2011–now", or "2028–" for something still on the ground. */
 export function projectYears(project: Project) {
-  return project.ended ? `${project.launched}–${project.ended}` : `${project.launched}–now`;
+  if (project.ended) return `${project.launched}–${project.ended}`;
+  if (project.launched > currentYear) return `${project.launched}–`;
+  return `${project.launched}–now`;
 }
 
 export function projectCounts(planetId: string) {
