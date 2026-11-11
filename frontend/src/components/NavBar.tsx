@@ -67,12 +67,12 @@ export default function NavBar({
 
   return (
     <header className="nav-bar">
-      <button type="button" className="brand" onClick={onOpenMap} aria-label="AstroRelics map">
+      <button type="button" className="brand" onClick={onOpenMap} aria-label="Solaris map">
         <span className="brand-logo">
           <img src={img.glowingPlanetLogo} alt="" />
         </span>
         <span className="brand-text">
-          <strong>AstroRelics</strong>
+          <strong>Solaris</strong>
           <small>Mission Atlas</small>
         </span>
       </button>

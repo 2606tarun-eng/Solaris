@@ -12,7 +12,7 @@ export default function AboutPanel({ onClose, onStartTour }: AboutPanelProps) {
         className="about-panel"
         role="dialog"
         aria-modal="true"
-        aria-label="About AstroRelics"
+        aria-label="About Solaris"
         onPointerDown={(event) => event.stopPropagation()}
       >
         <button type="button" className="about-close" onClick={onClose} aria-label="Close about panel">
@@ -22,7 +22,7 @@ export default function AboutPanel({ onClose, onStartTour }: AboutPanelProps) {
         <p className="about-kicker">NASA SPACE APPS CHALLENGE</p>
         <h2>Abandoned but not forgotten.</h2>
         <p className="about-lead">
-          AstroRelics is a playful map of the solar system. Every glowing dot is a real spacecraft,
+          Solaris is a playful map of the solar system. Every glowing dot is a real spacecraft,
           and every planet hides a story about the machines we sent there.
         </p>
 
@@ -58,7 +58,7 @@ export default function AboutPanel({ onClose, onStartTour }: AboutPanelProps) {
           <section>
             <h3>Made for curious kids</h3>
             <p>
-              AstroRelics is built for explorers aged 8–14. Text is short on purpose, and every
+              Solaris is built for explorers aged 8–14. Text is short on purpose, and every
               planet is one picture and one story at a time.
             </p>
           </section>

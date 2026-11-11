@@ -73,7 +73,7 @@ export default function MissionMap({
 
       <div className="map-overlay">
         <div className={`intro-card${drawerOpen || tourActive ? " is-muted" : ""}`}>
-          <p className="intro-kicker">NASA SPACE APPS · ASTRO RELICS</p>
+          <p className="intro-kicker">NASA SPACE APPS · SOLARIS</p>
           <h1>Wander the solar system.</h1>
           <p>Tap a planet to meet the robots we sent there. Every glowing dot is a real mission.</p>
         </div>

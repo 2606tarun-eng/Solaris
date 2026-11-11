@@ -39,7 +39,7 @@ export default function Root() {
   }, []);
 
   useEffect(() => {
-    document.title = inApp ? "AstroRelics — Mission Atlas" : "Solaris — NASA Space Apps 2026";
+    document.title = inApp ? "Solaris — Mission Atlas" : "Solaris — NASA Space Apps 2026";
   }, [inApp]);
 
   const enterApp = useCallback(() => {
