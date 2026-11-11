@@ -208,11 +208,6 @@ const CSS_WAVE = `
   }
 }
 
-.landing-sparkle-a {
-  right: 7%;
-  bottom: 13%;
-}
-
 .landing-sparkle-b {
   right: 21%;
   top: 11%;
@@ -1104,12 +1099,6 @@ export default function LandingIntro({
           <WaveField warping={warping} reducedMotion={reducedMotion} />
           <div className="landing-scrim" aria-hidden="true" />
 
-          <svg className="landing-sparkle landing-sparkle-a" viewBox="0 0 40 40" aria-hidden="true">
-            <path
-              d="M20 0 L23.2 16.8 L40 20 L23.2 23.2 L20 40 L16.8 23.2 L0 20 L16.8 16.8 Z"
-              fill="rgba(246, 208, 180, 0.7)"
-            />
-          </svg>
           <svg className="landing-sparkle landing-sparkle-b" viewBox="0 0 40 40" aria-hidden="true">
             <path
               d="M20 0 L23.2 16.8 L40 20 L23.2 23.2 L20 40 L16.8 23.2 L0 20 L16.8 16.8 Z"
