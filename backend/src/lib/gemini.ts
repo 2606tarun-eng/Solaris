@@ -1,11 +1,12 @@
 /**
  * Gemini client (REST, no SDK).
  *
- * Uses the free-tier `gemini-2.5-flash` model. If `GEMINI_API_KEY` is missing,
- * `isConfigured()` returns false and the caller falls back gracefully.
+ * Uses the Gemini model via the Generative Language API. If `GEMINI_API_KEY`
+ * is missing, `isConfigured()` returns false and the caller falls back
+ * gracefully. Override the model with `GEMINI_MODEL` if needed.
  */
 
-const MODEL = "gemini-2.5-flash";
+const MODEL = process.env.GEMINI_MODEL ?? "gemini-3.8-flash";
 const BASE = "https://generativelanguage.googleapis.com/v1beta/models";
 
 export function isConfigured() {

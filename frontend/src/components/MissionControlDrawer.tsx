@@ -1,20 +1,16 @@
-import { useMemo, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  missionControlFor,
-  type MissionControlEntry,
-  type MissionMedia,
-} from "../data/missionControl";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { missionControlFor, type MissionControlEntry } from "../data/missionControl";
+import { handlePlainClick, missionPath } from "../lib/missionRoute";
 import Icon from "./Icon";
+import "./mission-story/missionStoryLink.css";
 
 /**
  * MissionControlDrawer — the glass HUD that slides in from the right once a
  * planet is focused.
  *
- * Everything is inline: a mission expands in place (height animation + the
- * parent list item re-flowing with `layout`), so the reader never leaves the
- * panel. The gallery is not decorative — tapping a frame promotes it to the
- * hero slot above.
+ * Every row is a link: tapping a mission opens its full story page, so the
+ * drawer stays a short, scannable index instead of unfolding media inline.
  */
 
 type MissionControlDrawerProps = {
@@ -36,83 +32,16 @@ function statusLabel(status: MissionControlEntry["status"]) {
   return status === "active" ? "Still exploring" : "Retired explorer";
 }
 
-function MediaFrame({
-  item,
-  active,
-  onSelect,
-}: {
-  item: MissionMedia;
-  active: boolean;
-  onSelect: () => void;
-}) {
-  const content = (
-    <>
-      <img src={item.src} alt="" loading="lazy" draggable={false} />
-      {item.kind === "video" ? (
-        <span className="mc-media-play" aria-hidden="true">
-          <Icon name="play" size={11} />
-        </span>
-      ) : null}
-      <span className="mc-media-caption">{item.caption}</span>
-    </>
-  );
+function MissionRow({ entry }: { entry: MissionControlEntry }) {
+  const storyHref = missionPath(entry.id);
 
-  if (item.href) {
-    return (
+  return (
+    <li className={`mc-row is-${entry.status}`}>
       <a
-        className={`mc-media-item${active ? " is-active" : ""}`}
-        href={item.href}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={`${item.caption} — open the NASA archive`}
-      >
-        {content}
-      </a>
-    );
-  }
-
-  return (
-    <button
-      type="button"
-      className={`mc-media-item${active ? " is-active" : ""}`}
-      onClick={onSelect}
-      aria-pressed={active}
-      aria-label={`Show: ${item.caption}`}
-    >
-      {content}
-    </button>
-  );
-}
-
-function MissionRow({
-  entry,
-  open,
-  reducedMotion,
-  onToggle,
-}: {
-  entry: MissionControlEntry;
-  open: boolean;
-  reducedMotion: boolean;
-  onToggle: () => void;
-}) {
-  const [picked, setPicked] = useState<string | null>(null);
-  const hero = useMemo(() => {
-    const found = entry.media.find((item) => item.id === picked);
-    return found ?? { src: entry.heroImage, caption: entry.heroAlt, kind: "photo" as const };
-  }, [entry, picked]);
-
-  return (
-    <motion.li
-      layout={!reducedMotion}
-      className={`mc-row is-${entry.status}${open ? " is-open" : ""}`}
-      transition={{ layout: { duration: 0.34, ease: EASE_SOFT } }}
-    >
-      <button
-        type="button"
-        className="mc-row-head"
-        onClick={onToggle}
-        aria-expanded={open}
-        aria-controls={`mc-body-${entry.id}`}
+        className="mc-row-head mc-story-row"
+        href={storyHref}
+        onClick={(event) => handlePlainClick(event, storyHref)}
+        aria-label={`${entry.name}. ${entry.years}. ${statusLabel(entry.status)}. Read the mission story.`}
       >
         <span className={`mc-dot is-${entry.status}`} aria-hidden="true" />
         <span className="mc-row-text">
@@ -121,67 +50,11 @@ function MissionRow({
             {entry.years} · {entry.target}
           </span>
         </span>
-        <span className={`mc-chevron${open ? " is-open" : ""}`} aria-hidden="true">
-          <Icon name="plus" size={12} />
+        <span className="mc-chevron mc-story-go" aria-hidden="true">
+          <Icon name="arrow-right" size={13} />
         </span>
-      </button>
-
-      <AnimatePresence initial={false}>
-        {open ? (
-          <motion.div
-            key="body"
-            id={`mc-body-${entry.id}`}
-            className="mc-body"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: reducedMotion ? 0.01 : 0.34, ease: EASE_SOFT }}
-          >
-            <div className="mc-body-inner">
-              <span className={`mc-status is-${entry.status}`}>
-                <span className={`mc-dot is-${entry.status}`} aria-hidden="true" />
-                {statusLabel(entry.status)}
-              </span>
-
-              <div className="mc-hero-row">
-                <figure className="mc-hero">
-                  <img src={hero.src} alt={hero.caption} loading="lazy" draggable={false} />
-                </figure>
-                <div className="mc-stats">
-                  {entry.stats.map((stat) => (
-                    <div className="mc-stat" key={stat.label}>
-                      <strong>{stat.value}</strong>
-                      <span>{stat.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <p className="mc-hero-caption">{hero.caption}</p>
-              <p className="mc-summary">{entry.summary}</p>
-
-              <div className="mc-media-strip" role="group" aria-label={`${entry.name} media`}>
-                {entry.media.map((item) => (
-                  <MediaFrame
-                    key={item.id}
-                    item={item}
-                    active={picked === item.id}
-                    onSelect={() => setPicked(item.id)}
-                  />
-                ))}
-              </div>
-
-              {entry.href ? (
-                <a className="mc-source" href={entry.href} target="_blank" rel="noreferrer">
-                  Mission file on nasa.gov
-                  <Icon name="external" size={12} className="icon" />
-                </a>
-              ) : null}
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-    </motion.li>
+      </a>
+    </li>
   );
 }
 
@@ -191,8 +64,6 @@ export default function MissionControlDrawer({
   onClose,
 }: MissionControlDrawerProps) {
   const data = missionControlFor(planetId);
-  const [openId, setOpenId] = useState<string | null>(null);
-
   const defaultTab: TabKey =
     data && data.entries.some((entry) => entry.status === "active") ? "active" : "retired";
   const [tab, setTab] = useState<TabKey>(defaultTab);
@@ -201,7 +72,6 @@ export default function MissionControlDrawer({
   if (seenPlanet !== planetId) {
     setSeenPlanet(planetId);
     setTab(defaultTab);
-    setOpenId(null);
   }
 
   if (!data) return null;
@@ -249,10 +119,7 @@ export default function MissionControlDrawer({
               role="tab"
               aria-selected={selected}
               className={selected ? "is-active" : ""}
-              onClick={() => {
-                setTab(option.key);
-                setOpenId(null);
-              }}
+              onClick={() => setTab(option.key)}
             >
               <span className="mc-tab-label">[ {option.label} ]</span>
               <span className="mc-tab-count">{count}</span>
@@ -269,17 +136,13 @@ export default function MissionControlDrawer({
         ) : (
           <motion.ul className="mc-list" layout={!reducedMotion} role="tabpanel">
             {visible.map((entry) => (
-              <MissionRow
-                key={entry.id}
-                entry={entry}
-                open={openId === entry.id}
-                reducedMotion={reducedMotion}
-                onToggle={() => setOpenId(openId === entry.id ? null : entry.id)}
-              />
+              <MissionRow key={entry.id} entry={entry} />
             ))}
           </motion.ul>
         )}
       </div>
+
+      <p className="mc-story-hint">Tap a mission to open its story</p>
     </motion.aside>
   );
 }

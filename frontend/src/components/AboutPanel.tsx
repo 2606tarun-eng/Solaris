@@ -51,13 +51,13 @@ export default function AboutPanel({ onClose, onStartTour }: AboutPanelProps) {
             <ul>
               <li>
                 <span className="mini-dot is-active" aria-hidden="true" />
-                <strong>Orange</strong> — still exploring.
+                <strong>Green</strong> — still exploring.
               </li>
               <li>
                 <span className="mini-dot is-retired" aria-hidden="true" />
-                <strong>Gold</strong> — retired explorer.
+                <strong>Orange</strong> — retired explorer.
               </li>
-              <li>Shape matters too, so the dots work without colour.</li>
+              <li>Retired dots also pulse more slowly, so the dots still differ without colour.</li>
             </ul>
           </section>
           <section>

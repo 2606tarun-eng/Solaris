@@ -403,7 +403,7 @@ export type MissionOrbit = {
 
 const orbitColor: Record<ProjectStatus, string> = {
   active: "#34d399",
-  retired: "#d09a63",
+  retired: "#f97316",
 };
 
 /**

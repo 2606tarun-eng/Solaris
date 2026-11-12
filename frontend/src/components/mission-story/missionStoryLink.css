@@ -1,0 +1,58 @@
+/* Page-3 mission rows: each row is a link into the mission story page.
+   Scoped to the `mc-story-` prefix so nothing else in the drawer changes. */
+
+.mc-story-row {
+  text-decoration: none;
+  transition: background 160ms ease;
+}
+
+.mc-story-row:hover {
+  background: rgba(250, 204, 21, 0.05);
+}
+
+.mc-story-row:hover .mc-row-name {
+  color: #fde68a;
+}
+
+.mc-story-row:focus-visible {
+  outline: 2px solid rgba(250, 204, 21, 0.6);
+  outline-offset: -2px;
+  border-radius: 12px;
+}
+
+.mc-story-go {
+  color: var(--dim);
+  transition:
+    transform 160ms ease,
+    color 160ms ease;
+}
+
+.mc-story-row:hover .mc-story-go,
+.mc-story-row:focus-visible .mc-story-go {
+  color: var(--amber);
+  transform: translateX(2px);
+}
+
+.mc-story-hint {
+  margin: 0;
+  padding: 9px 16px;
+  border-top: 1px solid rgba(214, 160, 110, 0.14);
+  font-family: "IBM Plex Mono:Regular", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mc-story-row,
+  .mc-story-go {
+    transition: none;
+  }
+
+  .mc-story-row:hover .mc-story-go,
+  .mc-story-row:focus-visible .mc-story-go {
+    transform: none;
+  }
+}

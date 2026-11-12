@@ -16,7 +16,7 @@ type ProjectSeed = Omit<Project, "featured">;
 
 /**
  * Extra projects that orbit each planet. Real spacecraft are used so the neon
- * dots describe something true: cyan means still exploring, orange means retired.
+ * dots describe something true: green means still exploring, orange means retired.
  */
 const extraProjects: ProjectSeed[] = [
   {
