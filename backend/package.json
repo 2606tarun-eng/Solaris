@@ -1,0 +1,31 @@
+{
+  "name": "solaris-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "seed": "tsx scripts/seed.ts",
+    "sync": "tsx scripts/sync-nasa.ts",
+    "format": "oxfmt"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.0.1",
+    "@fastify/multipart": "^9.0.1",
+    "@libsql/client": "^0.14.0",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.38.0",
+    "fastify": "^5.2.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "drizzle-kit": "^0.31.0",
+    "oxfmt": "^0.76.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

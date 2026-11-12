@@ -125,3 +125,113 @@ the NASA Space Apps Challenge. First impression matters: a playful planetarium, 
 - Mission photos: NASA Image and Video Library (public domain), stored in
   `public/assets/missions/`.
 - Replace curated project data with official NASA data later via `src/lib/nasa.ts` only.
+
+## Backend build plan (active)
+
+Goal: free-tier backend that fetches NASA data, transforms it to the frontend
+schemas, caches it in SQLite, serves it via Fastify, and powers a voice agent.
+
+### Locked decisions
+
+- Runtime: Node.js 22 + TypeScript (same as frontend, shared types).
+- Framework: Fastify (fast, great TS support, schema-based).
+- ORM: Drizzle ORM (type-safe, SQLite-native).
+- Database: SQLite (file-based, zero-config, free).
+- LLM: Google Gemini 2.5 Flash (free tier, 1.5M tokens/day).
+- STT: Deepgram Nova-2 ($150 free credit for new users).
+- TTS: ElevenLabs (10k chars/month free).
+- File storage: Cloudflare R2 (10GB free, S3-compatible).
+- Hosting: Render free tier (750 hrs/month, always-on).
+- Validation: Zod (shared schemas between backend and frontend).
+- Images/videos: store URLs in SQLite, serve from NASA CDN (no binary blobs).
+- Voice audio: store files in R2, metadata + URL in SQLite `voice_cache`.
+
+### Architecture
+
+```
+NASA APIs → sync script (cron 6h) → transform → SQLite (cache + fallback)
+                                                        │
+                                                        ▼
+                                              Fastify API (Render)
+                                                        │
+                                                        ▼
+                                              Frontend (React + Vite)
+```
+
+### SQLite schema (tables)
+
+- `planets` — id, name, nickname, tagline, color, hero_image_url
+- `missions` — id, planet_id, name, agency, status, launched, ended, headline,
+  summary, fun_fact, nasa_url, hero_image_url, stats (JSON)
+- `projects` — id, planet_id, name, agency, status, launched, ended, featured
+- `timeline_events` — id, year, title, kind, planet_id, detail
+- `stories` — planet_id, headline, intro, fun_fact, voice_cache_url
+- `media` — id, mission_id, kind, src (URL), caption, href
+- `voice_cache` — id (hash), transcript, audio_url, duration_ms
+- `sync_log` — id, source, status, records_count, error, synced_at
+
+### API routes
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/api/health` | Health check |
+| GET | `/api/planets` | All planets |
+| GET | `/api/planets/:id` | Planet + missions + story |
+| GET | `/api/missions` | Missions (filter: planet, status) |
+| GET | `/api/missions/:id` | Mission + media |
+| GET | `/api/projects` | Projects (filter: planet, status) |
+| GET | `/api/timeline` | Timeline (filter: year, from, to) |
+| GET | `/api/stories/:planetId` | Kid-friendly story |
+| GET | `/api/search?q=` | Full-text search |
+| POST | `/api/voice` | Voice agent (audio → audio) |
+| POST | `/api/sync` | Trigger NASA sync (admin key) |
+
+### Voice agent flow
+
+```
+mic → MediaRecorder → POST /api/voice
+  → Deepgram STT → transcript
+  → SQLite context (missions, stories, planets)
+  → Gemini LLM → response text
+  → ElevenLabs TTS → audio file (R2 + SQLite cache)
+  → return { transcript, response, audioUrl }
+→ frontend plays audio + shows transcript
+```
+
+### Build phases
+
+1. Phase 1: backend skeleton, Fastify + SQLite + Drizzle, health check.
+2. Phase 2: NASA API clients, transform, sync script.
+3. Phase 3: API routes, Gemini story generation, JSON export.
+4. Phase 4: voice agent (Deepgram + Gemini + ElevenLabs + R2 cache).
+5. Phase 5: polish, error handling, rate limiting, frontend wiring, deploy.
+
+### Cost
+
+| Service | Free tier |
+|---------|-----------|
+| Render | 750 hrs/month |
+| Gemini | 1.5M tokens/day |
+| Deepgram | $150 credit |
+| ElevenLabs | 10k chars/month |
+| Cloudflare R2 | 10GB |
+| NASA APIs | Unlimited |
+| **Total** | **$0** |
+
+### Risk mitigations
+
+- NASA API down → SQLite serves stale data.
+- Render filesystem reset → re-sync on startup if DB empty.
+- ElevenLabs/Deepgram exhausted → Web Speech API fallback.
+- Gemini rate limit → queue + exponential backoff.
+- CORS → Fastify CORS plugin, allow frontend origin.
+
+### Success criteria
+
+- [ ] Backend runs on Render free tier, always-on.
+- [ ] SQLite has 100+ missions, 8 planets, 150+ timeline events.
+- [ ] API responds < 100ms for data endpoints.
+- [ ] Voice agent responds < 3 seconds.
+- [ ] Frontend works offline with bundled JSON.
+- [ ] NASA sync runs every 6 hours.
+- [ ] Zero cost in normal operation.
