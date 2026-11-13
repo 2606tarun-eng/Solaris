@@ -149,7 +149,13 @@ export default function MissionControlDrawer({
             Nothing {tab === "active" ? "still flying" : "retired"} around {data.planetName} yet.
           </p>
         ) : (
-          <motion.ul className="mc-list" layout={!reducedMotion} role="tabpanel">
+          <motion.ul
+            className="mc-list"
+            // A planet can list a hundred real missions; measuring every row for
+            // a layout animation would cost more than it adds.
+            layout={!reducedMotion && visible.length <= 24}
+            role="tabpanel"
+          >
             {visible.map((entry) => (
               <MissionRow key={entry.id} entry={entry} />
             ))}

@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import AboutPanel from "../AboutPanel";
 import NavBar from "../NavBar";
 import StarfieldCanvas from "../StarfieldCanvas";
 import usePerformanceTier from "../../hooks/usePerformanceTier";
 import useReducedMotion from "../../hooks/useReducedMotion";
 import { atlasPath, go, handlePlainClick, missionPath } from "../../lib/missionRoute";
-import { getMissionStory } from "../../data/missionStories";
+import { getMissionStory, getMissionStoryAsync } from "../../data/missionStories";
 import MissionStorySidebar from "./MissionStorySidebar";
 import MissionStoryTabs from "./MissionStoryTabs";
 import "./missionStory.css";
@@ -29,7 +29,27 @@ export default function MissionStoryPage({ missionId }: { missionId: string }) {
   const [isAudioEnabled, setIsAudioEnabled] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
 
-  const profile = useMemo(() => getMissionStory(missionId), [missionId]);
+  const [profile, setProfile] = useState(() => getMissionStory(missionId));
+  const [resolving, setResolving] = useState(() => getMissionStory(missionId) === null);
+
+  // Catalog missions live in a lazy chunk, so a missing story may still be on
+  // its way. Hand-written profiles resolve synchronously and skip this.
+  useEffect(() => {
+    const immediate = getMissionStory(missionId);
+    setProfile(immediate);
+    setResolving(immediate === null);
+    if (immediate) return;
+
+    let alive = true;
+    getMissionStoryAsync(missionId).then((resolved) => {
+      if (!alive) return;
+      setProfile(resolved);
+      setResolving(false);
+    });
+    return () => {
+      alive = false;
+    };
+  }, [missionId]);
 
   useEffect(() => {
     document.title = profile
@@ -69,6 +89,14 @@ export default function MissionStoryPage({ missionId }: { missionId: string }) {
           <div className="ms-shell">
             <MissionStorySidebar profile={profile} />
             <MissionStoryTabs key={profile.id} profile={profile} reducedMotion={reducedMotion} />
+          </div>
+        ) : resolving ? (
+          <div className="ms-empty">
+            <p className="ms-empty-kicker">Loading mission</p>
+            <h1>Fetching {missionId.replace(/-/g, " ")}…</h1>
+            <p className="ms-empty-lead">
+              Pulling this mission's NASA record and its five chapters.
+            </p>
           </div>
         ) : (
           <div className="ms-empty">

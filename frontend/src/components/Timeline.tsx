@@ -19,6 +19,16 @@ function position(year: number) {
   return ((year - TIMELINE_START) / (TIMELINE_END - TIMELINE_START)) * 100;
 }
 
+/** Assigns each marker a lane inside its year so same-year launches stay clickable. */
+const timelineMarkers = (() => {
+  const lanes = new Map<number, number>();
+  return timelineEvents.map((event) => {
+    const lane = lanes.get(event.year) ?? 0;
+    lanes.set(event.year, lane + 1);
+    return { event, lane };
+  });
+})();
+
 export default function Timeline({ year, onChange, highlighted }: TimelineProps) {
   const [playing, setPlaying] = useState(false);
   const events = eventsForYear(year);
@@ -104,12 +114,17 @@ export default function Timeline({ year, onChange, highlighted }: TimelineProps)
           </span>
         ))}
 
-        {timelineEvents.map((event) => (
+        {timelineMarkers.map(({ event, lane }) => (
           <button
             key={`${event.year}-${event.title}`}
             type="button"
             className={`rail-marker is-${event.kind}${event.year === year ? " is-current" : ""}`}
-            style={{ left: `${position(event.year)}%` }}
+            style={{
+              left: `${position(event.year)}%`,
+              // Several missions can launch in one year; a tiny spread keeps
+              // each marker clickable instead of stacking them exactly.
+              marginLeft: `${-4.5 + lane * 5}px`,
+            }}
             title={`${event.year} · ${event.title}: ${event.detail}`}
             aria-label={`${event.year}: ${event.title}`}
             onClick={() => {

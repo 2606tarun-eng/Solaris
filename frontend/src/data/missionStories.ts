@@ -1109,3 +1109,17 @@ export function getMissionStory(id: string): MissionProfile | null {
 
   return null;
 }
+
+/**
+ * Story lookup that also reaches the NASA catalog missions.
+ *
+ * The catalog's chapter data is loaded on demand, so page 4 awaits this once
+ * and keeps showing whatever the sync lookup already resolved.
+ */
+export async function getMissionStoryAsync(id: string): Promise<MissionProfile | null> {
+  const immediate = getMissionStory(id);
+  if (immediate) return immediate;
+
+  const { nasaStoryFor } = await import("./nasaStories");
+  return nasaStoryFor(id);
+}

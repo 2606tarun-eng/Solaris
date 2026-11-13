@@ -26,8 +26,34 @@ cp .env.example .env        # add keys when you have them
 pnpm db:push                # create SQLite tables
 pnpm seed                   # port frontend curated data into SQLite
 pnpm sync                   # enrich with NASA media (optional, network)
+pnpm scrape                 # rebuild the mission catalog (see below)
 pnpm dev                    # http://localhost:3001
 ```
+
+## Mission catalog scrape
+
+`pnpm scrape` rebuilds the atlas dataset straight from NASA:
+
+- **science.nasa.gov/wp-json/wp/v2/mission** — the official mission catalog
+  (status, target body, type, launch date, hero image, article prose).
+- **images-api.nasa.gov** — NASA Image and Video Library, for a *different*
+  photo per story chapter.
+
+It writes three files:
+
+| File | Used by |
+|------|---------|
+| `frontend/src/data/generated/nasaMissions.json` | pages 2–3 (active/retired panels) + page 5 timeline |
+| `frontend/src/data/generated/nasaChapters.json` | page 4 story chapters (lazy-loaded) |
+| `backend/data/image-gaps.md` | checklist of chapters that fell back to archive art |
+
+Responses are cached in `backend/.cache/nasa-missions`, so re-runs are cheap.
+Scope it with `pnpm scrape --body=moon --limit=12`.
+
+NSSDCA (`nssdc.gsfc.nasa.gov`) is read where its pages respond, but its
+`robots.txt` blocks the bulk query endpoints and its Oracle backend returns
+errors for many display pages, so it cannot back a full sync.
+
 
 ## API
 

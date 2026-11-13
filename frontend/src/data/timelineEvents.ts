@@ -1,4 +1,6 @@
-﻿export type TimelineEventKind = "launch" | "arrival" | "milestone" | "end";
+﻿import { generatedTimelineEvents } from "./nasaCatalog";
+
+export type TimelineEventKind = "launch" | "arrival" | "milestone" | "end";
 
 export type TimelineEvent = {
   year: number;
@@ -17,7 +19,7 @@ export const TIMELINE_END = new Date().getFullYear();
  * partners). Sources: NASA mission pages (science.nasa.gov), NASA History, and
  * NASA/JPL press releases.
  */
-export const timelineEvents: TimelineEvent[] = [
+export const curatedTimeline: TimelineEvent[] = [
   {
     year: 1957,
     title: "Sputnik 1",
@@ -526,6 +528,16 @@ export const timelineEvents: TimelineEvent[] = [
       "NASA's Artemis II mission sends astronauts around the Moon, the first crewed deep-space flight since Apollo 17.",
   },
 ];
+
+/**
+ * The timeline the app renders: curated story beats first, then real launch
+ * records from the NASA mission catalog. Generated launches never replace a
+ * hand-written entry for the same year, so the narrative keeps its voice.
+ */
+export const timelineEvents: TimelineEvent[] = [
+  ...curatedTimeline,
+  ...generatedTimelineEvents(2),
+].sort((a, b) => a.year - b.year);
 
 export function eventsForYear(year: number) {
   return timelineEvents.filter((event) => event.year === year);

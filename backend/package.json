@@ -10,6 +10,7 @@
     "db:push": "drizzle-kit push",
     "seed": "tsx scripts/seed.ts",
     "sync": "tsx scripts/sync-nasa.ts",
+    "scrape": "tsx scripts/scrape-missions.ts",
     "format": "oxfmt"
   },
   "dependencies": {

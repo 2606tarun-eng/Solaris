@@ -2,7 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { planets } from "../data/planets";
 import { missionByPlanet, missionYears } from "../data/missions";
+import { nasaMissions } from "../data/nasaCatalog";
 import { projects } from "../data/projects";
+import { go, missionPath } from "../lib/missionRoute";
 import Icon from "./Icon";
 
 type SearchResult = {
@@ -12,6 +14,8 @@ type SearchResult = {
   planetId: string;
   color: string;
   kind: "planet" | "mission" | "project";
+  /** When set, picking the result opens that mission's story page. */
+  missionId?: string;
 };
 
 type MissionSearchProps = {
@@ -21,6 +25,7 @@ type MissionSearchProps = {
 
 function buildIndex(): SearchResult[] {
   const results: SearchResult[] = [];
+  const names = new Set<string>();
 
   for (const planet of planets) {
     results.push({
@@ -36,6 +41,7 @@ function buildIndex(): SearchResult[] {
   for (const planet of planets) {
     const mission = missionByPlanet[planet.id];
     if (!mission) continue;
+    names.add(mission.name.toLowerCase());
     results.push({
       key: `mission-${mission.id}`,
       label: mission.name,
@@ -43,6 +49,25 @@ function buildIndex(): SearchResult[] {
       planetId: planet.id,
       color: planet.color,
       kind: "mission",
+      missionId: mission.id,
+    });
+  }
+
+  // Every mission in the NASA catalog, so search reaches the whole archive and
+  // not just the hand-written highlights.
+  for (const mission of nasaMissions) {
+    const label = mission.name.toLowerCase();
+    if (names.has(label)) continue;
+    names.add(label);
+    const planet = planets.find((item) => item.id === mission.bodyId);
+    results.push({
+      key: `nasa-${mission.id}`,
+      label: mission.name,
+      meta: `${mission.bodyName} · ${mission.agency} · ${mission.years}`,
+      planetId: mission.bodyId,
+      color: planet?.color ?? "#7dd3fc",
+      kind: "mission",
+      missionId: mission.id,
     });
   }
 
@@ -95,7 +120,10 @@ export default function MissionSearch({ inputRef, onSelectPlanet }: MissionSearc
   }, []);
 
   const choose = (result: SearchResult) => {
-    onSelectPlanet(result.planetId);
+    // A mission result opens its five-chapter story; a planet or project just
+    // flies the camera there.
+    if (result.missionId) go(missionPath(result.missionId));
+    else onSelectPlanet(result.planetId);
     setQuery("");
   };
 

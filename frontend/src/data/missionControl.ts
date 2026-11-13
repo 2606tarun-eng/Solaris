@@ -1,5 +1,6 @@
 import { img } from "../assets";
 import { missionByPlanet, planetStories, type ProjectStatus } from "./missions";
+import { generatedCountsFor, generatedEntriesFor } from "./nasaCatalog";
 import { planetById } from "./planets";
 import { projectCounts, projectsByPlanet, projectYears } from "./projects";
 
@@ -609,11 +610,63 @@ const derived: Record<string, PlanetMissionControl> = Object.fromEntries(
   }),
 );
 
-/** Full Mission Control data for one planet. Saturn and the Moon are hand-authored. */
+/** Full Mission Control data for one planet, curated entries first. */
+const controlCache = new Map<string, PlanetMissionControl | null>();
+
 export function missionControlFor(planetId: string): PlanetMissionControl | null {
-  if (planetId === "saturn") return saturn;
-  if (planetId === "moon") return moon;
-  return derived[planetId] ?? null;
+  const cached = controlCache.get(planetId);
+  if (cached !== undefined) return cached;
+  const built = buildMissionControl(planetId);
+  controlCache.set(planetId, built);
+  return built;
+}
+
+function buildMissionControl(planetId: string): PlanetMissionControl | null {
+  const base =
+    planetId === "saturn" ? saturn : planetId === "moon" ? moon : derived[planetId] ?? null;
+  const generated = generatedEntriesFor(planetId);
+
+  if (!base) {
+    if (generated.length === 0) return null;
+    const planet = planetById[planetId];
+    return {
+      planetId,
+      planetName: planet?.name ?? planetId,
+      headline: planet?.tagline ?? "",
+      brief:
+        planetStories[planetId]?.intro ??
+        `${planet?.name ?? planetId} missions, from the NASA mission catalog.`,
+      sphere: spherePalettes[planetId] ?? {
+        bands: ["#9ca3af", "#6b7280", "#d1d5db", "#4b5563"],
+        highlight: "rgba(255, 255, 255, 0.4)",
+        shadow: "rgba(8, 8, 10, 0.84)",
+      },
+      counts: generatedCountsFor(planetId),
+      entries: generated,
+    };
+  }
+
+  if (generated.length === 0) return base;
+
+  // Curated copy wins the top of each tab; the NASA catalog fills the rest.
+  // A mission that exists in both (Cassini, Apollo 11…) is listed once.
+  const seen = new Set<string>();
+  const entries: MissionControlEntry[] = [];
+  for (const entry of [...base.entries, ...generated]) {
+    const keys = [entry.id.toLowerCase(), entry.name.toLowerCase()];
+    if (keys.some((key) => seen.has(key))) continue;
+    for (const key of keys) seen.add(key);
+    entries.push(entry);
+  }
+
+  return {
+    ...base,
+    counts: {
+      active: entries.filter((entry) => entry.status === "active").length,
+      retired: entries.filter((entry) => entry.status === "retired").length,
+    },
+    entries,
+  };
 }
 
 /* ------------------------------------------------------------ 3-D orbits */
@@ -642,13 +695,16 @@ export function orbitMissionsFor(
   data: PlanetMissionControl,
   startRadius = 2.6,
   step = 0.4,
+  limit = 9,
 ): MissionOrbit[] {
   const ordered = [...data.entries].sort((a, b) => {
     if (a.status !== b.status) return a.status === "active" ? -1 : 1;
     return 0;
   });
 
-  return ordered.map((entry, index) => ({
+  // Only the first few get a visible orbit: a planet page can list a hundred
+  // real missions, but a hundred rings would be unreadable noise.
+  return ordered.slice(0, limit).map((entry, index) => ({
     id: entry.id,
     name: entry.name,
     orbitRadius: Number((startRadius + index * step).toFixed(2)),
