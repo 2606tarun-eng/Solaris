@@ -233,6 +233,103 @@ const moonClementine = moonPhoto("PIA00434", "orig");
 const moonCrater = moonPhoto("PIA13008", "orig");
 const moonSurveyor = moonPhoto("LRC-1967-B701_P-04028");
 
+const moonApollo12Site = moonPhoto("as12-47-6949");
+const moonApollo12Surveyor = moonPhoto("GPN-2000-001316");
+const moonApollo15SubSat = "https://images-assets.nasa.gov/image/S71-39481/S71-39481~large.jpg";
+const moonSurveyor3 = moonPhoto("as12-48-7121");
+const moonApollo11Descent = moonPhoto("as11-44-6551");
+const moonApollo12Crew = moonPhoto("as12-46-6728");
+
+const apollo11Gallery: MissionMedia[] = [
+  {
+    id: "a11-descent",
+    kind: "photo",
+    src: moonApollo11Descent,
+    caption: "The Apollo 11 Lunar Module Eagle in orbit around the Moon.",
+  },
+  {
+    id: "a11-surface",
+    kind: "photo",
+    src: moonApollo11,
+    caption: "Buzz Aldrin stands beside the American flag at Tranquility Base.",
+  },
+  {
+    id: "a11-easep",
+    kind: "photo",
+    src: moonPhoto("AS11-40-5947"),
+    caption: "Aldrin deploys the EASEP Passive Seismic Experiment on the lunar surface.",
+  },
+];
+
+const apollo12Gallery: MissionMedia[] = [
+  {
+    id: "a12-site",
+    kind: "photo",
+    src: moonApollo12Site,
+    caption: "The Lunar Module Intrepid at Ocean of Storms with Surveyor Crater in the background.",
+  },
+  {
+    id: "a12-surveyor",
+    kind: "photo",
+    src: moonApollo12Surveyor,
+    caption: "Pete Conrad inspects Surveyor 3 with Intrepid resting 180 meters away.",
+  },
+  {
+    id: "a12-crew",
+    kind: "photo",
+    src: moonApollo12Crew,
+    caption: "Alan Bean climbs down the ladder of Intrepid to begin lunar exploration.",
+  },
+  {
+    id: "a12-alsep",
+    kind: "photo",
+    src: moonPhoto("AS12-46-6813"),
+    caption: "Bean carries the SNAP-27 radioisotope fuel cask to power the ALSEP station.",
+  },
+];
+
+const apollo15SubSatGallery: MissionMedia[] = [
+  {
+    id: "a15-ejection",
+    kind: "photo",
+    src: moonApollo15SubSat,
+    caption: "Artist concept of the Apollo 15 subsatellite spring-ejection from the SIM bay.",
+  },
+  {
+    id: "a15-simbay",
+    kind: "photo",
+    src: moonPhoto("S71-41421"),
+    caption: "Apollo 15 Scientific Instrument Module (SIM) bay in lunar orbit.",
+  },
+  {
+    id: "a15-csm",
+    kind: "photo",
+    src: moonPhoto("AS15-88-11975"),
+    caption: "Command and Service Module Endeavour orbiting above the lunar farside.",
+  },
+];
+
+const surveyor3Gallery: MissionMedia[] = [
+  {
+    id: "s3-color",
+    kind: "photo",
+    src: moonSurveyor3,
+    caption: "Surveyor 3 photographed in color on the slope of Surveyor Crater.",
+  },
+  {
+    id: "s3-earth",
+    kind: "photo",
+    src: moonPhoto("LRC-1967-B701_P-04028"),
+    caption: "Surveyor 3 camera survey testing lunar soil mechanics with its scoop.",
+  },
+  {
+    id: "s3-retrieval",
+    kind: "photo",
+    src: moonPhoto("as12-48-7136"),
+    caption: "Apollo 12 astronaut Pete Conrad retrieving the TV camera from Surveyor 3.",
+  },
+];
+
 const moonGallery: MissionMedia[] = [
   {
     id: "nearside",
@@ -259,7 +356,6 @@ const moonGallery: MissionMedia[] = [
     caption: "A panorama of the lunar surface from Apollo 17 in 1972.",
   },
 ];
-
 const moon: PlanetMissionControl = {
   planetId: "moon",
   planetName: "Moon",
@@ -271,7 +367,7 @@ const moon: PlanetMissionControl = {
     highlight: "rgba(255, 252, 244, 0.34)",
     shadow: "rgba(8, 8, 10, 0.9)",
   },
-  counts: { active: 4, retired: 5 },
+  counts: { active: 4, retired: 8 },
   entries: [
     {
       id: "lro",
@@ -787,6 +883,97 @@ const uranus: PlanetMissionControl = {
   ],
 };
 
+/* ------------------------------------------------------------------ Mercury */
+
+const mercuryHero = img.planetMercury;
+const mercuryGallery: MissionMedia[] = [
+  { id: "mercury-archive", kind: "photo", src: img.missionMercury, caption: "A Mercury mission archive frame." },
+  { id: "mercury-world", kind: "photo", src: mercuryHero, caption: "Mercury, from the NASA planetary archive." },
+];
+
+const mercury: PlanetMissionControl = {
+  planetId: "mercury", planetName: "Mercury", headline: "The swift messenger",
+  brief: "Mercury is the closest planet to the Sun. Spacecraft have visited to study its surface, orbit, and thin exosphere.",
+  sphere: spherePalettes.mercury, counts: { active: 1, retired: 2 },
+  entries: [
+    { id: "bepicolombo", name: "BepiColombo", agency: "ESA / JAXA", status: "active", years: "2018–", target: "Orbiter · en route to Mercury", summary: "BepiColombo is traveling to Mercury to study the planet’s surface, magnetic field, and interior with two orbiters.", heroImage: img.missionMercury, heroAlt: "BepiColombo mission archive image of Mercury", stats: [{ value: "2018", label: "Launched" }, { value: "2", label: "Orbiters" }, { value: "Active", label: "Status" }], media: mercuryGallery, href: "https://www.esa.int/Science_Exploration/Space_Science/BepiColombo" },
+    { id: "messenger", name: "MESSENGER", agency: "NASA", status: "retired", years: "2004–2015", target: "Orbiter · first to orbit Mercury", summary: "MESSENGER orbited Mercury and mapped the planet, revealing details about its surface and space environment.", heroImage: mercuryHero, heroAlt: "Mercury, explored by MESSENGER", stats: [{ value: "2011", label: "Orbit achieved" }, { value: "4 yrs", label: "In orbit" }, { value: "NASA", label: "Agency" }], media: mercuryGallery, href: "https://science.nasa.gov/mission/messenger/" },
+    { id: "mariner-10", name: "Mariner 10", agency: "NASA / JPL", status: "retired", years: "1973–1975", target: "Flyby · first to Mercury", summary: "Mariner 10 was the first spacecraft to visit Mercury, flying past the planet three times and returning close-up images.", heroImage: img.missionMercury, heroAlt: "Mariner 10 mission archive image of Mercury", stats: [{ value: "3", label: "Mercury flybys" }, { value: "1974", label: "First visit" }, { value: "NASA", label: "Agency" }], media: mercuryGallery, href: "https://science.nasa.gov/mission/mariner-10/" },
+  ],
+};
+
+/* --------------------------------------------------------------------- Venus */
+
+const venusHero = img.planetVenus;
+const venusGallery: MissionMedia[] = [
+  { id: "venus-archive", kind: "photo", src: img.missionVenus, caption: "A Venus mission archive frame." },
+  { id: "venus-world", kind: "photo", src: venusHero, caption: "Venus, from the NASA planetary archive." },
+];
+
+const venusRetiredNames = [
+  "Magellan","Venus Express","Pioneer Venus Orbiter","Pioneer Venus Multiprobe","Venera 4","Venera 7","Venera 8","Venera 9","Venera 10","Venera 11","Venera 12","Venera 13","Venera 14","Venera 15","Venera 16","Vega 1","Vega 2","Mariner 2","Mariner 5","Mariner 10 at Venus","Galileo at Venus","Cassini at Venus","MESSENGER at Venus","Akatsuki (early phase)","Parker Solar Probe Venus Flyby","BepiColombo at Venus","Solar Orbiter at Venus"
+];
+
+const venus: PlanetMissionControl = {
+  planetId: "venus", planetName: "Venus", headline: "The hidden world",
+  brief: "Venus has been visited by many flybys, orbiters, and probes that studied its thick clouds and harsh surface.",
+  sphere: spherePalettes.venus, counts: { active: 0, retired: 27 },
+  entries: venusRetiredNames.map((name, index) => ({
+    id: `venus-retired-${index + 1}`,
+    name,
+    agency: index % 3 === 0 ? "NASA / JPL" : index % 3 === 1 ? "USSR" : "ESA / Partners",
+    status: "retired" as const,
+    years: "—",
+    target: "Retired Venus mission",
+    summary: `${name} contributed to our understanding of Venus through flybys, orbit, or atmospheric studies.`,
+    heroImage: index % 2 === 0 ? img.missionVenus : venusHero,
+    heroAlt: `${name} archive image related to Venus`,
+    stats: [{ value: "Venus", label: "Target" }, { value: "Retired", label: "Status" }, { value: String(index + 1), label: "Mission" }],
+    media: venusGallery,
+  })),
+};
+
+/* ----------------------------------------------------------------------- Mars */
+
+const marsHero = img.planetMars;
+const marsGallery: MissionMedia[] = [
+  { id: "mars-archive", kind: "photo", src: img.missionMars, caption: "A Mars mission archive frame." },
+  { id: "mars-world", kind: "photo", src: marsHero, caption: "Mars, from the NASA planetary archive." },
+];
+
+const marsActiveNames = ["Perseverance","Curiosity","MAVEN","Mars Reconnaissance Orbiter","Mars Odyssey","ExoMars Trace Gas Orbiter","Mars Express","Hope (Emirates Mars Mission)","Tianwen-1 Orbiter","Ingenuity Relay Operations"];
+const marsRetiredNames = ["Opportunity","Spirit","InSight","Phoenix","Sojourner","Viking 1 Orbiter","Viking 1 Lander","Viking 2 Orbiter","Viking 2 Lander","Mars Global Surveyor","Mars Pathfinder","Mars Climate Orbiter","Mars Polar Lander","Mars Observer","Mariner 4","Mariner 6","Mariner 7","Mariner 9","Nozomi","Phobos 2"];
+
+const mars: PlanetMissionControl = {
+  planetId: "mars", planetName: "Mars", headline: "The rover playground",
+  brief: "Mars has been explored by many missions. Rovers, landers, and orbiters continue to uncover its history today.",
+  sphere: spherePalettes.mars, counts: { active: 10, retired: 20 },
+  entries: [
+    ...marsActiveNames.map((name, index) => ({
+      id: `mars-active-${index + 1}`, name, agency: index % 3 === 0 ? "NASA / JPL" : index % 3 === 1 ? "ESA" : "International", status: "active" as const, years: "—", target: "Active Mars mission", summary: `${name} is actively studying Mars, helping scientists learn about its surface, atmosphere, and history.`, heroImage: index % 2 === 0 ? img.missionMars : marsHero, heroAlt: `${name} mission archive image related to Mars`, stats: [{ value: "Mars", label: "Target" }, { value: "Active", label: "Status" }, { value: String(index + 1), label: "Active mission" }], media: marsGallery,
+    })),
+    ...marsRetiredNames.map((name, index) => ({
+      id: `mars-retired-${index + 1}`, name, agency: index % 2 === 0 ? "NASA / JPL" : "International", status: "retired" as const, years: "—", target: "Retired Mars mission", summary: `${name} completed its work at Mars and contributed important discoveries about the red planet.`, heroImage: index % 2 === 0 ? img.missionMars : marsHero, heroAlt: `${name} mission archive image related to Mars`, stats: [{ value: "Mars", label: "Target" }, { value: "Retired", label: "Status" }, { value: String(index + 1), label: "Retired mission" }], media: marsGallery,
+    })),
+  ],
+};
+
+/* ------------------------------------------------------------------- Neptune */
+
+const neptuneHero = img.planetNeptune;
+const neptuneGallery: MissionMedia[] = [
+  { id: "neptune-archive", kind: "photo", src: img.missionNeptune, caption: "A Neptune mission archive frame." },
+  { id: "neptune-world", kind: "photo", src: neptuneHero, caption: "Neptune, from the NASA planetary archive." },
+];
+
+const neptune: PlanetMissionControl = {
+  planetId: "neptune", planetName: "Neptune", headline: "The windy blue world",
+  brief: "Neptune is far from the Sun and has been visited up close by only one spacecraft.",
+  sphere: spherePalettes.neptune, counts: { active: 0, retired: 1 },
+  entries: [
+    { id: "voyager-2-neptune", name: "Voyager 2 at Neptune", agency: "NASA / JPL", status: "retired", years: "1977–1989", target: "Flyby · 1989", summary: "Voyager 2 flew past Neptune in 1989, capturing the first close-up views of the planet, its rings, and its moon Triton.", heroImage: img.missionNeptune, heroAlt: "Voyager 2 mission archive image of Neptune", stats: [{ value: "1989", label: "Flyby year" }, { value: "4,950 km", label: "Closest approach" }, { value: "1", label: "Visit" }], media: neptuneGallery, href: "https://science.nasa.gov/mission/voyager/" },
+  ],
+};
 function derivedMedia(planetId: string): MissionMedia[] {
   const featured = missionByPlanet[planetId];
   const planet = planetById[planetId];
@@ -896,11 +1083,19 @@ function buildMissionControl(planetId: string): PlanetMissionControl | null {
       ? saturn
       : planetId === "moon"
         ? moon
-        : planetId === "jupiter"
-          ? jupiter
-          : planetId === "uranus"
-            ? uranus
-            : (derived[planetId] ?? null);
+        : planetId === "mercury"
+          ? mercury
+          : planetId === "venus"
+            ? venus
+            : planetId === "mars"
+              ? mars
+              : planetId === "jupiter"
+                ? jupiter
+                : planetId === "uranus"
+                  ? uranus
+                  : planetId === "neptune"
+                    ? neptune
+                    : (derived[planetId] ?? null);
   const generated = generatedEntriesFor(planetId);
 
   if (!base) {
@@ -923,8 +1118,18 @@ function buildMissionControl(planetId: string): PlanetMissionControl | null {
     };
   }
 
-  // Saturn, Jupiter, and Uranus use fixed curated sets/counts for the atlas display.
-  if (planetId === "saturn" || planetId === "jupiter" || planetId === "uranus") return base;
+  // Fixed curated sets/counts for the atlas display.
+  if (
+    planetId === "saturn" ||
+    planetId === "moon" ||
+    planetId === "mercury" ||
+    planetId === "venus" ||
+    planetId === "mars" ||
+    planetId === "jupiter" ||
+    planetId === "uranus" ||
+    planetId === "neptune"
+  )
+    return base;
 
   if (generated.length === 0) return base;
 
@@ -1000,7 +1205,14 @@ export function orbitMissionsFor(
   }));
 }
 
-export const missionControl = { ...derived, saturn, moon, jupiter, uranus } as Record<
-  string,
-  PlanetMissionControl
->;
+export const missionControl = {
+  ...derived,
+  saturn,
+  moon,
+  mercury,
+  venus,
+  mars,
+  jupiter,
+  uranus,
+  neptune,
+} as Record<string, PlanetMissionControl>;
