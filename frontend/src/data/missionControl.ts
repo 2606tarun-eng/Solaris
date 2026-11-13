@@ -690,17 +690,23 @@ const orbitColor: Record<ProjectStatus, string> = {
 /**
  * Lays the planet's missions out as orbit shells: still-active hardware runs
  * the inner tracks, retired explorers take the longer, slower outer ones.
+ *
+ * Pass `status` to show only one kind — the focus view uses the drawer's
+ * tab to pick which set revolves around the planet (capped at 9 shells).
  */
 export function orbitMissionsFor(
   data: PlanetMissionControl,
   startRadius = 2.6,
   step = 0.4,
   limit = 9,
+  status?: ProjectStatus,
 ): MissionOrbit[] {
-  const ordered = [...data.entries].sort((a, b) => {
-    if (a.status !== b.status) return a.status === "active" ? -1 : 1;
-    return 0;
-  });
+  const ordered = [...data.entries]
+    .filter((entry) => !status || entry.status === status)
+    .sort((a, b) => {
+      if (a.status !== b.status) return a.status === "active" ? -1 : 1;
+      return 0;
+    });
 
   // Only the first few get a visible orbit: a planet page can list a hundred
   // real missions, but a hundred rings would be unreadable noise.

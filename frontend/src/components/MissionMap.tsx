@@ -2,6 +2,7 @@ import { useEffect, useState, type RefObject } from "react";
 import { AnimatePresence } from "framer-motion";
 import type { CameraApi, PlanetPosition } from "../hooks/useCamera";
 import { missionControlFor } from "../data/missionControl";
+import { type DrawerTab } from "./MissionControlDrawer";
 import GuidedTour from "./GuidedTour";
 import MissionControlDrawer from "./MissionControlDrawer";
 import PlanetFocusStage from "./PlanetFocusStage";
@@ -58,9 +59,19 @@ export default function MissionMap({
   const focusData = selectedPlanetId ? missionControlFor(selectedPlanetId) : null;
   // Earth has one extra panel: its Moon. Every other planet stays single-body.
   const [focusedBody, setFocusedBody] = useState<"earth" | "moon">("earth");
+  // The drawer tab is shared with the 3-D stage, so the button the user
+  // clicks decides which missions revolve around the planet.
+  const [drawerTab, setDrawerTab] = useState<DrawerTab>("active");
   useEffect(() => {
     setFocusedBody("earth");
   }, [selectedPlanetId, drawerOpen]);
+
+  // When hopping between planets, show the tab that actually has data.
+  useEffect(() => {
+    if (!focusData) return;
+    const hasActive = focusData.entries.some((entry) => entry.status === "active");
+    setDrawerTab(hasActive ? "active" : "retired");
+  }, [focusData]);
 
   const moonSelected = selectedPlanetId === "earth" && drawerOpen && focusedBody === "moon";
 
@@ -160,6 +171,7 @@ export default function MissionMap({
             moonActive={moonSelected}
             onSelectMoon={() => setFocusedBody("moon")}
             onSelectEarth={() => setFocusedBody("earth")}
+            orbitTab={drawerTab}
           />
         </AnimatePresence>
       ) : null}
@@ -172,6 +184,8 @@ export default function MissionMap({
             reducedMotion={reducedMotion}
             onClose={onCloseDrawer}
             onBackToEarth={moonSelected ? () => setFocusedBody("earth") : undefined}
+            tab={drawerTab}
+            onTabChange={setDrawerTab}
           />
         ) : null}
       </AnimatePresence>

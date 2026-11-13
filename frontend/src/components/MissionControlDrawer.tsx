@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { missionControlFor, type MissionControlEntry } from "../data/missionControl";
 import { handlePlainClick, missionPath } from "../lib/missionRoute";
@@ -13,19 +12,22 @@ import "./mission-story/missionStoryLink.css";
  * drawer stays a short, scannable index instead of unfolding media inline.
  */
 
+export type DrawerTab = "active" | "retired";
+
 type MissionControlDrawerProps = {
   planetId: string;
   reducedMotion: boolean;
   onClose: () => void;
   /** Moon panel only: return to Earth's mission control. */
   onBackToEarth?: () => void;
+  /** Shared with the 3-D stage: which set of missions is orbiting the planet. */
+  tab: DrawerTab;
+  onTabChange: (tab: DrawerTab) => void;
 };
-
-type TabKey = "active" | "retired";
 
 const EASE_SOFT: [number, number, number, number] = [0.22, 0.9, 0.3, 1];
 
-const TABS: { key: TabKey; label: string }[] = [
+const TABS: { key: DrawerTab; label: string }[] = [
   { key: "active", label: "STILL ACTIVE" },
   { key: "retired", label: "RETIRED PIONEERS" },
 ];
@@ -65,17 +67,10 @@ export default function MissionControlDrawer({
   reducedMotion,
   onClose,
   onBackToEarth,
+  tab,
+  onTabChange,
 }: MissionControlDrawerProps) {
   const data = missionControlFor(planetId);
-  const defaultTab: TabKey =
-    data && data.entries.some((entry) => entry.status === "active") ? "active" : "retired";
-  const [tab, setTab] = useState<TabKey>(defaultTab);
-  // Reset the panel when the reader hops to another planet without closing.
-  const [seenPlanet, setSeenPlanet] = useState(planetId);
-  if (seenPlanet !== planetId) {
-    setSeenPlanet(planetId);
-    setTab(defaultTab);
-  }
 
   if (!data) return null;
 
@@ -134,7 +129,7 @@ export default function MissionControlDrawer({
               role="tab"
               aria-selected={selected}
               className={selected ? "is-active" : ""}
-              onClick={() => setTab(option.key)}
+              onClick={() => onTabChange(option.key)}
             >
               <span className="mc-tab-label">[ {option.label} ]</span>
               <span className="mc-tab-count">{count}</span>

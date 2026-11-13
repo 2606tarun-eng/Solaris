@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { planets } from "../data/planets";
 import { orbits } from "../data/solarSystem";
-import { projectCounts } from "../data/projects";
+import { missionControlFor } from "../data/missionControl";
 import type { CameraApi, PlanetPosition } from "../hooks/useCamera";
 import Icon from "./Icon";
 import PlanetMarker from "./PlanetMarker";
@@ -201,7 +201,7 @@ export default function OrbitSystem({
         </div>
 
         {planets.map((planet) => {
-          const counts = projectCounts(planet.id);
+          const counts = missionControlFor(planet.id)?.counts ?? { active: 0, retired: 0 };
           const dimmed =
             (filter === "active" && counts.active === 0) ||
             (filter === "retired" && counts.retired === 0);

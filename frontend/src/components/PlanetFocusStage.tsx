@@ -28,6 +28,8 @@ type PlanetFocusStageProps = {
   moonActive?: boolean;
   onSelectMoon?: () => void;
   onSelectEarth?: () => void;
+  /** Which drawer tab is open — decides which missions revolve in 3-D. */
+  orbitTab?: "active" | "retired";
 };
 
 const EASE_OUT: [number, number, number, number] = [0.22, 0.9, 0.3, 1];
@@ -107,6 +109,7 @@ export default function PlanetFocusStage({
   moonActive = false,
   onSelectMoon,
   onSelectEarth,
+  orbitTab = "active",
 }: PlanetFocusStageProps) {
   const narrow = useNarrow();
   const { sphere, rings } = data;
@@ -126,8 +129,9 @@ export default function PlanetFocusStage({
   const orbits = useMemo(() => {
     const start = rings ? (narrow ? 1.0 : 1.2) : narrow ? 0.8 : 1.0;
     const step = rings ? (narrow ? 0.06 : 0.1) : narrow ? 0.06 : 0.1;
-    return orbitMissionsFor(data, start, step);
-  }, [data, rings, narrow]);
+    // The drawer tab picks the set: green = still exploring, copper = retired.
+    return orbitMissionsFor(data, start, step, 9, orbitTab);
+  }, [data, rings, narrow, orbitTab]);
 
   const ringProps: PlanetRings | null = rings
     ? { band: rings.band, soft: rings.bandSoft, gap: rings.gap, tilt: 0.38 }
