@@ -137,27 +137,8 @@ const saturn: PlanetMissionControl = {
     bandSoft: "rgba(214, 190, 150, 0.24)",
     gap: "rgba(10, 8, 6, 0.34)",
   },
-  counts: { active: 1, retired: 4 },
+  counts: { active: 0, retired: 4 },
   entries: [
-    {
-      id: "dragonfly",
-      name: "Dragonfly",
-      agency: "NASA / APL",
-      status: "active",
-      years: "2028–",
-      target: "Titan · in development",
-      summary:
-        "A nuclear-powered rotorcraft that will fly between landing sites on Titan, Saturn's biggest moon. Titan has rivers and seas of liquid methane, and the ingredients for life may be waiting in them.",
-      heroImage: saturnHero,
-      heroAlt: "Saturn, the system Dragonfly is travelling to",
-      stats: [
-        { value: "2028", label: "Planned launch" },
-        { value: "8", label: "Rotors" },
-        { value: "Titan", label: "Destination" },
-      ],
-      media: saturnGallery,
-      href: "https://science.nasa.gov/mission/dragonfly/",
-    },
     {
       id: "cassini",
       name: "Cassini",
@@ -645,6 +626,9 @@ function buildMissionControl(planetId: string): PlanetMissionControl | null {
       entries: generated,
     };
   }
+
+  // Saturn uses a fixed curated set/counts for the atlas display.
+  if (planetId === "saturn") return base;
 
   if (generated.length === 0) return base;
 

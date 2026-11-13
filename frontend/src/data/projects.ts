@@ -128,14 +128,6 @@ const extraProjects: ProjectSeed[] = [
     ended: 2005,
   },
   {
-    id: "dragonfly",
-    planetId: "saturn",
-    name: "Dragonfly",
-    agency: "NASA / APL",
-    status: "active",
-    launched: 2028,
-  },
-  {
     id: "voyager-1",
     planetId: "saturn",
     name: "Voyager 1",

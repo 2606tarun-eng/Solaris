@@ -126,7 +126,7 @@ const seeds: PlanetSeed[] = [
     size: 72,
     period: 66,
     color: "#fde68a",
-    moons: 146,
+    moons: 293,
     tagline: "The ringed beauty",
     src: img.saturn,
     hero: img.planetSaturn,
