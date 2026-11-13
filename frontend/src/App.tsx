@@ -26,8 +26,6 @@ export default function AstroRelicsMissionAtlas() {
   const [filter, setFilter] = useState<MissionFilter>("all");
   const [speed, setSpeed] = useState(1);
   const [year, setYear] = useState(TIMELINE_END);
-  // Data-sonification master switch (Tone.js will read this next step).
-  const [isAudioEnabled, setIsAudioEnabled] = useState(false);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const cameraRef = useRef<HTMLDivElement>(null);
@@ -125,8 +123,6 @@ export default function AstroRelicsMissionAtlas() {
         onOpenMap={openMap}
         onStartTour={startTour}
         onOpenAbout={() => setAboutOpen(true)}
-        isAudioEnabled={isAudioEnabled}
-        onToggleAudio={() => setIsAudioEnabled((value) => !value)}
       />
 
       <main className="app-main">

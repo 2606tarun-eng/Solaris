@@ -7,8 +7,6 @@ type NavBarProps = {
   onOpenMap: () => void;
   onStartTour: () => void;
   onOpenAbout: () => void;
-  isAudioEnabled: boolean;
-  onToggleAudio: () => void;
 };
 
 export default function NavBar({
@@ -16,8 +14,6 @@ export default function NavBar({
   onOpenMap,
   onStartTour,
   onOpenAbout,
-  isAudioEnabled,
-  onToggleAudio,
 }: NavBarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
@@ -101,18 +97,6 @@ export default function NavBar({
           onClick={() => flash("Explorer accounts are coming soon.")}
         >
           Login
-        </button>
-
-        <button
-          type="button"
-          className={`audio-toggle ${isAudioEnabled ? "is-on" : "is-off"}`}
-          onClick={onToggleAudio}
-          aria-pressed={isAudioEnabled}
-          aria-label={isAudioEnabled ? "Turn audio off" : "Turn audio on"}
-          title={isAudioEnabled ? "Audio: on" : "Audio: off"}
-        >
-          <Icon name={isAudioEnabled ? "volume-on" : "volume-off"} size={16} />
-          <span className="audio-label">Audio: {isAudioEnabled ? "On" : "Off"}</span>
         </button>
 
         <div className="nav-menu-wrap">

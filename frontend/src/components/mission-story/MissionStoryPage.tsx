@@ -26,7 +26,6 @@ const SUGGESTIONS = [
 export default function MissionStoryPage({ missionId }: { missionId: string }) {
   const reducedMotion = useReducedMotion();
   const tier = usePerformanceTier();
-  const [isAudioEnabled, setIsAudioEnabled] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
 
   const [profile, setProfile] = useState(() => getMissionStory(missionId));
@@ -80,8 +79,6 @@ export default function MissionStoryPage({ missionId }: { missionId: string }) {
         onOpenMap={backToAtlas}
         onStartTour={backToAtlas}
         onOpenAbout={() => setAboutOpen(true)}
-        isAudioEnabled={isAudioEnabled}
-        onToggleAudio={() => setIsAudioEnabled((value) => !value)}
       />
 
       <main className="ms-main">
