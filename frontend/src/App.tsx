@@ -147,7 +147,9 @@ export default function AstroRelicsMissionAtlas() {
         />
       </main>
 
-      <Timeline year={year} onChange={setYear} highlighted={highlighted} speed={speed} />
+      {!drawerOpen ? (
+        <Timeline year={year} onChange={setYear} highlighted={highlighted} speed={speed} />
+      ) : null}
       <StatusBar />
 
       {aboutOpen ? (
