@@ -499,6 +499,245 @@ const spherePalettes: Record<string, PlanetMissionControl["sphere"]> = {
   },
 };
 
+/* ------------------------------------------------------------------- Jupiter */
+
+const jupiterHero = img.planetJupiter;
+const jupiterGallery: MissionMedia[] = [
+  {
+    id: "jupiter-archive",
+    kind: "photo",
+    src: img.missionJupiter,
+    caption: "A Jupiter mission archive frame.",
+  },
+  {
+    id: "jupiter-world",
+    kind: "photo",
+    src: jupiterHero,
+    caption: "Jupiter, from the NASA planetary archive.",
+  },
+];
+
+const jupiter: PlanetMissionControl = {
+  planetId: "jupiter",
+  planetName: "Jupiter",
+  headline: "The giant storm",
+  brief:
+    "Jupiter is a giant world of swirling clouds and powerful storms. Spacecraft have flown past, orbited, and are on their way to explore it and its moons.",
+  sphere: spherePalettes.jupiter,
+  counts: { active: 3, retired: 8 },
+  entries: [
+    {
+      id: "juno",
+      name: "Juno",
+      agency: "NASA / JPL",
+      status: "active",
+      years: "2011–now",
+      target: "Orbiter · studying Jupiter",
+      summary:
+        "Juno has been orbiting Jupiter since 2016, peering beneath its cloud tops to learn about its storms, magnetic field, and deep interior.",
+      heroImage: img.missionJupiter,
+      heroAlt: "Juno mission archive image of Jupiter",
+      stats: [
+        { value: "2011", label: "Launched" },
+        { value: "2016", label: "Arrived" },
+        { value: "Active", label: "Status" },
+      ],
+      media: jupiterGallery,
+      href: "https://science.nasa.gov/mission/juno/",
+    },
+    {
+      id: "europa-clipper",
+      name: "Europa Clipper",
+      agency: "NASA / JPL",
+      status: "active",
+      years: "2024–",
+      target: "Orbiter · Europa flybys",
+      summary:
+        "Europa Clipper is traveling to the Jupiter system to study Europa’s icy shell and the ocean that may lie beneath it.",
+      heroImage: jupiterHero,
+      heroAlt: "Jupiter, destination of the Europa Clipper mission",
+      stats: [
+        { value: "2024", label: "Launched" },
+        { value: "Europa", label: "Main target" },
+        { value: "Active", label: "Status" },
+      ],
+      media: jupiterGallery,
+      href: "https://science.nasa.gov/mission/europa-clipper/",
+    },
+    {
+      id: "juice",
+      name: "JUICE",
+      agency: "ESA",
+      status: "active",
+      years: "2023–",
+      target: "Orbiter · Jupiter’s icy moons",
+      summary:
+        "ESA’s Jupiter Icy Moons Explorer is on its way to study Jupiter and its large moons Ganymede, Callisto, and Europa.",
+      heroImage: jupiterHero,
+      heroAlt: "Jupiter, destination of the JUICE mission",
+      stats: [
+        { value: "2023", label: "Launched" },
+        { value: "Icy moons", label: "Focus" },
+        { value: "En route", label: "Status" },
+      ],
+      media: jupiterGallery,
+      href: "https://www.esa.int/Science_Exploration/Space_Science/Juice",
+    },
+    {
+      id: "galileo",
+      name: "Galileo",
+      agency: "NASA / JPL",
+      status: "retired",
+      years: "1989–2003",
+      target: "Orbiter · first at Jupiter",
+      summary:
+        "Galileo was the first spacecraft to orbit Jupiter. It studied the planet and its moons and dropped a probe into Jupiter’s atmosphere.",
+      heroImage: img.missionJupiter,
+      heroAlt: "Galileo mission archive image of Jupiter",
+      stats: [
+        { value: "35", label: "Orbits of Jupiter" },
+        { value: "8 yrs", label: "Exploring Jupiter" },
+        { value: "1", label: "Probe dropped" },
+      ],
+      media: jupiterGallery,
+      href: "https://science.nasa.gov/mission/galileo/",
+    },
+    {
+      id: "pioneer-10-jupiter",
+      name: "Pioneer 10",
+      agency: "NASA / Ames",
+      status: "retired",
+      years: "1972–1973",
+      target: "Flyby · 1973",
+      summary:
+        "Pioneer 10 was the first spacecraft to travel through the asteroid belt and make a close flyby of Jupiter.",
+      heroImage: jupiterHero,
+      heroAlt: "Jupiter, visited by Pioneer 10",
+      stats: [
+        { value: "1973", label: "Jupiter flyby" },
+        { value: "1st", label: "To Jupiter" },
+        { value: "NASA", label: "Agency" },
+      ],
+      media: jupiterGallery,
+      href: "https://science.nasa.gov/mission/pioneer-10/",
+    },
+    {
+      id: "pioneer-11-jupiter",
+      name: "Pioneer 11",
+      agency: "NASA / Ames",
+      status: "retired",
+      years: "1973–1974",
+      target: "Flyby · 1974",
+      summary:
+        "Pioneer 11 flew past Jupiter in 1974, taking images and measurements before continuing on to Saturn.",
+      heroImage: jupiterHero,
+      heroAlt: "Jupiter, visited by Pioneer 11",
+      stats: [
+        { value: "1974", label: "Jupiter flyby" },
+        { value: "2nd", label: "To Jupiter" },
+        { value: "NASA", label: "Agency" },
+      ],
+      media: jupiterGallery,
+      href: "https://science.nasa.gov/mission/pioneer-11/",
+    },
+    {
+      id: "voyager-1-jupiter",
+      name: "Voyager 1 at Jupiter",
+      agency: "NASA / JPL",
+      status: "retired",
+      years: "1977–1979",
+      target: "Flyby · 1979",
+      summary:
+        "Voyager 1 flew past Jupiter in 1979, capturing detailed images of the planet and discovering active volcanoes on its moon Io.",
+      heroImage: jupiterHero,
+      heroAlt: "Jupiter, visited by Voyager 1",
+      stats: [
+        { value: "1979", label: "Jupiter flyby" },
+        { value: "Io", label: "Volcanoes found" },
+        { value: "NASA", label: "Agency" },
+      ],
+      media: jupiterGallery,
+      href: "https://science.nasa.gov/mission/voyager/",
+    },
+    {
+      id: "voyager-2-jupiter",
+      name: "Voyager 2 at Jupiter",
+      agency: "NASA / JPL",
+      status: "retired",
+      years: "1977–1979",
+      target: "Flyby · 1979",
+      summary:
+        "Voyager 2 flew past Jupiter in 1979, studying the planet, its rings, and its moons before heading onward to the outer planets.",
+      heroImage: jupiterHero,
+      heroAlt: "Jupiter, visited by Voyager 2",
+      stats: [
+        { value: "1979", label: "Jupiter flyby" },
+        { value: "Rings", label: "Observed" },
+        { value: "NASA", label: "Agency" },
+      ],
+      media: jupiterGallery,
+      href: "https://science.nasa.gov/mission/voyager/",
+    },
+    {
+      id: "ulysses-jupiter",
+      name: "Ulysses",
+      agency: "ESA / NASA",
+      status: "retired",
+      years: "1990–1992",
+      target: "Flyby · 1992",
+      summary:
+        "Ulysses used a gravity assist from Jupiter in 1992 to swing out of the plane of the planets and study the Sun’s poles.",
+      heroImage: jupiterHero,
+      heroAlt: "Jupiter, used by Ulysses for a gravity assist",
+      stats: [
+        { value: "1992", label: "Jupiter flyby" },
+        { value: "Gravity assist", label: "Purpose" },
+        { value: "Sun", label: "Later focus" },
+      ],
+      media: jupiterGallery,
+      href: "https://science.nasa.gov/mission/ulysses/",
+    },
+    {
+      id: "cassini-jupiter",
+      name: "Cassini at Jupiter",
+      agency: "NASA / ESA / ASI",
+      status: "retired",
+      years: "1997–2000",
+      target: "Flyby · 2000",
+      summary:
+        "On its way to Saturn, Cassini flew past Jupiter in 2000 and worked with Galileo to study the planet’s atmosphere and magnetosphere.",
+      heroImage: jupiterHero,
+      heroAlt: "Jupiter, visited by Cassini during its flyby",
+      stats: [
+        { value: "2000", label: "Jupiter flyby" },
+        { value: "Saturn", label: "Final destination" },
+        { value: "NASA/ESA/ASI", label: "Agencies" },
+      ],
+      media: jupiterGallery,
+      href: "https://science.nasa.gov/mission/cassini/",
+    },
+    {
+      id: "new-horizons-jupiter",
+      name: "New Horizons at Jupiter",
+      agency: "NASA / APL",
+      status: "retired",
+      years: "2006–2007",
+      target: "Flyby · 2007",
+      summary:
+        "New Horizons used a Jupiter flyby in 2007 to gain speed on its way to Pluto, while also observing Jupiter’s atmosphere and moons.",
+      heroImage: jupiterHero,
+      heroAlt: "Jupiter, visited by New Horizons during its flyby",
+      stats: [
+        { value: "2007", label: "Jupiter flyby" },
+        { value: "Pluto", label: "Final destination" },
+        { value: "NASA", label: "Agency" },
+      ],
+      media: jupiterGallery,
+      href: "https://science.nasa.gov/mission/new-horizons/",
+    },
+  ],
+};
+
 /* -------------------------------------------------------------------- Uranus */
 
 const uranusHero = img.planetUranus;
@@ -657,9 +896,11 @@ function buildMissionControl(planetId: string): PlanetMissionControl | null {
       ? saturn
       : planetId === "moon"
         ? moon
-        : planetId === "uranus"
-          ? uranus
-          : (derived[planetId] ?? null);
+        : planetId === "jupiter"
+          ? jupiter
+          : planetId === "uranus"
+            ? uranus
+            : (derived[planetId] ?? null);
   const generated = generatedEntriesFor(planetId);
 
   if (!base) {
@@ -682,8 +923,8 @@ function buildMissionControl(planetId: string): PlanetMissionControl | null {
     };
   }
 
-  // Saturn and Uranus use fixed curated sets/counts for the atlas display.
-  if (planetId === "saturn" || planetId === "uranus") return base;
+  // Saturn, Jupiter, and Uranus use fixed curated sets/counts for the atlas display.
+  if (planetId === "saturn" || planetId === "jupiter" || planetId === "uranus") return base;
 
   if (generated.length === 0) return base;
 
@@ -759,7 +1000,7 @@ export function orbitMissionsFor(
   }));
 }
 
-export const missionControl = { ...derived, saturn, moon, uranus } as Record<
+export const missionControl = { ...derived, saturn, moon, jupiter, uranus } as Record<
   string,
   PlanetMissionControl
 >;

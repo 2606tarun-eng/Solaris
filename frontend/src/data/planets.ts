@@ -111,7 +111,7 @@ const seeds: PlanetSeed[] = [
     size: 86,
     period: 52,
     color: "#fde68a",
-    moons: 95,
+    moons: 115,
     tagline: "The giant storm",
     src: img.jupiter,
     hero: img.planetJupiter,
