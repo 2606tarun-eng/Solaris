@@ -151,7 +151,7 @@ export default function AstroRelicsMissionAtlas() {
         />
       </main>
 
-      <Timeline year={year} onChange={setYear} highlighted={highlighted} />
+      <Timeline year={year} onChange={setYear} highlighted={highlighted} speed={speed} />
       <StatusBar />
 
       {aboutOpen ? (

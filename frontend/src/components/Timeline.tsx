@@ -11,6 +11,8 @@ type TimelineProps = {
   year: number;
   onChange: (year: number) => void;
   highlighted: Set<string>;
+  /** Orbit speed (0.5/1/2) — the time machine advances in step with it. */
+  speed: number;
 };
 
 const DECADES = [1960, 1970, 1980, 1990, 2000, 2010, 2020];
@@ -29,7 +31,7 @@ const timelineMarkers = (() => {
   });
 })();
 
-export default function Timeline({ year, onChange, highlighted }: TimelineProps) {
+export default function Timeline({ year, onChange, highlighted, speed }: TimelineProps) {
   const [playing, setPlaying] = useState(false);
   const events = eventsForYear(year);
   const railPercent = position(year);
@@ -49,13 +51,15 @@ export default function Timeline({ year, onChange, highlighted }: TimelineProps)
       setPlaying(false);
       return;
     }
+    // Tie the time machine's pace to orbit speed: slow orbit = slow years.
+    const delay = 460 / Math.max(speed, 0.25);
     const timer = window.setTimeout(() => {
       const nextYear = Math.min(TIMELINE_END, year + 1);
       handleTimelineSonification(nextYear);
       onChange(nextYear);
-    }, 460);
+    }, delay);
     return () => window.clearTimeout(timer);
-  }, [playing, year, onChange]);
+  }, [playing, year, onChange, speed]);
 
   return (
     <section className="timeline-panel" aria-label="Mission time machine">
