@@ -214,6 +214,7 @@ export default function OrbitSystem({
               dimmed={dimmed}
               highlighted={highlighted.has(planet.id)}
               counts={counts}
+              filter={filter}
               onSelect={() => {
                 if (consumeClickBlock()) return;
                 onSelectPlanet(planet.id);
