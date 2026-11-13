@@ -913,47 +913,6 @@
   }
 }
 
-/* ------------------------------------------------------------ mission orbit rings */
-
-.mission-orbit-ring {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: var(--ring-radius);
-  height: var(--ring-radius);
-  margin: calc(var(--ring-radius) / -2) 0 0 calc(var(--ring-radius) / -2);
-  border: 1px solid;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0.5;
-  animation: mission-orbit-spin linear var(--ring-duration) infinite;
-}
-
-.mission-orbit-ring.is-active {
-  border-color: var(--signal-active);
-  box-shadow: 0 0 8px rgba(52, 211, 153, 0.45);
-}
-
-.mission-orbit-ring.is-retired {
-  border-color: var(--signal-retired);
-  box-shadow: 0 0 8px rgba(249, 115, 22, 0.45);
-}
-
-@keyframes mission-orbit-spin {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mission-orbit-ring {
-    animation: none;
-  }
-}
-
 /* ----------------------------------------------------------- neon dots */
 
 .project-dots {
