@@ -499,6 +499,55 @@ const spherePalettes: Record<string, PlanetMissionControl["sphere"]> = {
   },
 };
 
+/* -------------------------------------------------------------------- Uranus */
+
+const uranusHero = img.planetUranus;
+const uranusGallery: MissionMedia[] = [
+  {
+    id: "uranus-archive",
+    kind: "photo",
+    src: img.missionUranus,
+    caption: "Voyager 2 archive frame of Uranus.",
+  },
+  {
+    id: "uranus-world",
+    kind: "photo",
+    src: uranusHero,
+    caption: "Uranus, from the NASA planetary archive.",
+  },
+];
+
+const uranus: PlanetMissionControl = {
+  planetId: "uranus",
+  planetName: "Uranus",
+  headline: "The planet that rolls on its side.",
+  brief:
+    "Only one spacecraft has ever visited Uranus up close. Voyager 2 flew past in 1986 and revealed a tilted, icy world.",
+  sphere: spherePalettes.uranus,
+  counts: { active: 0, retired: 1 },
+  entries: [
+    {
+      id: "voyager-2-uranus",
+      name: "Voyager 2 at Uranus",
+      agency: "NASA / JPL",
+      status: "retired",
+      years: "1977–1986",
+      target: "Flyby · 1986",
+      summary:
+        "Voyager 2 flew past Uranus in 1986 and sent back the first close-up pictures. It found new moons, new rings, and a strange tilted magnetic field.",
+      heroImage: img.missionUranus,
+      heroAlt: "Voyager 2 mission archive image of Uranus",
+      stats: [
+        { value: "1986", label: "Flyby year" },
+        { value: "81,500 km", label: "Closest approach" },
+        { value: "10", label: "New moons found" },
+      ],
+      media: uranusGallery,
+      href: "https://science.nasa.gov/mission/voyager/",
+    },
+  ],
+};
+
 function derivedMedia(planetId: string): MissionMedia[] {
   const featured = missionByPlanet[planetId];
   const planet = planetById[planetId];
@@ -604,7 +653,13 @@ export function missionControlFor(planetId: string): PlanetMissionControl | null
 
 function buildMissionControl(planetId: string): PlanetMissionControl | null {
   const base =
-    planetId === "saturn" ? saturn : planetId === "moon" ? moon : derived[planetId] ?? null;
+    planetId === "saturn"
+      ? saturn
+      : planetId === "moon"
+        ? moon
+        : planetId === "uranus"
+          ? uranus
+          : (derived[planetId] ?? null);
   const generated = generatedEntriesFor(planetId);
 
   if (!base) {
@@ -627,8 +682,8 @@ function buildMissionControl(planetId: string): PlanetMissionControl | null {
     };
   }
 
-  // Saturn uses a fixed curated set/counts for the atlas display.
-  if (planetId === "saturn") return base;
+  // Saturn and Uranus use fixed curated sets/counts for the atlas display.
+  if (planetId === "saturn" || planetId === "uranus") return base;
 
   if (generated.length === 0) return base;
 
@@ -704,7 +759,7 @@ export function orbitMissionsFor(
   }));
 }
 
-export const missionControl = { ...derived, saturn, moon } as Record<
+export const missionControl = { ...derived, saturn, moon, uranus } as Record<
   string,
   PlanetMissionControl
 >;

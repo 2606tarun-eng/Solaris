@@ -141,6 +141,7 @@ const seeds: PlanetSeed[] = [
     size: 52,
     period: 82,
     color: "#93c5fd",
+    moons: 29,
     tagline: "The sideways planet",
     src: img.uranus,
     hero: img.planetUranus,
