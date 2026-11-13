@@ -1,4 +1,4 @@
-import type { RefObject } from "react";
+import { useEffect, useState, type RefObject } from "react";
 import { AnimatePresence } from "framer-motion";
 import type { CameraApi, PlanetPosition } from "../hooks/useCamera";
 import { missionControlFor } from "../data/missionControl";
@@ -56,6 +56,13 @@ export default function MissionMap({
   year,
 }: MissionMapProps) {
   const focusData = selectedPlanetId ? missionControlFor(selectedPlanetId) : null;
+  // Earth has one extra panel: its Moon. Every other planet stays single-body.
+  const [focusedBody, setFocusedBody] = useState<"earth" | "moon">("earth");
+  useEffect(() => {
+    setFocusedBody("earth");
+  }, [selectedPlanetId, drawerOpen]);
+
+  const moonSelected = selectedPlanetId === "earth" && drawerOpen && focusedBody === "moon";
 
   return (
     <section
@@ -150,6 +157,9 @@ export default function MissionMap({
             data={focusData}
             reducedMotion={reducedMotion}
             onDismiss={onCloseDrawer}
+            moonActive={moonSelected}
+            onSelectMoon={() => setFocusedBody("moon")}
+            onSelectEarth={() => setFocusedBody("earth")}
           />
         </AnimatePresence>
       ) : null}
@@ -157,10 +167,11 @@ export default function MissionMap({
       <AnimatePresence>
         {drawerOpen && selectedPlanetId ? (
           <MissionControlDrawer
-            key={`mc-${selectedPlanetId}`}
-            planetId={selectedPlanetId}
+            key={`mc-${moonSelected ? "moon" : selectedPlanetId}`}
+            planetId={moonSelected ? "moon" : selectedPlanetId}
             reducedMotion={reducedMotion}
             onClose={onCloseDrawer}
+            onBackToEarth={moonSelected ? () => setFocusedBody("earth") : undefined}
           />
         ) : null}
       </AnimatePresence>

@@ -24,6 +24,10 @@ type PlanetFocusStageProps = {
   data: PlanetMissionControl;
   reducedMotion: boolean;
   onDismiss: () => void;
+  /** Earth only: true while the Moon's Mission Control panel is open. */
+  moonActive?: boolean;
+  onSelectMoon?: () => void;
+  onSelectEarth?: () => void;
 };
 
 const EASE_OUT: [number, number, number, number] = [0.22, 0.9, 0.3, 1];
@@ -100,6 +104,9 @@ export default function PlanetFocusStage({
   data,
   reducedMotion,
   onDismiss,
+  moonActive = false,
+  onSelectMoon,
+  onSelectEarth,
 }: PlanetFocusStageProps) {
   const narrow = useNarrow();
   const { sphere, rings } = data;
@@ -174,6 +181,9 @@ export default function PlanetFocusStage({
               rings={ringProps}
               reducedMotion={reducedMotion}
               settled={settled}
+              showMoon={data.planetId === "earth"}
+              moonSelected={moonActive}
+              onSelectMoon={onSelectMoon}
             />
           </Suspense>
         ) : (
@@ -183,7 +193,27 @@ export default function PlanetFocusStage({
         <div className="mc-stage-caption">
           <span className="mc-stage-tag">FOCUS LOCK</span>
           <strong>{data.planetName}</strong>
-          <em>{data.headline}</em>
+          <em>{moonActive ? "Moon mission control open" : data.headline}</em>
+          {data.planetId === "earth" ? (
+            <div className="mc-stage-bodies" role="group" aria-label="Choose a body">
+              <button
+                type="button"
+                className={!moonActive ? "is-active" : ""}
+                onClick={() => onSelectEarth?.()}
+                aria-pressed={!moonActive}
+              >
+                Earth
+              </button>
+              <button
+                type="button"
+                className={moonActive ? "is-active" : ""}
+                onClick={() => onSelectMoon?.()}
+                aria-pressed={moonActive}
+              >
+                Moon
+              </button>
+            </div>
+          ) : null}
         </div>
       </motion.div>
     </motion.div>

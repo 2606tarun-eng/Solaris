@@ -17,6 +17,8 @@ type MissionControlDrawerProps = {
   planetId: string;
   reducedMotion: boolean;
   onClose: () => void;
+  /** Moon panel only: return to Earth's mission control. */
+  onBackToEarth?: () => void;
 };
 
 type TabKey = "active" | "retired";
@@ -62,6 +64,7 @@ export default function MissionControlDrawer({
   planetId,
   reducedMotion,
   onClose,
+  onBackToEarth,
 }: MissionControlDrawerProps) {
   const data = missionControlFor(planetId);
   const defaultTab: TabKey =
@@ -96,14 +99,26 @@ export default function MissionControlDrawer({
             <span aria-hidden="true">//</span> {data.planetName}
           </h2>
         </div>
-        <button
-          type="button"
-          className="mc-close"
-          onClick={onClose}
-          aria-label="Close mission control"
-        >
-          <Icon name="close" size={16} />
-        </button>
+        <div className="mc-head-actions">
+          {onBackToEarth ? (
+            <button
+              type="button"
+              className="mc-back"
+              onClick={onBackToEarth}
+              aria-label="Back to Earth mission control"
+            >
+              <span aria-hidden="true">←</span> Back to Earth
+            </button>
+          ) : null}
+          <button
+            type="button"
+            className="mc-close"
+            onClick={onClose}
+            aria-label="Close mission control"
+          >
+            <Icon name="close" size={16} />
+          </button>
+        </div>
       </header>
 
       <p className="mc-brief">{data.brief}</p>

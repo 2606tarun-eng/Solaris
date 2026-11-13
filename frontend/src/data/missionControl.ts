@@ -238,6 +238,233 @@ const saturn: PlanetMissionControl = {
   ],
 };
 
+/* --------------------------------------------------------------------- Moon */
+
+const moonPhoto = (id: string, size: "orig" | "large" = "large") =>
+  `https://images-assets.nasa.gov/image/${id}/${id}~${size}.jpg`;
+
+const moonNearside = moonPhoto("PIA00405");
+const moonFarside = moonPhoto("GSFC_20171208_Archive_e001939", "orig");
+const moonApollo11 = moonPhoto("as11-40-5875");
+const moonApollo17 = moonPhoto("jsc2004e52775");
+const moonClementine = moonPhoto("PIA00434", "orig");
+const moonCrater = moonPhoto("PIA13008", "orig");
+const moonSurveyor = moonPhoto("LRC-1967-B701_P-04028");
+
+const moonGallery: MissionMedia[] = [
+  {
+    id: "nearside",
+    kind: "photo",
+    src: moonNearside,
+    caption: "The Moon's near side, from NASA's planetary archive.",
+  },
+  {
+    id: "farside",
+    kind: "photo",
+    src: moonFarside,
+    caption: "The far side of the Moon, assembled from orbital images.",
+  },
+  {
+    id: "apollo-11",
+    kind: "photo",
+    src: moonApollo11,
+    caption: "Apollo 11 astronaut Buzz Aldrin beside the U.S. flag in 1969.",
+  },
+  {
+    id: "apollo-17",
+    kind: "photo",
+    src: moonApollo17,
+    caption: "A panorama of the lunar surface from Apollo 17 in 1972.",
+  },
+];
+
+const moon: PlanetMissionControl = {
+  planetId: "moon",
+  planetName: "Moon",
+  headline: "Our constant companion",
+  brief:
+    "Earth's only natural satellite — and the only other world humans have walked on. These are the robots still working there, and the pioneers who came before.",
+  sphere: {
+    bands: ["#4c4a46", "#9a958c", "#6b6760", "#b7b1a6", "#5d5a55", "#a39d93", "#43413e"],
+    highlight: "rgba(255, 252, 244, 0.34)",
+    shadow: "rgba(8, 8, 10, 0.9)",
+  },
+  counts: { active: 4, retired: 5 },
+  entries: [
+    {
+      id: "lro",
+      name: "Lunar Reconnaissance Orbiter",
+      agency: "NASA",
+      status: "active",
+      years: "2009–now",
+      target: "Orbiter · mapping the Moon",
+      summary:
+        "LRO has been circling the Moon since 2009. Its cameras map the surface in sharp detail and help mission planners pick safe landing spots.",
+      heroImage: moonNearside,
+      heroAlt: "The Moon, the world LRO has mapped since 2009",
+      stats: [
+        { value: "2009", label: "Launched" },
+        { value: "17 yrs", label: "Mapping the Moon" },
+        { value: "3D", label: "Surface map" },
+      ],
+      media: moonGallery,
+      href: "https://science.nasa.gov/mission/lro/",
+    },
+    {
+      id: "capstone",
+      name: "CAPSTONE",
+      agency: "NASA / Advanced Space",
+      status: "active",
+      years: "2022–now",
+      target: "Orbiter · testing the Gateway orbit",
+      summary:
+        "A small CubeSat that tested the stretched orbit planned for the Gateway station. It proved the path works, paving the way for future lunar infrastructure.",
+      heroImage: moonNearside,
+      heroAlt: "The Moon, where CAPSTONE tested a new orbit",
+      stats: [
+        { value: "2022", label: "Launched" },
+        { value: "1", label: "CubeSat" },
+        { value: "NRHO", label: "Test orbit" },
+      ],
+      media: moonGallery,
+      href: "https://science.nasa.gov/mission/capstone/",
+    },
+    {
+      id: "danuri",
+      name: "Danuri (KPLO)",
+      agency: "KARI / NASA",
+      status: "active",
+      years: "2022–now",
+      target: "Orbiter · Korea's lunar explorer",
+      summary:
+        "South Korea's first Moon mission is mapping the surface, measuring magnetic fields and hunting for signs of water ice in shadowed craters.",
+      heroImage: moonFarside,
+      heroAlt: "The Moon, mapped by the Danuri orbiter",
+      stats: [
+        { value: "2022", label: "Launched" },
+        { value: "1", label: "Orbiter" },
+        { value: "ShadowCam", label: "Instrument" },
+      ],
+      media: moonGallery,
+      href: "https://www.kari.re.kr/eng/sub03_04_01.do",
+    },
+    {
+      id: "change-4",
+      name: "Chang'e 4",
+      agency: "CNSA",
+      status: "active",
+      years: "2018–now",
+      target: "Lander · far side",
+      summary:
+        "The first mission to land on the Moon's far side. Its Yutu-2 rover is still exploring an ancient, battered landscape.",
+      heroImage: moonFarside,
+      heroAlt: "The far side of the Moon, explored by Chang'e 4",
+      stats: [
+        { value: "2019", label: "Landed" },
+        { value: "1", label: "Rover" },
+        { value: "Far side", label: "First" },
+      ],
+      media: moonGallery,
+      href: "https://www.cnsa.gov.cn/",
+    },
+    {
+      id: "apollo-11",
+      name: "Apollo 11",
+      agency: "NASA",
+      status: "retired",
+      years: "1969",
+      target: "Lander · first crewed landing",
+      summary:
+        "Neil Armstrong and Buzz Aldrin became the first humans to walk on the Moon while Michael Collins orbited above.",
+      heroImage: moonApollo11,
+      heroAlt: "Apollo 11 astronaut Buzz Aldrin on the Moon",
+      stats: [
+        { value: "1969", label: "Landed" },
+        { value: "2", label: "Moonwalkers" },
+        { value: "21.5 h", label: "On the surface" },
+      ],
+      media: moonGallery,
+      href: "https://science.nasa.gov/mission/apollo-11/",
+    },
+    {
+      id: "apollo-17",
+      name: "Apollo 17",
+      agency: "NASA",
+      status: "retired",
+      years: "1972",
+      target: "Lander · last crewed landing",
+      summary:
+        "The last Apollo landing. Geologist Harrison Schmitt and Gene Cernan spent three days on the surface and brought home 111 kg of Moon rock.",
+      heroImage: moonApollo17,
+      heroAlt: "Apollo 17 panorama of the lunar surface",
+      stats: [
+        { value: "1972", label: "Landed" },
+        { value: "3", label: "Crew" },
+        { value: "75 h", label: "On the surface" },
+      ],
+      media: moonGallery,
+      href: "https://science.nasa.gov/mission/apollo-17/",
+    },
+    {
+      id: "luna-2",
+      name: "Luna 2",
+      agency: "USSR",
+      status: "retired",
+      years: "1959",
+      target: "Impactor · first Moon impact",
+      summary:
+        "The first human-made object to reach the Moon. It struck the surface in 1959 and proved that the journey was possible.",
+      heroImage: moonCrater,
+      heroAlt: "A lunar crater, the kind of terrain Luna 2 impacted",
+      stats: [
+        { value: "1959", label: "Impacted" },
+        { value: "1st", label: "To reach the Moon" },
+        { value: "Moon", label: "Target" },
+      ],
+      media: moonGallery,
+      href: "https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=1959-014A",
+    },
+    {
+      id: "surveyor-1",
+      name: "Surveyor 1",
+      agency: "NASA",
+      status: "retired",
+      years: "1966",
+      target: "Lander · first soft landing",
+      summary:
+        "Surveyor 1 made the first gentle landing on the Moon, showing that future astronauts could touch down safely.",
+      heroImage: moonSurveyor,
+      heroAlt: "Surveyor 1 on the Moon",
+      stats: [
+        { value: "1966", label: "Landed" },
+        { value: "1st", label: "Soft landing" },
+        { value: "11k", label: "Images returned" },
+      ],
+      media: moonGallery,
+      href: "https://science.nasa.gov/mission/surveyor-1/",
+    },
+    {
+      id: "clementine",
+      name: "Clementine",
+      agency: "NASA / BMDO",
+      status: "retired",
+      years: "1994",
+      target: "Orbiter · mapping the Moon",
+      summary:
+        "A small joint NASA/BMDO spacecraft mapped the Moon in many wavelengths and found hints of ice in permanently shadowed craters.",
+      heroImage: moonClementine,
+      heroAlt: "The Moon observed by Clementine",
+      stats: [
+        { value: "1994", label: "Launched" },
+        { value: "1.8M", label: "Images" },
+        { value: "2", label: "Months mapping" },
+      ],
+      media: moonGallery,
+      href: "https://science.nasa.gov/mission/clementine/",
+    },
+  ],
+};
+
 /* --------------------------------------------------- derived for everyone else */
 
 const spherePalettes: Record<string, PlanetMissionControl["sphere"]> = {
@@ -382,9 +609,10 @@ const derived: Record<string, PlanetMissionControl> = Object.fromEntries(
   }),
 );
 
-/** Full Mission Control data for one planet. Saturn is hand-authored. */
+/** Full Mission Control data for one planet. Saturn and the Moon are hand-authored. */
 export function missionControlFor(planetId: string): PlanetMissionControl | null {
   if (planetId === "saturn") return saturn;
+  if (planetId === "moon") return moon;
   return derived[planetId] ?? null;
 }
 
@@ -430,4 +658,7 @@ export function orbitMissionsFor(
   }));
 }
 
-export const missionControl = { ...derived, saturn } as Record<string, PlanetMissionControl>;
+export const missionControl = { ...derived, saturn, moon } as Record<
+  string,
+  PlanetMissionControl
+>;

@@ -15,7 +15,7 @@ import {
   type PerspectiveCamera,
   type Texture,
 } from "three";
-import { glowSurface, planetSurface, ringSurface } from "../lib/planetTexture";
+import { glowSurface, moonSurface, planetSurface, ringSurface } from "../lib/planetTexture";
 
 /**
  * CinematicPlanet3D — the live micro view.
@@ -60,6 +60,12 @@ type CinematicPlanet3DProps = {
   settled?: boolean;
   /** Toggles when the planet is minimized/maximized. */
   minimized?: boolean;
+  /** Earth only: draw its Moon on a slow, clickable orbit. */
+  showMoon?: boolean;
+  /** True while the Moon's Mission Control panel is open. */
+  moonSelected?: boolean;
+  /** Opens Mission Control for the Moon. */
+  onSelectMoon?: () => void;
   className?: string;
 };
 
@@ -423,6 +429,122 @@ function MissionOrbit({
   );
 }
 
+/* ------------------------------------------------------------- Earth's Moon */
+
+const MOON_RADIUS = 0.095;
+/** Deliberately much slower than the Earth satellites (~0.32 rad/s). */
+const MOON_SPEED = 0.035;
+const MOON_TILT = 0.07;
+const MOON_PHASE = 0.7;
+
+/**
+ * Earth's Moon: one slow, clickable sphere just outside the satellite shells.
+ * Clicking it opens the Moon's Mission Control panel; the planet stays Earth.
+ */
+function MoonOrbit({
+  radius,
+  reducedMotion,
+  selected,
+  onSelect,
+}: {
+  radius: number;
+  reducedMotion: boolean;
+  selected: boolean;
+  onSelect?: () => void;
+}) {
+  const node = useRef<Group>(null);
+  const label = useRef<HTMLDivElement>(null);
+  const map = useMemo(() => moonSurface(), []);
+  const halo = useMemo(() => glowSurface(), []);
+
+  const points = useMemo(() => {
+    const list: [number, number, number][] = [];
+    const steps = 148;
+    for (let i = 0; i <= steps; i += 1) {
+      const angle = (i / steps) * Math.PI * 2;
+      list.push([Math.cos(angle) * radius, 0, Math.sin(angle) * radius]);
+    }
+    return list;
+  }, [radius]);
+
+  useEffect(() => () => {
+    document.body.style.cursor = "";
+  }, []);
+
+  useFrame((state) => {
+    const group = node.current;
+    if (!group) return;
+
+    const elapsed = reducedMotion ? 0 : state.clock.elapsedTime;
+    const angle = MOON_PHASE + elapsed * MOON_SPEED;
+    group.position.set(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
+
+    if (!label.current) return;
+    group.getWorldPosition(scratch);
+    projected.copy(scratch).project(state.camera);
+    label.current.dataset.side = projected.x < 0 ? "left" : "right";
+    label.current.style.opacity = selected ? "1" : "0.84";
+  });
+
+  const select = (event: { stopPropagation: () => void }) => {
+    event.stopPropagation();
+    onSelect?.();
+  };
+
+  const hoverOn = (event: { stopPropagation: () => void }) => {
+    event.stopPropagation();
+    document.body.style.cursor = "pointer";
+  };
+
+  const hoverOff = () => {
+    document.body.style.cursor = "";
+  };
+
+  return (
+    <group rotation={[MOON_TILT, 0.62, 0]}>
+      <Line
+        points={points}
+        color="#d8d3c8"
+        lineWidth={1}
+        transparent
+        opacity={0.2}
+        depthWrite={false}
+      />
+
+      <group ref={node}>
+        <mesh onClick={select} onPointerOver={hoverOn} onPointerOut={hoverOff}>
+          <sphereGeometry args={[MOON_RADIUS, 32, 32]} />
+          <meshStandardMaterial map={map} roughness={1} metalness={0} />
+        </mesh>
+
+        {/* A larger invisible target makes the little Moon easy to tap. */}
+        <mesh onClick={select} onPointerOver={hoverOn} onPointerOut={hoverOff}>
+          <sphereGeometry args={[MOON_RADIUS * 2, 16, 16]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+
+        <sprite scale={[0.44, 0.44, 1]}>
+          <spriteMaterial
+            map={halo}
+            color={selected ? "#fde68a" : "#cfd8e3"}
+            transparent
+            opacity={selected ? 0.72 : 0.35}
+            depthWrite={false}
+            blending={AdditiveBlending}
+          />
+        </sprite>
+
+        <Html zIndexRange={[7, 0]} style={{ pointerEvents: "none" }}>
+          <div className={`cp3d-tag is-moon${selected ? " is-selected" : ""}`} ref={label}>
+            <span className="cp3d-tag-line" />
+            <span className="cp3d-tag-name">Moon</span>
+          </div>
+        </Html>
+      </group>
+    </group>
+  );
+}
+
 /**
  * R3F sizes the canvas once, from the container's bounding box at mount time.
  * The stage grows in with a scale transform, so that first measurement can
@@ -455,6 +577,9 @@ export default function CinematicPlanet3D({
   reducedMotion = false,
   settled = false,
   minimized = false,
+  showMoon = false,
+  moonSelected = false,
+  onSelectMoon,
   className,
 }: CinematicPlanet3DProps) {
   const scale = minimized ? 0.5 : 1;
@@ -462,6 +587,16 @@ export default function CinematicPlanet3D({
   const map = remote ?? planetSurface(planetId, palette.bands);
 
   const segments = 64;
+
+  /** The Moon sits just beyond the outermost satellite shell. */
+  const moonOrbitRadius = useMemo(() => {
+    if (!showMoon) return null;
+    const outermost = missions.reduce(
+      (max, mission) => Math.max(max, mission.orbitRadius),
+      PLANET_RADIUS * 2.2,
+    );
+    return outermost + 0.24;
+  }, [showMoon, missions]);
 
   /**
    * The ring system is sized against the missions rather than fixed: it stops
@@ -509,8 +644,15 @@ export default function CinematicPlanet3D({
       vertical = Math.max(vertical, ringOuter * Math.sin(rings.tilt + ELEVATION_MAX));
     }
 
+    if (moonOrbitRadius !== null) {
+      horizontal = Math.max(horizontal, moonOrbitRadius);
+      // The Moon's lane is nearly flat, so it adds almost no vertical room —
+      // but it is the widest ring, so the camera must pull back for it.
+      vertical = Math.max(vertical, moonOrbitRadius * Math.sin(MOON_TILT + ELEVATION_MAX));
+    }
+
     return { horizontal, vertical };
-  }, [missions, rings, ringOuter]);
+  }, [missions, rings, ringOuter, moonOrbitRadius]);
 
   return (
     <div className={`cp3d${className ? ` ${className}` : ""}`}>
@@ -549,6 +691,15 @@ export default function CinematicPlanet3D({
               reducedMotion={reducedMotion}
             />
           ))}
+
+          {moonOrbitRadius !== null ? (
+            <MoonOrbit
+              radius={moonOrbitRadius}
+              reducedMotion={reducedMotion}
+              selected={moonSelected}
+              onSelect={onSelectMoon}
+            />
+          ) : null}
         </group>
 
         <OrbitControls

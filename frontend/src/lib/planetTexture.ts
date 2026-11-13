@@ -142,6 +142,98 @@ export function planetSurface(planetId: string, bands: string[]): Texture {
   return texture;
 }
 
+/**
+ * A dedicated cratered surface for the Moon. The planet generator paints
+ * latitude bands, which reads as a gas giant rather than a rocky world, so the
+ * Moon gets its own pass: a soft grey base plus craters with bright rims.
+ * Deterministic and network-free, like every other surface here.
+ */
+export function moonSurface(): Texture {
+  const cached = surfaceCache.get("moon-surface");
+  if (cached) return cached;
+
+  const width = 1024;
+  const height = 512;
+  const { canvas, ctx } = makeCanvas(width, height);
+  const random = seeded(hash("moon-surface"));
+
+  const base = ctx.createLinearGradient(0, 0, 0, height);
+  base.addColorStop(0, "#6f6c66");
+  base.addColorStop(0.22, "#a6a198");
+  base.addColorStop(0.5, "#b8b2a7");
+  base.addColorStop(0.78, "#9a958b");
+  base.addColorStop(1, "#66635e");
+  ctx.fillStyle = base;
+  ctx.fillRect(0, 0, width, height);
+
+  // Broad dark maria, then craters on top of them.
+  const maria = 9;
+  for (let i = 0; i < maria; i += 1) {
+    const x = random() * width;
+    const y = height * (0.24 + random() * 0.52);
+    const rx = 70 + random() * 130;
+    const ry = rx * (0.3 + random() * 0.26);
+    for (const offset of [-width, 0, width]) {
+      ctx.save();
+      ctx.translate(x + offset, y);
+      ctx.scale(1, ry / rx);
+      const blob = ctx.createRadialGradient(0, 0, 0, 0, 0, rx);
+      blob.addColorStop(0, "rgba(58,56,53,0.28)");
+      blob.addColorStop(0.65, "rgba(58,56,53,0.16)");
+      blob.addColorStop(1, "rgba(58,56,53,0)");
+      ctx.fillStyle = blob;
+      ctx.beginPath();
+      ctx.arc(0, 0, rx, 0, TAU);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  const craters = 160;
+  for (let i = 0; i < craters; i += 1) {
+    const x = random() * width;
+    const y = 24 + random() * (height - 48);
+    const radius = 2.5 + random() * 19;
+    const depth = 0.18 + random() * 0.24;
+    for (const offset of [-width, 0, width]) {
+      const cx = x + offset;
+      const crater = ctx.createRadialGradient(
+        cx - radius * 0.28,
+        y - radius * 0.28,
+        radius * 0.08,
+        cx,
+        y,
+        radius,
+      );
+      crater.addColorStop(0, `rgba(48,46,43,${depth.toFixed(3)})`);
+      crater.addColorStop(0.62, `rgba(78,75,71,${(depth * 0.5).toFixed(3)})`);
+      crater.addColorStop(0.82, `rgba(226,221,210,${(depth * 0.7).toFixed(3)})`);
+      crater.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = crater;
+      ctx.beginPath();
+      ctx.arc(cx, y, radius, 0, TAU);
+      ctx.fill();
+    }
+  }
+
+  const poles = ctx.createLinearGradient(0, 0, 0, height);
+  poles.addColorStop(0, "rgba(20,19,18,0.5)");
+  poles.addColorStop(0.18, "rgba(20,19,18,0)");
+  poles.addColorStop(0.82, "rgba(20,19,18,0)");
+  poles.addColorStop(1, "rgba(20,19,18,0.5)");
+  ctx.fillStyle = poles;
+  ctx.fillRect(0, 0, width, height);
+
+  const texture = new CanvasTexture(canvas);
+  texture.colorSpace = SRGBColorSpace;
+  texture.wrapS = RepeatWrapping;
+  texture.wrapT = ClampToEdgeWrapping;
+  texture.anisotropy = 4;
+  texture.needsUpdate = true;
+  surfaceCache.set("moon-surface", texture);
+  return texture;
+}
+
 const ringCache = new Map<string, Texture>();
 
 /**

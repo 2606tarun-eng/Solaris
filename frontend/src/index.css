@@ -2573,6 +2573,15 @@
   color: #e7e5e4;
 }
 
+/* Earth's Moon gets the same callout, with a brighter label when selected. */
+.cp3d-tag.is-moon.is-selected .cp3d-tag-name {
+  color: var(--amber);
+}
+
+.cp3d-tag.is-moon.is-selected .cp3d-tag-line {
+  opacity: 0.9;
+}
+
 /*
  * The micro view. When a planet is picked the macro map keeps zooming behind
  * this layer; the scrim swallows it and the chosen world grows out of the tap.
@@ -2888,6 +2897,51 @@
   color: var(--dim);
 }
 
+/* Earth-only body switcher. The 3-D Moon is clickable too; this is the
+ * keyboard-accessible equivalent and shows which panel is open. */
+.mc-stage-bodies {
+  display: inline-flex;
+  gap: 3px;
+  margin-top: 7px;
+  padding: 3px;
+  border: 1px solid rgba(120, 113, 108, 0.3);
+  border-radius: 9999px;
+  background: rgba(9, 9, 11, 0.72);
+  pointer-events: auto;
+}
+
+.mc-stage-bodies button {
+  min-height: 24px;
+  padding: 4px 11px;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--dim);
+  font-family: "IBM Plex Mono:Medium", monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.mc-stage-bodies button:hover {
+  color: var(--muted);
+}
+
+.mc-stage-bodies button:focus-visible {
+  outline: 2px solid rgba(250, 204, 21, 0.6);
+  outline-offset: 1px;
+}
+
+.mc-stage-bodies button.is-active {
+  color: var(--amber);
+  background: rgba(250, 204, 21, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(250, 204, 21, 0.42);
+}
+
 /* =================================================== mission control panel */
 
 .mc-drawer {
@@ -2961,6 +3015,44 @@
   color: #fff;
   border-color: rgba(214, 160, 110, 0.62);
   background: rgba(214, 160, 110, 0.12);
+}
+
+.mc-head-actions {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.mc-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgba(214, 160, 110, 0.32);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  font-family: "IBM Plex Mono:Medium", monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.mc-back:hover {
+  color: #fff;
+  border-color: rgba(214, 160, 110, 0.62);
+  background: rgba(214, 160, 110, 0.12);
+}
+
+.mc-back:focus-visible {
+  outline: 2px solid rgba(250, 204, 21, 0.6);
+  outline-offset: 2px;
 }
 
 .mc-brief {
@@ -3374,6 +3466,11 @@
 
   .mc-stage-tag,
   .mc-stage-caption em {
+    display: none;
+  }
+
+  /* The 3-D Moon remains tappable; the chip would crowd the small canvas. */
+  .mc-stage-bodies {
     display: none;
   }
 
