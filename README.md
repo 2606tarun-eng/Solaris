@@ -54,8 +54,8 @@ they went or *what happened to them*.
 
 ```bash
 # 1. Clone (Git LFS is required — the planet art and fonts live in LFS)
-git clone <repository-url>
-cd <repository-folder>
+git clone https://github.com/2606tarun-eng/Solaris.git
+cd Solaris
 
 # 2. Install the frontend
 pnpm install:frontend

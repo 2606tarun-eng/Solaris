@@ -20,8 +20,8 @@ Please open an issue before starting large features so we can agree on the appro
 ## Local workflow
 
 ```bash
-git clone <repository-url>
-cd <repository-folder>
+git clone https://github.com/2606tarun-eng/Solaris.git
+cd Solaris
 git lfs install && git lfs pull
 pnpm install:frontend
 pnpm dev

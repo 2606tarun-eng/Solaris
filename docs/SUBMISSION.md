@@ -15,7 +15,7 @@ A single page a judge or evaluator can read in two minutes.
 | **Category** | Interactive visualization · Education · Open data |
 | **Platform** | Web (desktop, tablet, phone) |
 | **Status** | Feature complete for submission (v1.0.0) |
-| **Repository** | This repository |
+| **Repository** | <https://github.com/2606tarun-eng/Solaris> |
 | **Demo** | `http://localhost:5173` after [setup](SETUP.md), or your deployed URL |
 
 ---

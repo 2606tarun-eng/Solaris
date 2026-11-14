@@ -134,8 +134,8 @@ nasa-data  education  kids  interactive-visualization  astronomy  open-data
 **Social preview:** upload `docs/assets/00-banner.png` under
 *Settings → General → Social preview*.
 
-> The repository is currently hosted at a URL containing the old working title. If you rename it to
-> `solaris`, GitHub redirects the old links automatically — no code changes are required.
+> The canonical repository is **`2606tarun-eng/Solaris`**. Keep it renamed, and archive or delete
+> any older duplicate so judges always land on the right project.
 
 ---
 
