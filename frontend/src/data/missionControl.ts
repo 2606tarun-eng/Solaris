@@ -367,7 +367,7 @@ const moon: PlanetMissionControl = {
     highlight: "rgba(255, 252, 244, 0.34)",
     shadow: "rgba(8, 8, 10, 0.9)",
   },
-  counts: { active: 4, retired: 8 },
+  counts: { active: 4, retired: 9 },
   entries: [
     {
       id: "lro",
@@ -539,6 +539,25 @@ const moon: PlanetMissionControl = {
       ],
       media: moonGallery,
       href: "https://science.nasa.gov/mission/clementine/",
+    },
+    {
+      id: "lcross",
+      name: "LCROSS",
+      agency: "NASA",
+      status: "retired",
+      years: "2009",
+      target: "Impactor · finding polar water ice",
+      summary:
+        "Sent a spent Centaur rocket crashing into Cabeus crater at the lunar south pole, uncovering hidden water ice deposits in the debris plume.",
+      heroImage: moonCrater,
+      heroAlt: "Cabeus crater at the south pole of the Moon",
+      stats: [
+        { value: "2009", label: "Impacted" },
+        { value: "Cabeus", label: "Target" },
+        { value: "Ice", label: "Confirmed" },
+      ],
+      media: moonGallery,
+      href: "https://science.nasa.gov/mission/lcross/",
     },
   ],
 };
