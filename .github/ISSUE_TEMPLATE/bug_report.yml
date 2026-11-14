@@ -1,0 +1,67 @@
+name: Bug report
+description: Something is broken, blank, or looks wrong.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping! Please check the troubleshooting table in
+        [docs/SETUP.md](../docs/SETUP.md#6-troubleshooting) first — blank planets are usually
+        missing Git LFS assets.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the problem, and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open http://localhost:5173/app
+        2. Click Saturn
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: Page / route
+      placeholder: /app, /mission/apollo-17, ...
+    validations:
+      required: false
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser + version, OS, screen size, and whether reduced motion is on.
+      placeholder: Chrome 141 · Windows 11 · 1600×1000 · reduced motion off
+    validations:
+      required: true
+
+  - type: dropdown
+    id: lfs
+    attributes:
+      label: Did you run `git lfs pull`?
+      options:
+        - "Yes"
+        - "No"
+        - "Not sure"
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot or console output
+      description: Drag an image here, or paste errors from the browser console.
+      render: shell
+    validations:
+      required: false

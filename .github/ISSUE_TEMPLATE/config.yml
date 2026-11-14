@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Git LFS help
+    url: https://git-lfs.com
+    about: Blank planets or 130-byte images? Install Git LFS and run "git lfs pull" (see docs/SETUP.md).
+  - name: NASA Space Apps Challenge
+    url: https://www.spaceappschallenge.org/
+    about: Challenge rules, judging criteria and resources.
