@@ -1,10 +1,10 @@
-# figma-make-app
+# Solaris — agent guide
 
 React + Vite + Tailwind CSS project running inside Figma Make.
 
 ## Development Server
 
-A Vite development server is **already running** on `$PORT` (default 8443). You don't need to start it manually.
+A Vite development server is **already running** on `$PORT` (default 5173). You don't need to start it manually.
 
 - Preview URL: The user can access the running app through the preview panel
 - Hot reload: Changes to source files are reflected immediately
@@ -13,7 +13,7 @@ A Vite development server is **already running** on `$PORT` (default 8443). You 
 
 Workspace layout — the app lives in `frontend/`, the future API in `backend/`:
 
-- `frontend/` - React + Vite + Tailwind CSS v4 app (the AstroRelics atlas)
+- `frontend/` - React + Vite + Tailwind CSS v4 app (the Solaris atlas)
 - `backend/` - Reserved for the future backend (see `backend/README.md`)
 - `package.json` (root) - Shim whose `dev`/`build`/`preview`/`format` scripts proxy into `frontend/` via `pnpm --dir frontend`
 - `.figma/` - Figma Make toolchain configuration (stays at workspace root)
@@ -51,7 +51,7 @@ Tailwind emits utility classes in `@layer utilities`, and CSS outside any cascad
 - Ensure JSX tags are closed and braces are balanced.
 - Export components as default exports.
 
-## AstroRelics build plan (active)
+## Solaris build plan (active)
 
 Goal: turn the static atlas into a living, kid-friendly (ages 8–14) solar-system experience for
 the NASA Space Apps Challenge. First impression matters: a playful planetarium, not a dashboard.

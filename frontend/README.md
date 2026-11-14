@@ -1,62 +1,59 @@
-# AstroRelics — Mission Atlas
+# Solaris — frontend app
 
-An interactive NASA Space Apps Challenge concept: a heliocentric map of the machines we
-left behind, with a searchable mission atlas, status filters, a launch-year timeline, and a
-relic detail panel.
+React 19 + Vite 8 + Tailwind CSS v4 single-page app. This is the product: the landing page, the
+mission atlas and the mission story pages.
 
-Built with React 19, TypeScript, Vite, and Tailwind CSS v4.
+> Full project documentation lives at the repository root: [README.md](../README.md) ·
+> [docs/](../docs/).
 
-## Run locally
-
-```bash
-pnpm install
-pnpm dev
-```
-
-Open <http://localhost:8443>. The dev server scales the fixed 1600 × 1180 atlas stage down
-to the browser width, so it also works in narrow preview panes.
-
-## Build for the web
+## Run it
 
 ```bash
-pnpm build     # production files in dist/
-pnpm preview   # serve the production build locally
+pnpm install    # from this folder
+pnpm dev        # http://localhost:5173
 ```
 
-`dist/` is a completely static site. Upload it to any static host (Netlify, Vercel, Cloudflare
-Pages, GitHub Pages, S3, nginx) — no server or environment variables required.
+From the repository root you can use `pnpm install:frontend` and `pnpm dev` instead.
 
-If you host the site on a sub-path (for example `https://example.com/astrorelics/`), set
-`FIGMA_PUBLIC_URL` while building so asset and image URLs include the prefix:
+## Build
 
 ```bash
-FIGMA_PUBLIC_URL=/astrorelics pnpm build
+pnpm build      # static output in ../dist
+pnpm preview    # serve the build on :4173
+pnpm format     # oxfmt
 ```
 
-## Project structure
+## Structure
 
 ```text
 src/
-  App.tsx                  page state, viewport scaling, layout composition
-  assets.ts                single registry for every image path
-  index.css                Tailwind import, self-hosted fonts, atlas styles
+  App.tsx                  atlas composition (map + timeline + status bar)
+  Root.tsx                 tiny three-route entry ("/", "/app", "/mission/:id")
+  assets.ts                single registry for every image used by the UI
+  index.css                Tailwind import + design tokens
   components/
-    NavBar.tsx             top navigation
-    MissionMap.tsx         heliocentric map, planet markers, search, filters
-    Timeline.tsx           launch / landing era slider
-    DetailDrawer.tsx       relic detail panel
-    StatusBar.tsx          footer credits
-  data/
-    planets.ts             planet positions, status, captions
-    solarSystem.ts         sun flare rings and orbit paths
-    starfield.ts           decorative background stars
+    LandingIntro.tsx       cinematic splash
+    MissionMap.tsx         atlas surface
+    OrbitSystem.tsx        one rAF loop; planets via DOM transforms
+    CameraControls.tsx     zoom / reset HUD
+    MissionControlDrawer.tsx
+    mission-story/         five-chapter story pages
+    Timeline.tsx           time machine (1957 → today)
+    GuidedTour.tsx         one-minute tour
+    MissionSearch.tsx      live search
+    StarfieldCanvas.tsx    adaptive star field
+  context/                 theme + passport providers (prototype features)
+  data/                    planets, missions, stories, timeline, generated NASA JSON
+  hooks/                   useCamera, usePerformanceTier, useReducedMotion
+  lib/                     routing, NASA adapter, flash bus, kid audio
 public/
-  assets/                  planet, orbit, and icon artwork
-  fonts/                   IBM Plex Mono, Inter, Space Grotesk (self-hosted)
+  assets/                  planet art, mission photos, icons (Git LFS)
+  fonts/                   Inter, Space Grotesk, IBM Plex Mono (Git LFS)
 ```
 
 ## Notes
 
-- Fonts are served from `public/fonts`, so the site has no external font/CDN dependency.
-- All artwork lives in `public/assets` and is referenced through `src/assets.ts`.
-- Page title, description, and favicon are configured in `.figma/make/site.json`.
+- All images are registered in `src/assets.ts`; never hardcode a path in a component.
+- The app is fully offline-capable: no runtime API calls are required.
+- Page title, description and favicon come from `.figma/make/site.json`.
+- Imagery is stored in Git LFS — run `git lfs pull` if images look blank.
