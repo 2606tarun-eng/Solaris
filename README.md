@@ -13,11 +13,17 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06b6d4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-e6ae83?style=flat-square)](LICENSE)
 
+### ▶ [**Live demo — solaris-nasa.web.app**](https://solaris-nasa.web.app)
+
 [**Quick start**](#-quick-start) · [**Screenshots**](#-screenshots) · [**How it works**](#-how-it-works) · [**Docs**](#-documentation) · [**Team**](#-team-asynchronous)
 
 </div>
 
 ---
+
+> **Solaris is live at <https://solaris-nasa.web.app>** — deployed on Firebase Hosting (free Spark
+> plan). Pushing to `main` rebuilds and redeploys it automatically once the repo secrets are set; see
+> [docs/SETUP.md → Deploy to Firebase](docs/SETUP.md#4-deploy-to-firebase-hosting-free-spark-plan).
 
 ## What is Solaris?
 

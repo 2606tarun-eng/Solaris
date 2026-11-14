@@ -122,7 +122,7 @@ Commit the regenerated `frontend/src/data/generated/*.json` and
 
 > Solaris — a kid-friendly, interactive NASA mission atlas of the solar system. Real missions, real imagery, orbit engine, timeline and mission stories. Built for the NASA Space Apps Challenge 2026.
 
-**About → Website:** your deployed URL (e.g. `https://solaris.example.com`)
+**About → Website:** <https://solaris-nasa.web.app>
 
 **Topics:**
 

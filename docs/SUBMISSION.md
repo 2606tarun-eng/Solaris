@@ -16,7 +16,7 @@ A single page a judge or evaluator can read in two minutes.
 | **Platform** | Web (desktop, tablet, phone) |
 | **Status** | Feature complete for submission (v1.0.0) |
 | **Repository** | <https://github.com/2606tarun-eng/Solaris> |
-| **Demo** | `http://localhost:5173` after [setup](SETUP.md), or your deployed URL |
+| **Demo** | **<https://solaris-nasa.web.app>** (Firebase Hosting, free Spark plan) · or `http://localhost:5173` after [setup](SETUP.md) |
 
 ---
 

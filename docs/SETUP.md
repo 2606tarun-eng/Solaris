@@ -130,6 +130,9 @@ firebase login
 firebase use --add <your-project-id>     # writes .firebaserc, choose an alias like "default"
 ```
 
+This repository is already linked to **`solaris-nasa`** (see [`.firebaserc`](../.firebaserc)), so
+`pnpm deploy:firebase` works as-is. Live site: **<https://solaris-nasa.web.app>**.
+
 `firebase.json` already points at the right place:
 
 ```json
@@ -141,8 +144,22 @@ firebase use --add <your-project-id>     # writes .firebaserc, choose an alias l
 }
 ```
 
-The rewrite is what keeps `/app` and `/mission/:id` working after a refresh. Cache headers give
-images and fonts a one-year immutable cache.
+The rewrite is what keeps `/app` and `/mission/:id` working after a refresh.
+
+### Cache policy
+
+Fresh deploys must show up immediately, so caching is split by file type:
+
+| Files | Cache-Control | Why |
+|---|---|---|
+| `**/*.html` | `no-cache, no-store, must-revalidate` | The HTML entry point must always be re-checked, so new builds appear at once |
+| `**/*.@(js\|css)` | `public, max-age=31536000, immutable` | Vite fingerprints these filenames (`index-B_yr6RAN.js`), so a change means a new URL |
+| `**/*.@(woff\|woff2\|ttf\|otf)` | `public, max-age=31536000, immutable` | Fonts almost never change |
+| `**/*.@(jpg\|jpeg\|png\|svg\|webp\|gif\|ico)` | `public, max-age=86400, stale-while-revalidate=604800` | Planet art and screenshots keep stable filenames, so they revalidate daily instead of sticking for a year |
+
+Net effect: code changes reach visitors on the next page load, while images stay cheap (important on
+the Spark plan's 360 MB/day). If you replace an image and still see the old one, hard-refresh once
+(**Ctrl+Shift+R**) or open an incognito window.
 
 ### Deploy manually
 
@@ -254,7 +271,8 @@ CI runs the production build on every push and pull request (`.github/workflows/
 | `Port 5173 is already in use` | Another dev server | `$env:PORT=5180; pnpm dev` |
 | `pnpm: command not found` | pnpm missing | `corepack enable` or `npm i -g pnpm` |
 | Blank page after deploy | Wrong base path | rebuild with `FIGMA_PUBLIC_URL=/<sub-path>` |
-| 404 on `/mission/...` after refresh | Static host has no SPA fallback | add an `index.html` fallback rule |
+| 404 on `/mission/...` after refresh | Static host has no SPA fallback | add an `index.html` fallback rule (`firebase.json` already has it) |
+| Old version still showing after deploy | Browser cached the page | hard-refresh once (**Ctrl+Shift+R**); HTML is `no-store`, images revalidate daily |
 | Fonts look wrong | LFS fonts missing | `git lfs pull` |
 | Build fails on Node 20 | Vite 8 needs Node 22 | switch to Node 22+ |
 
