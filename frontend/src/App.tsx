@@ -12,7 +12,7 @@ import usePerformanceTier from "./hooks/usePerformanceTier";
 import useReducedMotion from "./hooks/useReducedMotion";
 import { TIMELINE_END, planetsForYear } from "./data/timelineEvents";
 
-export default function AstroRelicsMissionAtlas() {
+export default function SolarisMissionAtlas() {
   const reducedMotion = useReducedMotion();
   const tier = usePerformanceTier();
 

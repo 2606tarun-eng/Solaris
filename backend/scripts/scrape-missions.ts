@@ -30,7 +30,7 @@ const GAP_FILE = path.join(ROOT, "data", "image-gaps.md");
 
 const CATALOG = "https://science.nasa.gov/wp-json/wp/v2/";
 const IMAGES = "https://images-api.nasa.gov";
-const UA = { "User-Agent": "AstroRelics/1.0 (NASA Space Apps Challenge)" };
+const UA = { "User-Agent": "Solaris/1.0 (NASA Space Apps Challenge)" };
 
 /** Body → NASA mission-target term id. Order decides the primary body. */
 const BODIES: Array<{ id: string; name: string; termId: number }> = [

@@ -9,7 +9,7 @@ import { missionIdFromPath } from "./lib/missionRoute";
  * Minimal two-route entry point.
  *
  *   "/"              -> Solaris splash landing page
- *   "/app"           -> the existing AstroRelics atlas (untouched)
+ *   "/app"           -> the Solaris mission atlas
  *   "/system"        -> alias for "/app"
  *   "/mission/:id"   -> page 4, the mission story (opens from page 3)
  *
