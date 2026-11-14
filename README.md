@@ -1,6 +1,6 @@
-# AstroRelics workspace
+# Solaris workspace
 
-NASA Space Apps Challenge project: **AstroRelics** — a kid-friendly solar-system
+NASA Space Apps Challenge project: **Solaris** — a kid-friendly solar-system
 atlas of the machines we sent out and left behind.
 
 ## Layout
