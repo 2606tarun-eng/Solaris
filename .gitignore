@@ -17,3 +17,9 @@ Desktop.ini
 
 # Local tool state
 *.log
+firebase-debug.log
+*-debug.log
+
+# Firebase CLI local state
+.firebase/
+.firebaserc.local

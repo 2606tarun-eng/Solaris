@@ -24,6 +24,8 @@ First submission build for the **NASA Space Apps Challenge 2026**.
 - NASA catalogue scrape pipeline and generated JSON data.
 - Optional Fastify + SQLite backend with NASA sync and a voice-agent endpoint.
 - Full documentation set, CI workflow, issue/PR templates and MIT licence.
+- Firebase Hosting configuration (`firebase.json`) and an automatic deploy workflow on push to
+  `main`, plus a `pnpm deploy:firebase` script.
 
 ### Changed
 

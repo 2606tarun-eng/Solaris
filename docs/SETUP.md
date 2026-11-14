@@ -115,7 +115,98 @@ COPY --from=build /app/dist /usr/share/nginx/html
 
 ---
 
-## 4. Optional backend (NASA cache + voice agent)
+## 4. Deploy to Firebase Hosting (free Spark plan)
+
+Solaris ships with `firebase.json` and `.github/workflows/firebase-deploy.yml`, so you can deploy
+from your laptop in one command or let every push to `main` deploy automatically.
+
+### One-time setup (5 minutes)
+
+```bash
+npm i -g firebase-tools
+firebase login
+
+# create a project at https://console.firebase.google.com (Spark / free plan, no card)
+firebase use --add <your-project-id>     # writes .firebaserc, choose an alias like "default"
+```
+
+`firebase.json` already points at the right place:
+
+```json
+{
+  "hosting": {
+    "public": "dist",
+    "rewrites": [{ "source": "**", "destination": "/index.html" }]
+  }
+}
+```
+
+The rewrite is what keeps `/app` and `/mission/:id` working after a refresh. Cache headers give
+images and fonts a one-year immutable cache.
+
+### Deploy manually
+
+```bash
+pnpm build                    # writes the static site to repo-root dist/
+pnpm deploy:firebase          # build + deploy in one step
+```
+
+Or the explicit form:
+
+```bash
+pnpm build
+npx firebase-tools deploy --only hosting
+```
+
+Firebase prints the live URLs, typically:
+
+- `https://<project-id>.web.app`
+- `https://<project-id>.firebaseapp.com`
+
+Preview a build before promoting it (optional): `npx firebase-tools hosting:channel:deploy preview`.
+
+### Automatic deploys from GitHub
+
+The workflow `.github/workflows/firebase-deploy.yml` builds and deploys on every push to `main`.
+Add two settings to the repository:
+
+| Kind | Name | Value |
+|---|---|---|
+| Variable | `FIREBASE_PROJECT_ID` | your Firebase project id |
+| Secret | `FIREBASE_SERVICE_ACCOUNT` | JSON key for a service account with the *Firebase Hosting Admin* role |
+
+Create the service account key:
+
+```bash
+# Option A — let the CLI do everything (adds workflow + secrets via the GitHub API)
+npx firebase-tools init hosting:github
+
+# Option B — manual
+# 1. Google Cloud Console → IAM & Admin → Service Accounts → Create service account
+# 2. Grant role: Firebase Hosting Admin
+# 3. Keys → Add key → JSON → download
+# 4. GitHub repo → Settings → Secrets and variables → Actions → New repository secret
+#    Name: FIREBASE_SERVICE_ACCOUNT   Value: paste the whole JSON file
+```
+
+### Free-tier limits to know
+
+| Limit | Spark plan |
+|---|---|
+| Storage | 10 GB |
+| Transfer | **360 MB / day** |
+| Custom domain | supported (domain must be one you own) |
+| URL | `https://<project-id>.web.app` |
+
+Solaris is roughly 3.6 MB, so that is on the order of ~100 first-time visits per day. Visitors who
+already have the assets cached cost almost nothing, because the header rules cache images and fonts
+for a year. If you expect heavier traffic, move to Blaze (pay-as-you-go) or Cloudflare Pages.
+
+> The backend is **not** deployed — the site is 100 % static. Keep `backend/` for local data work.
+
+---
+
+## 5. Optional backend (NASA cache + voice agent)
 
 The atlas works **without** the backend. The API exists for cached NASA syncs, server-side search
 and the voice agent.
@@ -144,7 +235,7 @@ voice agent.
 
 ---
 
-## 5. Quality checks
+## 6. Quality checks
 
 ```bash
 pnpm build        # must pass before every commit
@@ -155,7 +246,7 @@ CI runs the production build on every push and pull request (`.github/workflows/
 
 ---
 
-## 6. Troubleshooting
+## 7. Troubleshooting
 
 | Symptom | Cause | Fix |
 |---|---|---|
@@ -169,7 +260,7 @@ CI runs the production build on every push and pull request (`.github/workflows/
 
 ---
 
-## 7. Repository conventions
+## 8. Repository conventions
 
 - `main` is protected in spirit: every change goes through a pull request.
 - Commit messages follow **Conventional Commits** (`feat:`, `fix:`, `docs:`, `chore:`).

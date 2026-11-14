@@ -8,6 +8,7 @@
     "build": "pnpm --dir frontend run build",
     "preview": "pnpm --dir frontend run preview",
     "format": "pnpm --dir frontend run format",
-    "install:frontend": "pnpm --dir frontend install"
+    "install:frontend": "pnpm --dir frontend install",
+    "deploy:firebase": "pnpm build && npx firebase-tools deploy --only hosting"
   }
 }

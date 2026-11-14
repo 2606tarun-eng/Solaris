@@ -75,6 +75,10 @@ Open **<http://localhost:5173>** → the landing page. Click **Explore the void*
 Need a production build, the optional NASA data backend, or troubleshooting? See
 **[docs/SETUP.md](docs/SETUP.md)**.
 
+Ship it: `pnpm deploy:firebase` publishes `dist/` to Firebase Hosting (free Spark plan, one command,
+`firebase.json` already configured) — full steps in
+**[docs/SETUP.md → Deploy to Firebase](docs/SETUP.md#4-deploy-to-firebase-hosting-free-spark-plan)**.
+
 ---
 
 ## 📸 Screenshots
